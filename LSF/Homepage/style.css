@@ -1,0 +1,463 @@
+/* ===================== General Styles ===================== */
+body {
+    background-color: #ffffff;
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    
+  }
+  /* Navbar */
+  nav {
+    position: fixed;           /* Make it stick */
+    top: 0;                    /* Align to top */
+    left: 0;                   /* Align to left */
+    width: 100%;               /* Full width */
+    z-index: 1000;             /* Make sure it stays on top */
+    background-color: #f8f9fa;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+  }
+  
+  nav ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav li {
+    height: 50px;
+  }
+  
+  nav a {
+    height: 100%;
+    padding: 0 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+  
+  nav a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  nav li:first-child {
+    margin-right: auto;
+  }
+ 
+ 
+
+  /*Logo Section */
+  .logo {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent; /* adjust if needed */
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+}
+
+.logo span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color:#ad67c8 ; /* Neon cyan, change to your brand color */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 5px rgba(173, 103, 200, 0.5); /* Soft glow effect */
+  transition: all 0.3s ease;
+}
+
+.logo:hover span {
+  color: #434343;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    height: 100vh;
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    transition: right 0.3s ease-in-out;
+    z-index: 1050;
+    padding-top: 20px;
+  }
+  
+  .sidebar.show {
+    right: 0;
+  }
+  
+  
+  
+  .sidebar a:hover {
+    background-color: #f0f0f0;
+  }
+  
+.sidebar li {
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect to match navbar */
+.sidebar a:hover {
+  background-color: #f0f0f0;
+  color:  #ad67c8;
+  transform: translateX(5px);
+  border-left: 4px solid  #ad67c8;
+}
+
+/* Icon spacing */
+.sidebar a i {
+  margin-right: 12px;
+  min-width: 20px;
+  text-align: center;
+}
+ /* Hide menu icon on desktop */
+ .menu-icon {
+  display: none;
+}
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hideOnMobile {
+      display: none;
+    }
+  
+    .menu-icon {
+      display: block;
+    }
+  }
+  
+  /* ===================== Hero Section ===================== */
+  h1 {
+    font-weight: bold;
+    color: #222;
+  }
+  
+  h1 .text-primary-custom {
+    color: #ad67c8 !important;
+}
+
+
+  /* Search Bar */
+  .search-bar input {
+    border: 2px solid #ad67c8;
+    border-radius: 5px;
+    padding: 8px;
+  }
+  
+  .search-bar button {
+    background-color: #ad67c8;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .search-bar button:hover {
+    background-color: #8b4ea7;
+  }
+  .search-input {
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(173, 103, 200, 0.6); /* Soft purple glow */
+    border-color: #ad67c8;
+}
+
+  /* ===================== Service Categories ===================== */
+  .service-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+    text-align: center;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .service-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
+  
+  .service-box img {
+    width: 80px;
+    height: auto;
+  }
+  
+  .service-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ===================== Cards (Popular Businesses) ===================== */
+  .card {
+    border: none;
+    transition: 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .badge {
+    background-color: #ad67c8 ;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+   /* ===================== Section Title Page  ===================== */
+  .section-title {
+    font-size: 1.75rem;         /* Medium-readable (approx. text-2xl) */
+    font-weight: 700;           /* Bold */
+    letter-spacing: 1px;        /* Slight letter spacing */
+    color: #ad67c8;             /* Brand color */
+    text-transform: uppercase;  /* Uppercase for emphasis */
+    text-align: center;         /* Centered */
+    position: relative;
+    margin-bottom: 0.75rem;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  height: 4px;
+  width: 60px;
+  background-color: #ad67c8;
+  margin: 8px auto 0;
+  border-radius: 9999px;
+}
+
+/*.section-title:hover::after {
+    width: 100%;
+}*/
+.section-title-three {
+  font-size: 1.75rem;         /* Medium-readable (approx. text-2xl) */
+  font-weight: 700;           /* Bold */
+  letter-spacing: 1px;        /* Slight letter spacing */
+  color: #ad67c8;             /* Brand color */
+  text-transform: uppercase;  /* Uppercase for emphasis */
+  text-align: center;         /* Centered */
+  position: relative;
+  margin-bottom: 0.75rem;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.section-title-three::after {
+  content: '';
+  display: block;
+  height: 4px;
+  width: 60px;
+  background-color: #ad67c8;
+  margin: 8px auto 0;
+  border-radius: 9999px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+  /* ===================== Buttons ===================== */
+  .btn-primary {
+    background-color: #ad67c8 !important;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #8b4ea7 !important;
+  }
+  
+  /*Service Card Shadow Effect*/
+  .custom-shadow {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .custom-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+  }
+  /* ===================== Splash Screen  ===================== */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 1.2s ease-out forwards;
+  }
+  
+  /* ===================== Footer Section ===================== */
+  .footer {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    padding: 40px 0;
+    border-top: 5px solid #ad67c8;
+  }
+  
+  .footer-section h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ad67c8;
+  }
+  
+  .footer-section p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 8px;
+  }
+  
+  .footer-links a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .footer-links a:hover {
+    color: #ad67c8;
+  }
+  
+  .social-icons {
+    margin-top: 10px;
+  }
+  
+  .social-icons a {
+    display: inline-block;
+    color: #fff;
+    background: #ad67c8;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    margin-right: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    background: #8b4ea7;
+  }
+  
+  .copyright {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+
+   /* ===================== Provider Cards Section  ===================== */
+  .provider-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.3s;
+    background: #fafafa;
+}
+.provider-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.card-title {
+  font-size: 1.2rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+.btn-view-details {
+  background-color: #8b4ea7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-view-details:hover {
+  background-color: #6c3b8b; /* slightly darker purple */
+  transform: translateY(-2px);
+  color: #fff;
+}
