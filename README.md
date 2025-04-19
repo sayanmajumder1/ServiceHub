@@ -1,7 +1,5 @@
-Here's the updated **README.md** without the technology stack and installation instructions. 🚀  
 
 ---
-
 # **🚀 Local Service Finder**  
 *Find and book local services near you with ease!*  
 
