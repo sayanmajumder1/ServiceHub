@@ -1,3 +1,4 @@
+//Side Bar Functionality Code 
 function showSidebar() {
     document.getElementById("sidebar").classList.add("show");
 }
