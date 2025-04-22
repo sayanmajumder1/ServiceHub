@@ -12,6 +12,12 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+     <!-- Maintain The  Side Bar  Functionality Java Script     -->
+     <script src ="SideBarFunction.js"></script>
+
+      <!-- Bootstrap JS (for responsive behavior) -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
 </head>
 <body>
    
@@ -63,18 +69,18 @@
                 <div class="row text-center">
                     <?php
                     include 'db_connect.php'; // adjust path if needed
-                    $sql = "SELECT * FROM services WHERE type = 'category'";
+                    $sql = "SELECT * FROM service";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         // Useing While Loops To Show The Cards Category
                         while ($row = $result->fetch_assoc()) {
-                            $image_data = base64_encode($row['image_blob']); // encode BLOB  Images
+                            $image_data = '../Admin/img/' . $row['image']; 
                             echo '
                             <div class="col-4 col-md-4 col-lg-4 mb-3">
-                                <a href="providers.php?id=' . $row['id'] . '" class="text-decoration-none text-dark">
+                                <a href="providers.php?id=' . $row['s_id'] . '" class="text-decoration-none text-dark">
                                     <div class="service-box">
-                                        <img src="data:image/jpeg;base64,' . $image_data . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
-                                        <p>' . htmlspecialchars($row['service_name']) . '</p>
+                                        <img src="' .trim( $image_data) . '" alt="' . htmlspecialchars($row['s_name']) . '" class="img-fluid">
+                                        <p>' . htmlspecialchars($row['s_name']) . '</p>
                                     </div>
                                 </a>
                             </div>';
@@ -97,19 +103,7 @@
     
     
     
-    <!-- Bootstrap JS (for responsive behavior) -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Maintain The  Side Bar  Functionality Java Script     -->
-    <script>
-        function showSidebar() {
-            document.getElementById("sidebar").classList.add("show");
-        }
-
-        function hideSidebar() {
-            document.getElementById("sidebar").classList.remove("show");
-        }
-    </script>
-
+   
 
 
 <!-- Fotter Section --->
@@ -152,13 +146,6 @@
         </div>
     </div>
 </footer>
-
-
-
-
-
-
-
 
 </body>
 </html>

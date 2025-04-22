@@ -152,7 +152,7 @@ $_SESSION['visited'] = true;
 //Js For Showing The Splash Screen  When the Website Is Opening
 setTimeout(function(){
 window.location.href="home.php";
-},9000);
+},5000);
 </script>
 </body>
 </html>

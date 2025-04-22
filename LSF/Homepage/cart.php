@@ -10,6 +10,9 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+
+<!-- SideBar Functionality  Js  Code Integrated Here  -->
+    <script src= "SideBarFunction.js"></script>
 </head>
 <body>
     
@@ -74,15 +77,7 @@
   <!-- Bootstrap JS (for responsive behavior) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Maintain The  Side Bar  Functionality Java Script    -->
-    <script>
-        function showSidebar() {
-            document.getElementById("sidebar").classList.add("show");
-        }
-
-        function hideSidebar() {
-            document.getElementById("sidebar").classList.remove("show");
-        }
-    </script>
+  
 
 
 
