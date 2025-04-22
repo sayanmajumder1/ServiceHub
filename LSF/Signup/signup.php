@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,13 +17,11 @@
       }
     }
   </style>
-
 </head>
-
 <body class="bg-zinc-100 h-screen overflow-y-auto">
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white">
     <div>
-      <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
+      <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30  " />
     </div>
     <button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">
       Login

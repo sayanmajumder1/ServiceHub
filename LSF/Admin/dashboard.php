@@ -6,7 +6,6 @@
         header("location:adminlog.php");
         exit;
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -187,6 +186,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="ui3">
                     <div class="o35">
                     <div class="col-md-8">
@@ -214,6 +214,9 @@
                         </div>
                     </div>
             </div>
+
+
+            
             <div id="ui4">
                 <div class="o35">
                     <p style="padding:5px;font-size:2.2rem">Manage Services </p>
