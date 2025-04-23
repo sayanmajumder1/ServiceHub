@@ -11,7 +11,7 @@
 <body class="h-screen overflow-y-auto">
     <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
         <div>
-            <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
+            <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
         </div>
         <a href="./signup.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Create new account</button></a>
     </nav>
@@ -20,7 +20,7 @@
         <!-- Left Panel -->
         <div class="lg:flex lg:w-[35%] xl:w-2/6 flex-col items-center justify-center p-2 bg-white">
             <div class="w-[90%]">
-                <img src="./6333204.jpg" alt="Illustration" />
+                <img src="./images/6333204.jpg" alt="Illustration" />
             </div>
             <!-- <p class="mt-3 text-center text-sm lg:text-lg w-full">
                 Login to your existing account

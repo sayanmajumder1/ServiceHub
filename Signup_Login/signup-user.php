@@ -11,7 +11,7 @@
   <!-- Navbar -->
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
     <div>
-      <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
+      <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
     </div>
     <a href="./login.php">
       <button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Login</button>
@@ -24,7 +24,7 @@
     <!-- Left Panel -->
     <div class="lg:flex lg:w-[35%] xl:w-2/6 flex-col items-center justify-center p-2 bg-white">
       <div class="img1 w-[90%]">
-        <img src="./5052671.jpg" alt="Provider Signup" />
+        <img src="./images/5052671.jpg" alt="Provider Signup" />
       </div>
       <!-- <p class="mt-3 text-center text-sm lg:text-lg w-full">
         Get services done at your doorstep

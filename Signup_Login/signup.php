@@ -11,7 +11,7 @@
 <body class="h-screen overflow-y-auto">
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
     <div>
-      <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
+      <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
     </div>
     <a href="./login.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Login</button></a>
     </button>
@@ -21,7 +21,7 @@
     <!-- Left Panel -->
     <div class="lg:flex lg:w-[35%] xl:w-2/6 flex-col items-center justify-center p-2 bg-white">
       <div id="carousel" class="img1 w-[90%]">
-        <img src="./7400904.jpg" alt="Illustration" id="carousel-image" class="transition-opacity duration-1000 opacity-100">
+        <img src="./images/7400904.jpg" alt="Illustration" id="carousel-image" class="transition-opacity duration-1000 opacity-100">
       </div>
       <div id="carousel-dots" class=" flex justify-center mt-4 gap-2">
         <span class="w-2.5 h-2.5 bg-purple-500 rounded-full transition-all duration-300"></span>
@@ -66,9 +66,9 @@
 
   <script>
     const imagePaths = [
-      './7400904.jpg',
-      './4219239.jpg',
-      './5248427.jpg'
+      './images/7400904.jpg',
+      './images/4219239.jpg',
+      './images/5248427.jpg'
     ];
 
     let currentIndex = 0;
