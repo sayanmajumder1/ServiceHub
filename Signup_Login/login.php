@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to your account</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="h-screen overflow-y-auto">
+    <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
+        <div>
+            <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
+        </div>
+        <a href="./signup.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Create new account</button></a>
+    </nav>
+
+    <main class="lg:flex max-h-screen w-full">
+        <!-- Left Panel -->
+        <div class="lg:flex lg:w-[35%] xl:w-2/6 flex-col items-center justify-center p-2 bg-white">
+            <div class="w-[90%]">
+                <img src="./6333204.jpg" alt="Illustration" />
+            </div>
+            <!-- <p class="mt-3 text-center text-sm lg:text-lg w-full">
+                Login to your existing account
+            </p> -->
+        </div>
+
+        <!-- Step 1: Choose Account -->
+        <div id="step1" class="lg:w-1/2 flex flex-col px-8 py-8 text-center lg:ml-10 items-center">
+            <h1 class="text-3xl lg:text-5xl font-bold mb-4">Welcome back 👋🏽</h1>
+
+            <h2 class="text-lg font-medium mb-8 lg:mb-15">Login to your account</h2>
+
+            <form method="POST" action="http://localhost/ServiceHub/Signup_Login/otpVerification.php">
+                <input type="email" name="email" id="email" placeholder="Email" required class="border px-4 py-2 rounded mb-3 w-full max-w-md" />
+
+                <input type="password" name="password" id="password" placeholder="Password" class="border px-4 py-2 rounded mb-3 w-full max-w-md" />
+
+                <p class="text-xs text-gray-500 mb-6 lg:mt-15">
+                    This information will be securely saved as per the
+                    <span class="font-semibold">Terms of Services</span> and
+                    <span class="font-semibold">Privacy Policy</span>
+                </p>
+
+                <div class="flex gap-8 justify-center mt-10">
+                    <button class="bg-gray-200 px-5 py-2 rounded">Help!</button>
+                    <input type="submit" class="bg-purple-500 text-white px-4 py-2 rounded w-full sm:w-auto" value="Login">
+                </div>
+        </div>
+    </main>
+    <script src="signup.js"></script>
+</body>
+
+</html>
