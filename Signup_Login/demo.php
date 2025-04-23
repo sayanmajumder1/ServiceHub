@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,13 +17,19 @@
       }
     }
   </style>
-
 </head>
+<<<<<<< HEAD:Signup_Login/demo.php
 
 <body class="h-screen overflow-y-auto">
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
     <div>
       <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
+=======
+<body class="bg-zinc-100 h-screen overflow-y-auto">
+  <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white">
+    <div>
+      <img src="./logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30  " />
+>>>>>>> 1170eb0d8e09194b5211c44fa632441e80f5d14a:Signup/signup.php
     </div>
     <a href="./login.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Login</button></a>
     </button>
