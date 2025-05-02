@@ -1,4 +1,4 @@
-<<<<<<< HEAD:LSF/Homepage/index.php
+
 <?php
 session_start();
 // If user has already visited, redirect to home.php directly
@@ -51,10 +51,12 @@ $_SESSION['visited'] = true;
 
       <!-- Centered Circular Logo -->
             <img 
+        loading="lazy"
         src="assets/images/logo.png" 
         alt="Logo"
-        class="bg-[#ad67c8] w-32 h-32 rounded-full shadow-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700"
+        class="w-48 h-48 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-700"
       />
+
 
       <!-- 
         - w-32 h-32: 8rem circular logo.
@@ -153,7 +155,7 @@ $_SESSION['visited'] = true;
 //Js For Showing The Splash Screen  When the Website Is Opening
 setTimeout(function(){
 window.location.href="home.php";
-},5000);
+},9000);
 </script>
 </body>
 </html>

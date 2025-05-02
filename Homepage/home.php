@@ -1,4 +1,4 @@
-<<<<<<< HEAD:LSF/Homepage/home.php
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +28,19 @@
     <nav>
                 <!-- Side Bar Section-->
     <ul class="sidebar" id="sidebar">
-        <li onclick="hideSidebar()">
-           <a href="#"><i class="fa-solid fa-times"></i></a>
+        <li onclick="hideSidebar()" class="navbar-profile-two d-flex  align-items-center padding-top-bottom" onclick="showSidebar()" style="height: 100px;">
+           <a href="#"  ><i class="fa-solid fa-times"></i></a>
+           <a href="profile.php" class="d-inline-block position-relative">
+            <img 
+            src="assets/images/logo2.png" 
+            alt="User profile" 
+            class="img-fluid rounded-circle shadow profile-img-animate"
+            style="width: 80px; height: 80px; object-fit: cover;"
+            />
+        </a>
         </li>
+
+         
        <li>
           <a href="#"><i class="fas fa-home"></i> Home</a>
         </li>
@@ -45,19 +55,33 @@
         </li>
         <li>
            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+
         </li>
+       
+         
     </ul>
        <!-- Nav  Bar Section-->      
         <ul>
             <li class="logo">
-            <img src="assets/images/logo.png" alt="Electricity">
-            <span>Service Hub</span>
+            <img  loading = "lazy "src="assets/images/logo.png" alt="Service Hub Icon ">
+           <!-- <span>Service Hub</span>-->
             </li>
             <li class="hideOnMobile"><a href="service.php">Service</a></li>
             <li class="hideOnMobile"><a href="cart.php">Cart</a></li>
             <li class="hideOnMobile"><a href="#">About</a></li>
             <li class="hideOnMobile"><a href="#">Contact</a></li>
-            
+          
+                <li class="navbar-profile" onclick="hideSidebar()">
+                <a href="profile.php">
+                    <img 
+                    src="assets/images/logo2.png" 
+                    alt="User profile" 
+                    class="img-fluid rounded-circle shadow" 
+                    style="width: 50px; height: 50px; object-fit: cover;"
+                    />
+                </a>
+                </li>
+  
             <li class="menu-icon" onclick="showSidebar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
         </ul>
     </nav>
@@ -164,7 +188,7 @@
 
 
 
-
+        <!-- Footer Section -->
     <footer class="footer">
     <div class="container">
         <div class="row">

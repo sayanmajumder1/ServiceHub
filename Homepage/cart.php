@@ -1,4 +1,4 @@
-<<<<<<< HEAD:LSF/Homepage/cart.php
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +21,16 @@
     <nav>
                 <!-- Side Bar Section-->
     <ul class="sidebar" id="sidebar">
-        <li onclick="hideSidebar()">
-           <a href="#"><i class="fa-solid fa-times"></i></a>
+    <li onclick="hideSidebar()" class="navbar-profile-two d-flex  align-items-center padding-top-bottom" onclick="showSidebar()" style="height: 100px;">
+           <a href="#"  ><i class="fa-solid fa-times"></i></a>
+           <a href="profile.php" class="d-inline-block position-relative">
+            <img 
+            src="assets/images/logo2.png" 
+            alt="User profile" 
+            class="img-fluid rounded-circle shadow profile-img-animate"
+            style="width: 80px; height: 80px; object-fit: cover;"
+            />
+        </a>
         </li>
        <li>
           <a href="home.php"><i class="fas fa-home"></i> Home</a>
@@ -44,7 +52,7 @@
         <ul>
             <li class="logo">
             <img src="assets/images/logo.png" alt="Electricity">
-            <span>Service Hub</span>
+         
             </li>
             <li class="hideOnMobile"><a href="home.php">Home</a></li>
             <li class="hideOnMobile"><a href="service.php">Service</a></li>

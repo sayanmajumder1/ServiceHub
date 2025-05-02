@@ -1,4 +1,4 @@
-<<<<<<< HEAD:LSF/Homepage/db_connect.php
+
 <?php
 $servername = "localhost"; // or "127.0.0.1"
 $username = "root";        // default XAMPP/WAMP username
