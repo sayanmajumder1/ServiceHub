@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +6,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - Service Provider</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    .service-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .service-card.selected {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px #8b5cf6;
+      transform: scale(0.9);
+    }
+
+    .services-container {
+      scrollbar-width: thin;
+      scrollbar-color: #8b5cf6 #f3f4f6;
+    }
+
+    .services-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .services-container::-webkit-scrollbar-thumb {
+      background-color: #8b5cf6;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 
 <body class="h-screen overflow-y-auto">
@@ -25,9 +52,9 @@
       <div class="img1 w-[90%]">
         <img src="./images/4706264.jpg" alt="Provider Signup" />
       </div>
-      <!-- <p class="mt-3 text-center text-sm lg:text-lg w-full">
+      <p class="hidden lg:flex lg:justify-center mt-3 text-center text-sm lg:text-lg w-full">
         Start offering your services to thousands of customers
-      </p> -->
+      </p>
     </div>
 
     <!-- Step 2 Form -->
@@ -36,7 +63,7 @@
       <h1 class="text-3xl lg:text-5xl font-bold text-center mb-4">Create your provider profile</h1>
       <p class="mb-8 text-center text-base lg:text-lg">Fill in your business and personal information</p>
 
-      <form method="POST" action="http://localhost/ServiceHub/Signup_Login/otpVerification.php" enctype="multipart/form-data" class="w-full max-w-5xl mx-auto">
+      <form method="POST" action="processSignup_provider.php" enctype="multipart/form-data" class="w-full max-w-5xl mx-auto"> <!-- NEW: Updated action -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           <!-- Left Form -->
@@ -54,9 +81,13 @@
             <div class="mb-3">
               <input id="email" name="email" type="email" placeholder="Email Address" class="w-full p-3 border rounded" required>
             </div>
+            <div class="flex items-center border rounded mb-3 w-full max-w-md overflow-hidden">
+              <span class="px-3 py-2 bg-gray-100 text-gray-700 border-r">+91</span>
+              <input type="tel" name="phone" placeholder="Phone Number" class="px-3 py-2 w-full focus:outline-none" required />
+            </div>
             <div class="mb-3 relative">
               <input id="password" name="password" type="password" placeholder="Password" class="w-full p-3 border rounded pr-10" required>
-              <span onclick="togglePassword()" class="absolute right-3 top-3 cursor-pointer text-gray-500">👁️</span>
+              <span onclick="togglePassword()" class="absolute right-3 top-3 cursor-pointer text-gray-500">👀</span>
             </div>
           </div>
 
@@ -77,20 +108,71 @@
 
         <!-- Services Section -->
         <div class="mt-10">
-          <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Available Services</h2>
-          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div class="border rounded-xl shadow p-4 bg-white">
-              <img src="./service1.jpg" alt="Plumbing Service" class="w-full h-32 object-cover mb-2 rounded-lg">
-              <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
-              <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
-            </div>
-            <div class="border rounded-xl shadow p-4 bg-white">
-              <img src="./service2.jpg" alt="Electrician Service" class="w-full h-32 object-cover mb-2 rounded-lg">
-              <h3 class="font-bold text-gray-800 text-center">Electrician</h3>
-              <p class="text-sm text-gray-600 text-center">Wiring, installations, repairs.</p>
+          <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">Select Your Service</h2>
+          <p class="text-sm text-gray-500 text-center mb-4">(Choose one service category)</p>
+
+          <div class="services-container overflow-x-auto whitespace-nowrap pb-4">
+            <div class="inline-flex space-x-4">
+              <!-- Plumbing -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'Plumbing')">
+                <img src="./service1.jpg" alt="Plumbing Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
+                <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
+                <input type="radio" name="service" value="Plumbing" class="hidden">
+              </div>
+
+              <!-- Electrician -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'Electrician')">
+                <img src="./service2.jpg" alt="Electrician Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">Electrician</h3>
+                <p class="text-sm text-gray-600 text-center">Wiring, installations, repairs.</p>
+                <input type="radio" name="service" value="Electrician" class="hidden">
+              </div>
+
+              <!-- Cleaning -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'Cleaning')">
+                <img src="./service3.jpg" alt="Cleaning Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">Cleaning</h3>
+                <p class="text-sm text-gray-600 text-center">Home and office cleaning.</p>
+                <input type="radio" name="service" value="Cleaning" class="hidden">
+              </div>
+
+              <!-- Carpentry -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'Carpentry')">
+                <img src="./service4.jpg" alt="Carpentry Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">Carpentry</h3>
+                <p class="text-sm text-gray-600 text-center">Furniture and woodwork.</p>
+                <input type="radio" name="service" value="Carpentry" class="hidden">
+              </div>
+
+              <!-- Painting -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'Painting')">
+                <img src="./service5.jpg" alt="Painting Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">Painting</h3>
+                <p class="text-sm text-gray-600 text-center">Wall and furniture painting.</p>
+                <input type="radio" name="service" value="Painting" class="hidden">
+              </div>
+
+              <!-- AC Repair -->
+              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                onclick="selectService(this, 'AC Repair')">
+                <img src="./service6.jpg" alt="AC Repair Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <h3 class="font-bold text-gray-800 text-center">AC Repair</h3>
+                <p class="text-sm text-gray-600 text-center">AC installation and maintenance.</p>
+                <input type="radio" name="service" value="AC Repair" class="hidden">
+              </div>
             </div>
           </div>
+          <p id="selected-service-text" class="text-center mt-4 text-purple-600 font-medium hidden">
+            Selected service: <span id="selected-service-name"></span>
+          </p>
         </div>
+
 
         <!-- Submit and Back Buttons -->
         <div class="mt-8 flex justify-between items-center">
@@ -111,7 +193,28 @@
     }
 
     function goBackToStep1() {
-      window.location.href = "signup.php"; // Change as needed
+      window.location.href = "signup.php";
+    }
+
+    // Single service selection
+    function selectService(card, serviceName) {
+      // Remove selection from all cards
+      document.querySelectorAll('.service-card').forEach(c => {
+        c.classList.remove('selected');
+      });
+
+      // Add selection to clicked card
+      card.classList.add('selected');
+
+      // Set the radio button as checked
+      const radio = card.querySelector('input[type="radio"]');
+      radio.checked = true;
+
+      // Update selected service text
+      document.getElementById('selected-service-name').textContent = serviceName;
+      document.getElementById('selected-service-text').classList.remove('hidden');
+
+      console.log("Selected Service:", serviceName);
     }
   </script>
 </body>
