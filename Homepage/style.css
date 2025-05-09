@@ -25,6 +25,7 @@ nav ul {
   align-items: center;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 nav li {
@@ -48,6 +49,37 @@ nav li:first-child {
   margin-right: auto;
 }
 
+.nav-link a {
+  position: relative;
+  text-decoration: none;
+  padding: 10px 15px;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nav-link a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 0;
+  height: 3px;
+  background-color: #ad67c8;
+  transition: width 0.3s ease;
+}
+
+.nav-link a:hover::after,
+.nav-link a.active::after {
+  width: 100%;
+}
+
+.nav-link a.active {
+  color: #ad67c8;
+}
+
 /*  Profile Image Section  Code Custom  CSS*/
 .navbar-profile img:hover {
   transform: scale(1.1) rotate(3deg);
@@ -62,11 +94,9 @@ nav li:first-child {
   transform: scale(1.15) rotate(5deg);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-.padding-top-bottom{
+.padding-top-bottom {
   padding-top: 1.05px;
-  
 }
-
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -80,16 +110,6 @@ nav li:first-child {
     display: none;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 /*Logo Section */
 .logo {

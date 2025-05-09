@@ -1,4 +1,41 @@
+<?php
+// Set session cookie parameters BEFORE starting the session
+$lifetime = 60 * 60 * 24 * 7; // 7 days
+ini_set('session.gc_maxlifetime', $lifetime);
+ini_set('session.cookie_lifetime', $lifetime);
 
+session_set_cookie_params([
+    'lifetime' => $lifetime,
+    'path' => '/',
+    'domain' => '', 
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+
+session_start(); // Start the session
+
+include_once "db_connect.php";
+
+// Use session safely now
+$user_id = $_SESSION['user_id'] ?? null;
+if (!$user_id) {
+    header("Location:/ServiceHub/Signup_Login/login.php ");
+    exit();
+}
+
+// Get user details from DB
+$query = "SELECT * FROM users WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+// Handle profile image
+$image = $user['image'] ?? '';
+$displayImage = !empty($image) ? $image : 'default.jpg';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +62,7 @@
            <a href="#"  ><i class="fa-solid fa-times"></i></a>
            <a href="profile.php" class="d-inline-block position-relative">
             <img 
-            src="assets/images/logo2.png" 
+            src="assets/images/<?php echo $displayImage; ?>" 
             alt="User profile" 
             class="img-fluid rounded-circle shadow profile-img-animate"
             style="width: 80px; height: 80px; object-fit: cover;"
@@ -54,12 +91,21 @@
             <img src="assets/images/logo.png" alt="Electricity">
          
             </li>
-            <li class="hideOnMobile"><a href="home.php">Home</a></li>
-            <li class="hideOnMobile"><a href="service.php">Service</a></li>
-            <li class="hideOnMobile"><a href="cart.php">Cart</a></li>
-            <li class="hideOnMobile"><a href="#">About</a></li>
-            <li class="hideOnMobile"><a href="#">Contact</a></li>
-            
+            <li class="hideOnMobile nav-link"><a href="home.php">Home</a></li>
+            <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
+            <li class="hideOnMobile nav-link"><a href="cart.php">Cart</a></li>
+            <li class="hideOnMobile nav-link"><a href="#">About</a></li>
+            <li class="hideOnMobile nav-link"><a href="#">Contact</a></li>
+            <li class="navbar-profile" onclick="hideSidebar()">
+                <a href="profile.php">
+                    <img 
+                    src="assets/images/<?php echo $displayImage; ?>" 
+                    alt="User profile" 
+                    class="img-fluid rounded-circle shadow" 
+                    style="width: 50px; height: 50px; object-fit: cover;"
+                    />
+                </a>
+                </li>
             <li class="menu-icon" onclick="showSidebar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
         </ul>
     </nav>

@@ -1,3 +1,31 @@
+<?php
+
+session_start(); // Start the session
+
+
+
+include_once "db_connect.php";
+
+// Use session safely now
+$user_id = $_SESSION['user_id'] ?? null;
+if (!$user_id) {
+    header("Location:/ServiceHub/Signup_Login/login.php ");
+    exit();
+}
+
+// Get user details from DB
+$query = "SELECT * FROM users WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+// Handle profile image
+$image = $user['image'] ?? '';
+$displayImage = !empty($image) ? $image : 'default.jpg';
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +60,7 @@
            <a href="#"  ><i class="fa-solid fa-times"></i></a>
            <a href="profile.php" class="d-inline-block position-relative">
             <img 
-            src="assets/images/logo2.png" 
+            src="assets/images/<?php echo $displayImage; ?>" 
             alt="User profile" 
             class="img-fluid rounded-circle shadow profile-img-animate"
             style="width: 80px; height: 80px; object-fit: cover;"
@@ -66,15 +94,17 @@
             <img  loading = "lazy "src="assets/images/logo.png" alt="Service Hub Icon ">
            <!-- <span>Service Hub</span>-->
             </li>
-            <li class="hideOnMobile"><a href="service.php">Service</a></li>
-            <li class="hideOnMobile"><a href="cart.php">Cart</a></li>
-            <li class="hideOnMobile"><a href="#">About</a></li>
-            <li class="hideOnMobile"><a href="#">Contact</a></li>
-          
+            
+            <li class="hideOnMobile nav-link"><a href="home.php"  class="active">Home</a></li>
+            <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
+            <li class="hideOnMobile nav-link"><a href="cart.php">Cart</a></li>
+            <li class="hideOnMobile nav-link"><a href="#">About</a></li>
+            <li class="hideOnMobile nav-link"><a href="#">Contact</a></li>
+            
                 <li class="navbar-profile" onclick="hideSidebar()">
                 <a href="profile.php">
                     <img 
-                    src="assets/images/logo2.png" 
+                    src="assets/images/<?php echo $displayImage; ?>" 
                     alt="User profile" 
                     class="img-fluid rounded-circle shadow" 
                     style="width: 50px; height: 50px; object-fit: cover;"
@@ -127,11 +157,11 @@
                             $image_data ='../Admin/img/' . $row['image']; 
                             echo '
                             <div class="col-4 col-md-4 col-lg-4 mb-3">
-                                <a href="providers.php?id=' . $row['s_id'] . '" class="text-decoration-none text-dark">
+                                <a href="providers.php?id=' . $row['service_id'] . '" class="text-decoration-none text-dark">
                                     <div class="service-box">
-                                        <img src="' .trim( $image_data) . '" alt="' . htmlspecialchars($row['s_name']) . '" class="img-fluid">
+                                        <img src="' .trim( $image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
                                         
-                                        <p>' . htmlspecialchars($row['s_name']) . '</p>
+                                        <p>' . htmlspecialchars($row['service_name']) . '</p>
                                     </div>
                                 </a>
                             </div>';

@@ -1,3 +1,42 @@
+<?php
+session_start(); // Always start session first
+//echo "<pre>";
+//print_r($_SESSION);
+//echo "</pre>";
+include_once "db_connect.php";
+
+// Check if session is set
+if (!isset($_SESSION['user_id'])) {
+ // echo "DEBUG: Query failed or user not found. User ID from session: " . $user_id;
+ header("Location:/ServiceHub/Signup_Login/login.php"); 
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch user from DB
+$query = "SELECT * FROM users WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+// Check if user exists
+if ($result && mysqli_num_rows($result) > 0) {
+    $user = mysqli_fetch_assoc($result);
+    $image = $user['image'];
+    $displayImage = !empty($image) ? $image : 'default.jpg';
+} else {
+    // No user found → session invalid
+    session_destroy();
+//echo "DEBUG: Query failed or user not found. User ID from session: " . $user_id;
+header("Location:/ServiceHub/Signup_Login/login.php");
+    exit();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,7 +240,7 @@ textarea.form-control:focus {
 <div class="container py-5">
   <div class = "button-padding">
  <!-- Back Button -->
- <button class="btn back-btn" onclick="history.back()">
+ <button class="btn back-btn" onclick="window.location.href='/ServiceHub/Homepage/home.php'">
           <i class="bi bi-arrow-left-circle"></i> Back
         </button>
 </div>    
@@ -210,67 +249,54 @@ textarea.form-control:focus {
 
     <!-- Profile Image -->
     <div class="position-relative text-center" style="margin-top: -40px;">
-      <img src="assets/images/logo2.png" class="img-fluid rounded-circle shadow profile-pic animated-profile" alt="Profile Picture">
-      <button class="btn btn-light edit-btn-profile" title="Edit Photo">
+      <img src="assets/images/<?php echo $displayImage; ?>" class="img-fluid rounded-circle shadow profile-pic animated-profile" alt="Profile Picture">
+      <form action="upload_profile.php" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" id="uploadBtn" style="display:none;" onchange="this.form.submit();">
+      <button type="button" class="btn btn-light edit-btn-profile" title="Edit Photo"onclick="document.getElementById('uploadBtn').click();">
         <i class="bi bi-pencil"></i>
       </button>
+      </form>
     </div>
 
     <!-- Profile Form -->
     <div class="card-body mt-3 pt-2">
-      <h5 class="text-center mb-4">Profile</h5>
+      <h5 class="text-center mb-4">Profile
+      <span style="display: block; height: 3px; width: 60px; background-color:  #ad67c8; margin: 8px auto 0; border-radius: 2px;"></span>
+      </h5>
 
-      <form>
+      <form action="upload_profile.php" method ="post">
         <div class="mb-3">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-control" placeholder="First Name" value="Enter First Name ">
+          <label class="form-label"> Name</label>
+          <input type="text" class="form-control"  name="first_name" value="<?php echo htmlspecialchars($user['name']); ?>" required >
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-control" placeholder="Last Name" value="Enter Your Last Name ">
-        </div>
+       
 
         <div class="mb-3">
           <label class="form-label">E-mail</label>
-          <input type="email" class="form-control" placeholder="Email" value="Enter Your Email">
+          <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Date of Birth</label>
-          <input type="text" class="form-control" placeholder="Enter Your D.O.B">
+          <input type="text" class="form-control" >
         </div>
         <div class="mb-3">
           <label class="form-label">Enter Your Phone No </label>
-          <input type="phone" class="form-control" placeholder="Enter Your Phone No">
+          <input type="phone" class="form-control" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Gender</label>
-          <div class="btn-group w-100 gender-btn-group" role="group">
-            <input type="radio" class="btn-check" name="gender" id="male" checked>
-
-            <label class="btn  custom-btn" for="male">Male</label>
-
-            <input type="radio" class="btn-check" name="gender" id="female">
-            <label class="btn   custom-btn" for="female">Female</label>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <label class="form-label">Location</label>
-          <textarea class="form-control" rows="3" placeholder="Location...">Enter Your Location </textarea>
-        </div>
-
-        <button type="submit" class="btn btn-secondary w-100 save-btn" disabled>Save Changes</button>
-        <div class = "password-text-button ">
-        <button type="submit" class="btn btn-link text-decoration-none text-secondary  justify-center p-0">Change The Password</button>
-
-        </div>
+        <button type="submit" name="update_profile" class="btn btn-secondary w-100 save-btn" >Save Changes</button>
       </form>
+               
+          <form action=""   class ="d-flex justify-content-center align-items-center"> 
+          <button type="submit" class="btn btn-link text-decoration-none text-secondary  justify-center p-0">Change The Password</button>
+          </form>
+          <form action="logout.php" method="post" class="d-flex justify-content-center align-items-center">
+      <button type="submit" class="btn btn-link text-decoration-none text-secondary text-danger">Log Out</button>
+    </form>
+
     </div>
   </div>
 </div>
-
-
 </body>
 </html>
