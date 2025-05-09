@@ -1,0 +1,65 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  background-color: #f5f2fa;
+}
+.sidebar {
+  width: 250px;
+  background-color: #e8d4fc;
+  padding: 20px;
+}
+.sidebar .nav-link {
+  font-weight: bold;
+  color: #9810FA;
+  margin-bottom: 10px;
+}
+.sidebar .submenu {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+.sidebar .submenu a {
+  font-weight: normal;
+  font-size: 14px;
+  color: #5d3fd3;
+}
+.content {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #f5f3ff;
+}
+.logout-btn {
+  margin-top: 30px;
+  color: #9810FA;
+  font-weight: bold;
+}
+.logo-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #b19cd9;
+  border-radius: 50%;
+}
+.profile {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.profile-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #d0bdf4;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+}
+
+/* Titles */
+.profile-role {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.profile-name {
+  font-size: 14px;
+  color: #666;
+}
