@@ -194,6 +194,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             </div>
         </div>
         <hr>
+        
         <div class="text-center copyright">
             <p>&copy; 2025 YourCompany. All Rights Reserved.</p>
         </div>
