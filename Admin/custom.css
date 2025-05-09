@@ -1,6 +1,6 @@
 body {
     overflow-x: hidden;
-    background-color: rgb(202, 220, 236);
+    background-color: rgb(210, 217, 224);
 }
 .sidebar {
     height: 100vh;
@@ -21,26 +21,40 @@ body {
 .main-content.expanded {
     margin-left: 0;
 }
+.bg{
+    background-color: #9b43da;
+}
+span{
+    color:rgb(245, 237, 246);
+}
+
+.h222{
+    color:#652891;
+}
+
 .hv1{
-    color:white;
+    color:rgb(242, 236, 245);
     cursor: pointer; 
     text-decoration: none;
 }
 .hv1:hover{
-    color:rgb(42, 88, 216);
+    color:rgb(250, 223, 251);
     
 }
-.hv1:active{
-    color:rgb(255, 255, 255);
-    
+
+.hv11{
+    color: white;
+}
+.hv11:hover{
+    color:rgb(241, 241, 241);
 }
 .con1{
     height:60px;
     width:70vw;
 }
-#ui2,#ui3,#ui4,#ui5,#ui6,#ui7{
+/* #ui2,#ui3,#ui4,#ui5,#ui6,#ui7{
     display: none;
-}
+} */
 .r1{
     padding-top: 25px;
 }
@@ -49,11 +63,12 @@ body {
 }
 .c1{
     border-radius: 25px;
-    background-color: rgb(229, 255, 246);
+    background-color: rgb(228, 242, 244);
     width:35vw;
 }
 .c1:hover{
-    background-color: transparent;
+    background-color: white;
+    box-shadow: 5px 4px 15px rgba(210, 21, 239, 0.83);
   
 }
 table th {
@@ -71,7 +86,13 @@ table, th,td {
     border-collapse: collapse;
   }
   
-  
+.transition {
+    transition: transform 0.3s;
+}
+.collapsing + .transition, 
+.collapse.show + .transition {
+    transform: rotate(180deg);
+}
 @media screen and (max-width: 992px) {
     .sidebar:not(.collapsed) {
         width: 100% !important;

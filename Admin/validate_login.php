@@ -26,7 +26,7 @@ include_once "connection.php";
               // Verify password
               if ($password == $row['password']) 
               {
-                $_SESSION['username']=$password;
+                $_SESSION['username']=$username;
                 // Login successful
                 echo "Login successful!";
                 

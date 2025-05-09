@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      background-color: #022020;
+      background-color: #9810FA;
       color: white;
       min-height: 100vh;
       display: flex;
@@ -18,15 +18,15 @@
       padding: 1rem;
     }
     .login-container {
-      background-color:rgb(3, 41, 41);
+      background-color:rgb(147, 43, 222);
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 20px rgba(17, 16, 16, 0.89);
       overflow: hidden;
       width: 100%;
       max-width: 900px;
     }
     .login-logo {
-      background-color:rgb(3, 41, 41);
+      background-color:rgb(148, 39, 225);
       text-align: center;
       padding: 2rem;
       border-right: 1px solid #ffffff22;
@@ -115,7 +115,6 @@
 
          <button type="submit" class="btn btn-orange mt-2">Login</button>
         </form>
-        <a href="#" class="forgot-link">Forgotten Your Password?</a>
       </div>
     </div>
   </div>
