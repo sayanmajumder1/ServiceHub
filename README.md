@@ -1,6 +1,6 @@
 
 ---
-# **🚀 Local Service Finder**  
+# **🚀 Local Service Hub**  
 *Find and book local services near you with ease!*  
 
 ![PHP](https://img.shields.io/badge/PHP-Server--Side-blue) ![HTML](https://img.shields.io/badge/HTML-Frontend-orange) ![CSS](https://img.shields.io/badge/CSS-Styling-green) ![MySQL](https://img.shields.io/badge/Database-MySQL-blue)  
