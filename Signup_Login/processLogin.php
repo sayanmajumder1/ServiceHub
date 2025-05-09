@@ -38,7 +38,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 // Check providers table if not found in users
-$query = "SELECT * FROM service_provider WHERE email = ?";
+$query = "SELECT * FROM service_providers WHERE email = ?";
 $stmt = mysqli_prepare($conn, $query);
 if (!$stmt) {
     die("Prepare failed: " . mysqli_error($conn));
