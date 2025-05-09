@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['email'] = $data['email'];
                     $_SESSION['account_type'] = 'provider';
                     unset($_SESSION['signup_data'], $_SESSION['otp']);
-                    header("Location: /ServiceHub/Homepage/provider-dashboard.php");
+                    header("Location: /ServiceHub/s_pro/dash.php");
                     exit();
                 }
             } else {
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($_SESSION['account_type'] == 'user') {
                     header("Location: /ServiceHub/Homepage/home.php");
                 } else {
-                    header("Location: /ServiceHub/Homepage/provider-dashboard.php");
+                    header("Location: /ServiceHub/s_pro/dash.php");
                 }
                 exit();
             }
