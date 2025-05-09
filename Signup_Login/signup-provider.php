@@ -116,7 +116,7 @@
               <!-- Plumbing -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'Plumbing')">
-                <img src="./service1.jpg" alt="Plumbing Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service1.png" alt="Plumbing Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
                 <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
                 <input type="radio" name="service" value="Plumbing" class="hidden">
@@ -125,7 +125,7 @@
               <!-- Electrician -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'Electrician')">
-                <img src="./service2.jpg" alt="Electrician Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service2.png" alt="Electrician Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Electrician</h3>
                 <p class="text-sm text-gray-600 text-center">Wiring, installations, repairs.</p>
                 <input type="radio" name="service" value="Electrician" class="hidden">
@@ -134,7 +134,7 @@
               <!-- Cleaning -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'Cleaning')">
-                <img src="./service3.jpg" alt="Cleaning Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service3.png" alt="Cleaning Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Cleaning</h3>
                 <p class="text-sm text-gray-600 text-center">Home and office cleaning.</p>
                 <input type="radio" name="service" value="Cleaning" class="hidden">
@@ -143,7 +143,7 @@
               <!-- Carpentry -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'Carpentry')">
-                <img src="./service4.jpg" alt="Carpentry Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service4.png" alt="Carpentry Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Carpentry</h3>
                 <p class="text-sm text-gray-600 text-center">Furniture and woodwork.</p>
                 <input type="radio" name="service" value="Carpentry" class="hidden">
@@ -152,7 +152,7 @@
               <!-- Painting -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'Painting')">
-                <img src="./service5.jpg" alt="Painting Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service5.png" alt="Painting Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Painting</h3>
                 <p class="text-sm text-gray-600 text-center">Wall and furniture painting.</p>
                 <input type="radio" name="service" value="Painting" class="hidden">
@@ -161,7 +161,7 @@
               <!-- AC Repair -->
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
                 onclick="selectService(this, 'AC Repair')">
-                <img src="./service6.jpg" alt="AC Repair Service" class="w-full h-32 object-cover mb-2 rounded-lg">
+                <img src="./images/service6.png" alt="AC Repair Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">AC Repair</h3>
                 <p class="text-sm text-gray-600 text-center">AC installation and maintenance.</p>
                 <input type="radio" name="service" value="AC Repair" class="hidden">

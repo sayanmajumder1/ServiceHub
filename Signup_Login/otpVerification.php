@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include 'connection.php';
 
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 } else {
                     // Insert provider
-                    $query = "INSERT INTO service_providers (business_name, owner, email, phone, category) VALUES (?, ?, ?, ?, ?)";
+                    $query = "INSERT INTO service_provider(business_name, owner, email, phone, category) VALUES (?, ?, ?, ?, ?)";
                     $stmt = mysqli_prepare($conn, $query);
                     mysqli_stmt_bind_param($stmt, "sssss", $data['business_name'], $data['owner'], $data['email'], $data['phone'], $data['category']);
                     mysqli_stmt_execute($stmt);
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: /ServiceHub/s_pro/dash.php");
                     exit();
                 }
+
             } else {
                 // For login, just redirect
                 unset($_SESSION['otp']);
@@ -58,6 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 exit();
             }
+
+           
+      
         } else {
             $error = "Wrong OTP entered. Please try again.";
         }

@@ -17,24 +17,32 @@ $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "s", $email);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-
 if (mysqli_num_rows($result) > 0) {
     $user = mysqli_fetch_assoc($result);
     if ($password === $user['password']) {
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['account_type'] = 'user';
-        
+        $_SESSION['login_verification'] = true; // 🔥 Used to detect login OTP
+   
+
+
+
         // Generate OTP
         $_SESSION['otp'] = rand(100000, 999999);
+       
         header("Location: otpVerification.php");
         exit();
     }
 }
 
+
 // Check providers table if not found in users
-$query = "SELECT * FROM service_providers WHERE email = ?";
+$query = "SELECT * FROM service_provider WHERE email = ?";
 $stmt = mysqli_prepare($conn, $query);
+if (!$stmt) {
+    die("Prepare failed: " . mysqli_error($conn));
+}
 mysqli_stmt_bind_param($stmt, "s", $email);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -45,7 +53,7 @@ if (mysqli_num_rows($result) > 0) {
         $_SESSION['provider_id'] = $provider['provider_id'];
         $_SESSION['email'] = $provider['email'];
         $_SESSION['account_type'] = 'provider';
-        
+        $_SESSION['login_verification'] = true;
         // Generate OTP
         $_SESSION['otp'] = rand(100000, 999999);
         header("Location: otpVerification.php");
