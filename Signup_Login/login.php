@@ -1,4 +1,48 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require_once "connection.php";
+
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check for user
+    $user_stmt = $conn->prepare("SELECT user_id, email FROM users WHERE email = ? AND password = ?");
+    $user_stmt->bind_param("ss", $email, $password);
+    $user_stmt->execute();
+    $result_user = $user_stmt->get_result();
+    $user = $result_user->fetch_assoc();
+
+    // Check for provider
+    $provider_stmt = $conn->prepare("SELECT provider_id, email FROM service_providers WHERE email = ? AND password = ?");
+    $provider_stmt->bind_param("ss", $email, $password);
+    $provider_stmt->execute();
+    $result_provider = $provider_stmt->get_result();
+    $provider = $result_provider->fetch_assoc();
+
+    if ($user) {
+        $_SESSION['auth_type'] = 'login';
+        $_SESSION['user_type'] = 'user';
+        $_SESSION['otp'] = rand(100000, 999999);
+        $_SESSION['user_data'] = $user;
+        header("Location: otpVerification.php");
+        exit();
+    } elseif ($provider) {
+        $_SESSION['auth_type'] = 'login';
+        $_SESSION['user_type'] = 'provider';
+        $_SESSION['otp'] = rand(100000, 999999);
+        $_SESSION['user_data'] = $provider;
+        header("Location: otpVerification.php");
+        exit();
+    } else {
+        $error = "Invalid credentials.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +58,9 @@
         <div>
             <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
         </div>
-        <a href="./signup.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Create new account</button></a>
+        <a href="./signup.php">
+            <button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Create new account</button>
+        </a>
     </nav>
 
     <main class="lg:flex max-h-screen w-full">
@@ -31,9 +77,14 @@
             <h1 class="text-3xl lg:text-5xl font-bold mb-4">Welcome back 👋🏽</h1>
             <h2 class="text-lg font-medium mb-8 lg:mb-15">Login to your account</h2>
 
-            <form method="POST" action="processLogin.php"> <!-- Changed this line -->
+            <!-- Display error message -->
+            <?php if ($error): ?>
+                <div class="text-red-500 font-semibold mb-4"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
+
+            <form method="POST" action="">
                 <input type="email" name="email" id="email" placeholder="Email" required class="border px-4 py-2 rounded mb-3 w-full max-w-md" />
-                <input type="password" name="password" id="password" placeholder="Password" class="border px-4 py-2 rounded mb-3 w-full max-w-md" />
+                <input type="password" name="password" id="password" placeholder="Password" required class="border px-4 py-2 rounded mb-3 w-full max-w-md" />
 
                 <p class="text-xs text-gray-500 mb-6 lg:mt-15">
                     This information will be securely saved as per the

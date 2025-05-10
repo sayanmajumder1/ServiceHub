@@ -1,4 +1,56 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require_once "connection.php";
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Process form data when submitted
+    $targetDir = "uploads/";
+    
+    // Create upload directory if it doesn't exist
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    // Handle file upload
+    $identityImage = '';
+    if (isset($_FILES['documentUpload'])) {
+        $identityImage = $targetDir . uniqid() . "_" . basename($_FILES["documentUpload"]["name"]);
+        if (!move_uploaded_file($_FILES["documentUpload"]["tmp_name"], $identityImage)) {
+            $error = "Failed to upload document";
+        }
+    }
+
+    if (empty($error)) {
+        $data = [
+            'account_type' => 'provider',
+            'businessname' => $_POST['businessName'],
+            'provider_name' => $_POST['ownerName'],
+            'address' => $_POST['businessAddress'],
+            'email' => $_POST['email'],
+            'phone' => $_POST['phone'],
+            'password' => $_POST['password'],
+            'identityno' => $_POST['idNumber'],
+            'lisenceno' => $_POST['licenseNumber'] ?? '',
+            'identityimage' => $identityImage,
+            'service_id' => $_POST['service'],
+            'image' => "default_provider.png",
+            'description' => "New provider",
+            'approved_action' => "pending"
+        ];
+
+        $_SESSION['otp'] = rand(100000, 999999);
+        $_SESSION['auth_type'] = 'signup';
+        $_SESSION['user_type'] = 'provider';
+        $_SESSION['signup_data'] = $data;
+        
+        header("Location: otpVerification.php");
+        exit();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,6 +88,12 @@
 </head>
 
 <body class="h-screen overflow-y-auto">
+  <!-- Error Message Display -->
+  <?php if ($error): ?>
+    <div class="fixed top-20 right-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50">
+      <?php echo htmlspecialchars($error); ?>
+    </div>
+  <?php endif; ?>
 
   <!-- Navbar -->
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0 z-50">
@@ -63,30 +121,35 @@
       <h1 class="text-3xl lg:text-5xl font-bold text-center mb-4">Create your provider profile</h1>
       <p class="mb-8 text-center text-base lg:text-lg">Fill in your business and personal information</p>
 
-      <form method="POST" action="processSignup_provider.php" enctype="multipart/form-data" class="w-full max-w-5xl mx-auto"> <!-- NEW: Updated action -->
+      <form method="POST" action="" enctype="multipart/form-data" class="w-full max-w-5xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
           <!-- Left Form -->
           <div>
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Personal Information</h2>
             <div class="mb-3">
-              <input id="businessName" name="businessName" type="text" placeholder="Business Name" class="w-full p-3 border rounded capitalize" required>
+              <input id="businessName" name="businessName" type="text" placeholder="Business Name" 
+                     class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="ownerName" name="ownerName" type="text" placeholder="Owner Name" class="w-full p-3 border rounded capitalize" required>
+              <input id="ownerName" name="ownerName" type="text" placeholder="Owner Name" 
+                     class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="businessAddress" name="businessAddress" type="text" placeholder="Business Address" class="w-full p-3 border rounded capitalize" required>
+              <input id="businessAddress" name="businessAddress" type="text" placeholder="Business Address" 
+                     class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="email" name="email" type="email" placeholder="Email Address" class="w-full p-3 border rounded" required>
+              <input id="email" name="email" type="email" placeholder="Email Address" 
+                     class="w-full p-3 border rounded" required>
             </div>
             <div class="flex items-center border rounded mb-3 w-full max-w-md overflow-hidden">
               <span class="px-3 py-2 bg-gray-100 text-gray-700 border-r">+91</span>
-              <input type="tel" name="phone" placeholder="Phone Number" class="px-3 py-2 w-full focus:outline-none" required />
+              <input type="tel" name="phone" placeholder="Phone Number" 
+                     class="px-3 py-2 w-full focus:outline-none" required />
             </div>
             <div class="mb-3 relative">
-              <input id="password" name="password" type="password" placeholder="Password" class="w-full p-3 border rounded pr-10" required>
+              <input id="password" name="password" type="password" placeholder="Password" 
+                     class="w-full p-3 border rounded pr-10" required>
               <span onclick="togglePassword()" class="absolute right-3 top-3 cursor-pointer text-gray-500">👀</span>
             </div>
           </div>
@@ -95,13 +158,16 @@
           <div>
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Legal Documents</h2>
             <div class="mb-3">
-              <input id="idNumber" name="idNumber" type="text" placeholder="ID Number" class="w-full p-3 border rounded" required>
+              <input id="idNumber" name="idNumber" type="text" placeholder="ID Number" 
+                     class="w-full p-3 border rounded" required>
             </div>
             <div class="mb-3">
-              <input id="licenseNumber" name="licenseNumber" type="text" placeholder="License Number" class="w-full p-3 border rounded">
+              <input id="licenseNumber" name="licenseNumber" type="text" placeholder="License Number" 
+                     class="w-full p-3 border rounded">
             </div>
             <div class="mb-3">
-              <input id="documentUpload" name="documentUpload" type="file" class="w-full p-3 border rounded">
+              <input id="documentUpload" name="documentUpload" type="file" 
+                     class="w-full p-3 border rounded" accept=".pdf,.jpg,.jpeg,.png">
             </div>
           </div>
         </div>
@@ -119,7 +185,7 @@
                 <img src="./images/service1.png" alt="Plumbing Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
                 <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
                 <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
-                <input type="radio" name="service" value="Plumbing" class="hidden">
+                <input type="radio" name="service" value="Plumbing" class="hidden" required>
               </div>
 
               <!-- Electrician -->
@@ -173,11 +239,9 @@
           </p>
         </div>
 
-
         <!-- Submit and Back Buttons -->
         <div class="mt-8 flex justify-between items-center">
           <button type="button" onclick="goBackToStep1()" class="bg-gray-300 px-5 py-2 rounded">Back</button>
-
           <button type="submit" class="bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600 transition">
             Signup
           </button>
@@ -218,5 +282,4 @@
     }
   </script>
 </body>
-
 </html>
