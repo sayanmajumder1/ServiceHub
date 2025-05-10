@@ -23,7 +23,7 @@
 
 <div class="main-content">
 
-    <h1 class="page-title">Manage Bookings</h1>
+    <h1 class="page-title">Bookings Request</h1>
 
     <div class="table-container">
         <table class="custom-table">
@@ -40,6 +40,7 @@
                                      
                  include_once "connection.php";
                 $res=mysqli_query($con,"select booking.*,users.name,users.address from booking inner join users on booking.user_id=users.user_id 
+                 
                 where provider_id='".$_SESSION['id']."' and booking_status='pending'");
                  $count=1;
                  while($row=mysqli_fetch_array($res))
