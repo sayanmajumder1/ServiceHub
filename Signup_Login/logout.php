@@ -7,4 +7,3 @@ session_destroy();
 // Redirect to login page
 header("Location: login.php");
 exit(); // Don't forget to call exit() after header() to stop further execution
-?>

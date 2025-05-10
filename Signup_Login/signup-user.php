@@ -1,4 +1,37 @@
-<?php session_start(); /* NEW: Required for sessions */ ?>
+<?php
+session_start();
+require_once "connection.php";
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Validate passwords match
+  if ($_POST['password'] !== $_POST['confirmPassword']) {
+    $error = "Passwords do not match!";
+  } else {
+    // Prepare user data
+    $data = [
+      'account_type' => 'user',
+      'name' => $_POST['fullName'],
+      'email' => $_POST['email'],
+      'phone' => $_POST['phone'],
+      'password' => $_POST['password'],
+      'address' => '', // You can add address field to your form if needed
+      'image' => "default_user.png"
+    ];
+
+    // Generate OTP and store data
+    $_SESSION['otp'] = rand(100000, 999999);
+    $_SESSION['auth_type'] = 'signup';
+    $_SESSION['user_type'] = 'user';
+    $_SESSION['signup_data'] = $data;
+
+    header("Location: otpVerification.php");
+    exit();
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +40,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - User</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    /* Custom styles for error message */
+    .error-message {
+      animation: fadeInOut 5s ease-in-out forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      10% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      90% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+  </style>
 </head>
 
 <body class="h-screen overflow-y-auto">
+  <!-- Error Message Display -->
+  <?php if ($error): ?>
+    <div class="fixed top-20 right-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 error-message">
+      <?php echo htmlspecialchars($error); ?>
+    </div>
+  <?php endif; ?>
 
-  <!-- Navbar  -->
+  <!-- Navbar -->
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
     <div>
       <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
@@ -38,22 +105,41 @@
       <h1 class="text-3xl lg:text-5xl font-bold mb-4">Create your profile</h1>
       <p class="mb-6 text-base lg:text-lg">Fill in your personal details</p>
 
-      <form method="POST" action="processSignup_user.php"> 
-        <input type="text" name="fullName" placeholder="Full Name" class="border px-4 py-2 rounded mb-3 w-full max-w-md" style="text-transform: capitalize;" required />
-        <input type="email" name="email" placeholder="Email" class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
+      <form method="POST" action="">
+        <input type="text" name="fullName" placeholder="Full Name"
+          class="border px-4 py-2 rounded mb-3 w-full max-w-md" style="text-transform: capitalize;" required />
+        <input type="email" name="email" placeholder="Email"
+          class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
         <div class="flex items-center border rounded mb-3 w-full max-w-md overflow-hidden">
           <span class="px-3 py-2 bg-gray-100 text-gray-700 border-r">+91</span>
-          <input type="tel" name="phone" placeholder="Phone Number" class="px-3 py-2 w-full focus:outline-none" required />
+          <input type="tel" name="phone" placeholder="Phone Number"
+            class="px-3 py-2 w-full focus:outline-none" required />
         </div>
-        <input type="password" name="password" placeholder="Password" class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" class="border px-4 py-2 rounded mb-5 w-full max-w-md" required />
+        <input type="password" name="password" placeholder="Password"
+          class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password"
+          class="border px-4 py-2 rounded mb-5 w-full max-w-md" required />
         <div class="flex gap-5 justify-center mb-4">
-          <button type="button" onclick="window.location.href='signup.php';" class="bg-gray-300 px-5 py-2 rounded">Back</button>
-          <button type="submit" class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600">Signup</button>
+          <button type="button" onclick="window.location.href='signup.php';"
+            class="bg-gray-300 px-5 py-2 rounded">Back</button>
+          <button type="submit"
+            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600">Signup</button>
         </div>
       </form>
     </div>
   </main>
+
+  <script>
+    // Auto-hide error message after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+      const errorMessage = document.querySelector('.error-message');
+      if (errorMessage) {
+        setTimeout(() => {
+          errorMessage.remove();
+        }, 5000);
+      }
+    });
+  </script>
 </body>
 
 </html>
