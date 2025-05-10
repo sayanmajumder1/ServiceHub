@@ -13,6 +13,6 @@
 
     $res=mysqli_query($con,"update booking set booking_status='$value'where booking_id='".$_GET['id']."'");
 
-    header("location:total_bookings.php");
+    header("location:bookings.php");
 
 ?>

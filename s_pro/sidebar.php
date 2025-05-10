@@ -7,6 +7,8 @@
     <nav>
         <a href="dash.php" class="main-link">Dashboard</a>
 		<a href="bookings.php" class="main-link">Bookings</a>
+        <a href="ongoingbooking.php" class="main-link">Ongoing Booking</a>
+
         <a href="pay.php" class="main-link">Payment</a>
         <a href="rvu.php" class="main-link">Review</a>
         <a href="lout.php" class="main-link logout">🔓 Log Out</a>
