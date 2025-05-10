@@ -23,7 +23,7 @@
 
 <div class="main-content">
 
-    <h1 class="page-title">Manage Bookings</h1>
+    <h1 class="page-title">Bookings Request</h1>
 
     <div class="table-container">
         <table class="custom-table">
