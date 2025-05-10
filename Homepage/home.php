@@ -7,12 +7,13 @@ session_start(); // Start the session
 include_once "db_connect.php";
 
 // Use session safely now
-$user_id = $_SESSION['user_id'] ?? null;
-if (!$user_id) {
-    header("Location:/ServiceHub/Signup_Login/login.php ");
-    exit();
-}
-
+//$user_id = $_SESSION['user_id'] ?? null;
+//if (!$user_id) {
+  //  header("Location:/ServiceHub/Signup_Login/login.php ");
+    //exit();
+//}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 // Get user details from DB
 $query = "SELECT * FROM users WHERE user_id = ?";
 $stmt = mysqli_prepare($conn, $query);
@@ -24,6 +25,7 @@ $user = mysqli_fetch_assoc($result);
 // Handle profile image
 $image = $user['image'] ?? '';
 $displayImage = !empty($image) ? $image : 'default.jpg';
+}
 ?>
 
 
@@ -58,6 +60,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
     <ul class="sidebar" id="sidebar">
         <li onclick="hideSidebar()" class="navbar-profile-two d-flex  align-items-center padding-top-bottom" onclick="showSidebar()" style="height: 100px;">
            <a href="#"  ><i class="fa-solid fa-times"></i></a>
+           <?php if (isset($_SESSION['user_id'])): ?>
            <a href="profile.php" class="d-inline-block position-relative">
             <img 
             src="assets/images/<?php echo $displayImage; ?>" 
@@ -65,7 +68,13 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             class="img-fluid rounded-circle shadow profile-img-animate"
             style="width: 80px; height: 80px; object-fit: cover;"
             />
+
         </a>
+        <?php else: ?>
+            <a href="/ServiceHub/Signup_Login/login.php" class="fw-bold" style="text-decoration: none;color: #010913FF;">
+                Signup or Login
+            </a>
+        <?php endif; ?>
         </li>
 
          
@@ -102,6 +111,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             <li class="hideOnMobile nav-link"><a href="#">Contact</a></li>
             
                 <li class="navbar-profile" onclick="hideSidebar()">
+                     <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="profile.php">
                     <img 
                     src="assets/images/<?php echo $displayImage; ?>" 
@@ -110,6 +120,11 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
                     style="width: 50px; height: 50px; object-fit: cover;"
                     />
                 </a>
+                  <?php else: ?>
+            <a href="/ServiceHub/Signup_Login/login.php" class=" fw-bold" style="text-decoration: none;color: #010913FF;">
+                Signup or Login
+            </a>
+        <?php endif; ?>
                 </li>
   
             <li class="menu-icon" onclick="showSidebar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
@@ -148,6 +163,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             <div class="container mt-5">
                 <div class="row text-center">
                     <?php
+                    $user_id = $_SESSION['user_id'] ?? null;
                     include 'db_connect.php'; // adjust path if needed
                     $sql = "SELECT * FROM service";
                     // Added Query To Select the Categories From Service table 
@@ -155,16 +171,15 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $image_data ='../Admin/img/' . $row['image']; 
-                            echo '
-                            <div class="col-4 col-md-4 col-lg-4 mb-3">
-                                <a href="providers.php?id=' . $row['service_id'] . '" class="text-decoration-none text-dark">
-                                    <div class="service-box">
-                                        <img src="' .trim( $image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
-                                        
-                                        <p>' . htmlspecialchars($row['service_name']) . '</p>
-                                    </div>
-                                </a>
-                            </div>';
+                           echo '
+                        <div class="col-4 col-md-4 col-lg-4 mb-3">
+                            <a href="' . (!empty($user_id) ? 'providers.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="text-decoration-none text-dark">
+                                <div class="service-box">
+                                    <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
+                                    <p>' . htmlspecialchars($row['service_name']) . '</p>
+                                </div>
+                            </a>
+                        </div>';
                         }
                         // <img src="data:image/jpeg;base64,' . $image_data . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
                           // This Fetched  The    Image And Category name From Service Table.
