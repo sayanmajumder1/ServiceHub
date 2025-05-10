@@ -3,7 +3,7 @@
 	 session_start();
      if(!isset($_SESSION["email"]))
      {
-         header("location:/project_php/serviceHub/Signup_login/login.php");
+         header("location:/serviceHub/Signup_login/login.php");
          exit;
      }
 
@@ -33,6 +33,20 @@
         }
         .bg{
             background-color:#9810FA;
+        }
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0 5px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+        }
+        .otp-input:focus {
+            border-color: #0d6efd;
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
     </style>
 </head>
@@ -66,11 +80,42 @@
                         <p><strong>Booking No:</strong> <?php echo $row['booking_no']; ?></p>
                         <p><strong>Booking Time:</strong> <?php echo $row['booking_time']; ?></p>
                         <p><strong>Booking Status:</strong> <?php echo ucfirst($row['booking_status']); ?></p>
-                        <a href="#.php?id=<?php echo $row['provider_id']; ?>" class="btn btn-outline-success mt-3">OTP</a>
+                       
+
             <!-- <a href="#.php?id=<?php echo $row['provider_id']; ?>" class="btn btn-outline-danger mt-3">COMPLETE</a>
                     </div> -->
                 </div>
             </div>
+    <!-- OTP Button -->
+        <a href="javascript:void(0);" id="showOtpBtn" onclick="showOtpForm()" class="btn btn-outline-success mt-3">OTP</a>
+
+        <!-- OTP Form (Initially Hidden) -->
+        <div id="otpForm" style="display: none;" class="mt-3">
+            <form>
+                <div class="d-flex justify-content-center mb-3">
+                    <input type="text" maxlength="1" class="otp-input"
+                        oninput="moveToNext(this, 'otp2')" onkeydown="moveBack(event, null)" id="otp1" autofocus>
+                    <input type="text" maxlength="1" class="otp-input"
+                        oninput="moveToNext(this, 'otp3')" onkeydown="moveBack(event, 'otp1')" id="otp2">
+                    <input type="text" maxlength="1" class="otp-input"
+                        oninput="moveToNext(this, 'otp4')" onkeydown="moveBack(event, 'otp2')" id="otp3">
+                    <input type="text" maxlength="1" class="otp-input"
+                        onkeydown="moveBack(event, 'otp3')" id="otp4">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Submit OTP</button>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="#">Resend OTP</a>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
         </div>
     </div>
             <?php
@@ -82,4 +127,24 @@
 </div>
 <script src="script.js"></script>
 </body>
+<!-- JavaScript to toggle visibility -->
+<script>
+    function showOtpForm() {
+        document.getElementById('otpForm').style.display = 'block';     // Show OTP form
+        document.getElementById('showOtpBtn').style.display = 'none';   // Hide OTP button
+    }
+
+    function moveToNext(current, nextFieldID) {
+        if (current.value.length >= 1 && nextFieldID) {
+            document.getElementById(nextFieldID).focus();
+        }
+    }
+
+    function moveBack(e, prevFieldID) {
+        if (e.key === "Backspace" && e.target.value === '' && prevFieldID) {
+            document.getElementById(prevFieldID).focus();
+        }
+    }
+</script>
+
 </html>
