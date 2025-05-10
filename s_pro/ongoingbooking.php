@@ -55,7 +55,7 @@
                     <td><?php   echo $row['booking_status']?></td>
 
                     <td>
-                        <a href="#.php?id=<?php echo $row['booking_id']?>"><button class="btn btn-primary">View</button>
+                        <a href="viewbooking.php?id=<?php echo $row['booking_id']?>"><button class="btn btn-primary">View</button>
                     </td>
                 </tr>
                 <?php
