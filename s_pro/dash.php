@@ -1,5 +1,13 @@
 <?php
 session_start();
+	 
+	 session_start();
+	
+    if(!isset($_SESSION["email"]))
+    {
+        header("location:/serviceHub/Signup_login/login.php");
+        exit;
+    }
 
 if (!isset($_SESSION["provider_id"])) {
 	header("location:/ServiceHub/Signup_Login/login.php");

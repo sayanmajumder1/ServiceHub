@@ -105,9 +105,6 @@
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">Submit OTP</button>
                 </div>
-                <div class="text-center mt-3">
-                    <a href="#">Resend OTP</a>
-                </div>
             </form>
         </div>
 

@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Selected service: <span id="selected-service-name"></span>
           </p>
         </div>
-
+        <p id="selected-service-name" class="mt-4 text-lg font-semibold text-purple-600 text-center"></p>
         <!-- Submit and Back Buttons -->
         <div class="mt-8 flex justify-between items-center">
           <button type="button" onclick="goBackToStep1()" class="bg-gray-300 px-5 py-2 rounded">Back</button>
@@ -246,24 +246,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       window.location.href = "signup.php";
     }
 
-    // Single service selection
+   
     function selectService(card, serviceName) {
-      // Remove selection from all cards
-      document.querySelectorAll('.service-card').forEach(c => {
-        c.classList.remove('selected');
-      });
+        // Remove 'selected' class from all service cards
+        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('ring', 'ring-purple-600'));
+        
+        // Add 'selected' style to clicked card
+        card.classList.add('ring', 'ring-purple-600');
 
-      // Add selection to clicked card
-      card.classList.add('selected');
 
-      // Set the radio button as checked
-      const radio = card.querySelector('input[type="radio"]');
-      radio.checked = true;
+        // Set the value of the hidden radio input inside this card
+        card.querySelector('input[type="radio"]').checked = true;
 
       // Update selected service text
       document.getElementById('selected-service-name').textContent = serviceName;
       document.getElementById('selected-service-text').classList.remove('hidden');
     }
+
+
   </script>
 </body>
 
