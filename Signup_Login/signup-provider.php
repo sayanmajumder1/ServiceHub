@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'identityno' => $_POST['idNumber'],
             'lisenceno' => $_POST['licenseNumber'] ?? '',
             'identityimage' => $identityImage,
-            'service_id' => $_POST['service'],
+            'service_id' => $_POST['service_id'],
             'image' => "default_provider.png",
             'description' => "New provider",
             'approved_action' => "pending"
@@ -179,66 +179,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <div class="services-container overflow-x-auto whitespace-nowrap pb-4">
             <div class="inline-flex space-x-4">
-              <!-- Plumbing -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Plumbing')">
-                <img src="./images/service1.png" alt="Plumbing Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
-                <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
-                <input type="radio" name="service" value="Plumbing" class="hidden" required>
-              </div>
+            <?php
 
-              <!-- Electrician -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Electrician')">
-                <img src="./images/service2.png" alt="Electrician Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Electrician</h3>
-                <p class="text-sm text-gray-600 text-center">Wiring, installations, repairs.</p>
-                <input type="radio" name="service" value="Electrician" class="hidden">
-              </div>
+              include_once "connection.php";
+              $res=mysqli_query($conn,"select * from service");
+              while($row=mysqli_fetch_array($res))
+              {
 
-              <!-- Cleaning -->
+            ?>
+           
               <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Cleaning')">
-                <img src="./images/service3.png" alt="Cleaning Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Cleaning</h3>
-                <p class="text-sm text-gray-600 text-center">Home and office cleaning.</p>
-                <input type="radio" name="service" value="Cleaning" class="hidden">
-              </div>
+                onclick="selectService(this, '<?php echo $row['service_name']; ?>')">
+                <img src="/serviceHub/Admin/img/<?php echo $row['image'] ?>"  alt="Plumbing Service" 
+                  class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
 
-              <!-- Carpentry -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Carpentry')">
-                <img src="./images/service4.png" alt="Carpentry Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Carpentry</h3>
-                <p class="text-sm text-gray-600 text-center">Furniture and woodwork.</p>
-                <input type="radio" name="service" value="Carpentry" class="hidden">
+                <h3 class="font-bold text-gray-800 text-center"><?php echo $row['service_name'] ?></h3>
+                <input type="radio" name="service_id" value="<?php echo $row['service_id']; ?>" class="hidden" required>
+                <!-- <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p> -->
+            
+          
               </div>
+            <?php
 
-              <!-- Painting -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Painting')">
-                <img src="./images/service5.png" alt="Painting Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Painting</h3>
-                <p class="text-sm text-gray-600 text-center">Wall and furniture painting.</p>
-                <input type="radio" name="service" value="Painting" class="hidden">
-              </div>
+                }
 
-              <!-- AC Repair -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'AC Repair')">
-                <img src="./images/service6.png" alt="AC Repair Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">AC Repair</h3>
-                <p class="text-sm text-gray-600 text-center">AC installation and maintenance.</p>
-                <input type="radio" name="service" value="AC Repair" class="hidden">
-              </div>
-            </div>
-          </div>
-          <p id="selected-service-text" class="text-center mt-4 text-purple-600 font-medium hidden">
-            Selected service: <span id="selected-service-name"></span>
-          </p>
+            ?>
         </div>
-
+        </div>
+        <p id="selected-service-name" class="mt-4 text-lg font-semibold text-purple-600 text-center"></p>
         <!-- Submit and Back Buttons -->
         <div class="mt-8 flex justify-between items-center">
           <button type="button" onclick="goBackToStep1()" class="bg-gray-300 px-5 py-2 rounded">Back</button>
@@ -260,26 +228,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       window.location.href = "signup.php";
     }
 
-    // Single service selection
+   
     function selectService(card, serviceName) {
-      // Remove selection from all cards
-      document.querySelectorAll('.service-card').forEach(c => {
-        c.classList.remove('selected');
-      });
+        // Remove 'selected' class from all service cards
+        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('ring', 'ring-purple-600'));
+        
+        // Add 'selected' style to clicked card
+        card.classList.add('ring', 'ring-purple-600');
 
-      // Add selection to clicked card
-      card.classList.add('selected');
 
-      // Set the radio button as checked
-      const radio = card.querySelector('input[type="radio"]');
-      radio.checked = true;
+        // Set the value of the hidden radio input inside this card
+        card.querySelector('input[type="radio"]').checked = true;
 
-      // Update selected service text
-      document.getElementById('selected-service-name').textContent = serviceName;
-      document.getElementById('selected-service-text').classList.remove('hidden');
-
-      console.log("Selected Service:", serviceName);
+        // Show selected service name below
+        document.getElementById('selected-service-name').textContent = "Selected Service: " + serviceName;
     }
+
+
   </script>
 </body>
 </html>

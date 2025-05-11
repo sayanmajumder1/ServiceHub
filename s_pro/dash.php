@@ -4,7 +4,7 @@
 	
     if(!isset($_SESSION["email"]))
     {
-        header("location:/project_php/serviceHub/Signup_login/login.php");
+        header("location:/serviceHub/Signup_login/login.php");
         exit;
     }
 
