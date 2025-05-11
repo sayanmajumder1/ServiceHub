@@ -40,6 +40,7 @@
                         <th scope="col">User Name</th>
                         <th scope="col">Service Provider</th>
                         <th scope="col">Service Category</th>
+                        <th scope="col">Payment status</th>
                         <th colspan='2'>Action</th>
                         </tr>
                     </thead>
@@ -47,7 +48,7 @@
                     <?php
                         include_once "connection.php";
                         $count=1;
-                        $res=mysqli_query($con,"SELECT booking.booking_id,booking.booking_no, users.name, users.email, service_providers.provider_name, service.service_name FROM
+                        $res=mysqli_query($con,"SELECT booking.*, users.name, users.email, service_providers.provider_name, service.service_name FROM
                         booking JOIN users ON booking.user_id = users.user_id JOIN service_providers ON booking.provider_id = service_providers.provider_id 
                         JOIN service ON booking.service_id = service.service_id");
                         while($row=mysqli_fetch_array($res))
@@ -60,6 +61,7 @@
                         <td data-label="User Name"><?php  echo $row['name']?></td>
                         <td data-label="Service Provider"><?php  echo $row['provider_name'] ?></td>
                         <td data-label="Service"><?php  echo $row['service_name']?></td>
+                         <td data-label="status"><?php  echo $row['payment_status']?></td>
                         <td data-label="Action"><a href="paymentview.php?id=<?php echo $row['booking_id']; ?>"><button type="button" class="btn btn-outline-primary">View</button></td>
                         <td data-label="Action"><button type="button" class="btn btn-outline-success">Refund</button></td>
                         </tr>
