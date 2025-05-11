@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Check if user is logged in as provider
 if (!isset($_SESSION["provider_id"]) || !isset($_SESSION["email"]) || $_SESSION["user_type"] !== 'provider') {
 	header("Location: /ServiceHub/Signup_Login/login.php");

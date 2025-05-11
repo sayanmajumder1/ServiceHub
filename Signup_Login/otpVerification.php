@@ -17,9 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: /ServiceHub/s_pro/dash.php");
                 exit();
             }
-        } elseif (isset($_SESSION['provider_id'])) {
-            header("Location: /ServiceHub/s_pro/dash.php");
-            exit();
         }
         // For signup flow
         elseif (isset($_SESSION['signup_data'])) {
