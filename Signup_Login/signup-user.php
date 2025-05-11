@@ -5,25 +5,19 @@ require_once "connection.php";
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Validate passwords match
   if ($_POST['password'] !== $_POST['confirmPassword']) {
     $error = "Passwords do not match!";
   } else {
-    // Prepare user data
     $data = [
       'account_type' => 'user',
       'name' => $_POST['fullName'],
       'email' => $_POST['email'],
       'phone' => $_POST['phone'],
       'password' => $_POST['password'],
-      'address' => '', // You can add address field to your form if needed
       'image' => "default_user.png"
     ];
 
-    // Generate OTP and store data
     $_SESSION['otp'] = rand(100000, 999999);
-    $_SESSION['auth_type'] = 'signup';
-    $_SESSION['user_type'] = 'user';
     $_SESSION['signup_data'] = $data;
 
     header("Location: otpVerification.php");
@@ -31,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

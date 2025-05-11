@@ -8,39 +8,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Check for user
-    $user_stmt = $conn->prepare("SELECT user_id, email FROM users WHERE email = ? AND password = ?");
-    $user_stmt->bind_param("ss", $email, $password);
-    $user_stmt->execute();
-    $result_user = $user_stmt->get_result();
-    $user = $result_user->fetch_assoc();
+    // Check user table
+    $stmt = $conn->prepare("SELECT user_id, email FROM users WHERE email = ? AND password = ?");
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Check for provider
-    $provider_stmt = $conn->prepare("SELECT provider_id, email FROM service_providers WHERE email = ? AND password = ?");
-    $provider_stmt->bind_param("ss", $email, $password);
-    $provider_stmt->execute();
-    $result_provider = $provider_stmt->get_result();
-    $provider = $result_provider->fetch_assoc();
-
-    if ($user) {
-        $_SESSION['auth_type'] = 'login';
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = 'user';
-        $_SESSION['otp'] = rand(100000, 999999);
-        $_SESSION['user_data'] = $user;
+        $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
         header("Location: otpVerification.php");
         exit();
-    } elseif ($provider) {
-        $_SESSION['auth_type'] = 'login';
-        $_SESSION['user_type'] = 'provider';
-        $_SESSION['otp'] = rand(100000, 999999);
-        $_SESSION['user_data'] = $provider;
-        header("Location: otpVerification.php");
-        exit();
-    } else {
-        $error = "Invalid credentials.";
+    }
+    // If not user, check provider table
+    else {
+        $stmt = $conn->prepare("SELECT provider_id, email FROM service_providers WHERE email = ? AND password = ?");
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // In the provider login section:
+        if ($result->num_rows > 0) {
+            $provider = $result->fetch_assoc();
+            $_SESSION['provider_id'] = $provider['provider_id'];
+            $_SESSION['email'] = $provider['email'];
+            $_SESSION['user_type'] = 'provider';
+            $_SESSION['otp'] = rand(100000, 999999);
+            header("Location: otpVerification.php");
+            exit();
+        } else {
+            $error = "Invalid email or password";
+        }
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>

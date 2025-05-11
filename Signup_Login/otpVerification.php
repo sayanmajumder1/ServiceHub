@@ -1,68 +1,77 @@
 <?php
-ob_start();
 session_start();
-include 'connection.php';
+require_once "connection.php";
+
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $enteredOtp = implode('', $_POST['otp_digits'] ?? []);
 
     if ($enteredOtp == $_SESSION['otp']) {
-        // SIGNUP Flow
-        if (isset($_SESSION['signup_data'])) {
+        // For login flow
+        if (isset($_SESSION['user_id'])) {
+            if ($_SESSION['user_type'] == 'user') {
+                header("Location: /ServiceHub/Homepage/home.php");
+                exit();
+            } else {
+                header("Location: /ServiceHub/s_pro/dash.php");
+                exit();
+            }
+        } elseif (isset($_SESSION['provider_id'])) {
+            header("Location: /ServiceHub/s_pro/dash.php");
+            exit();
+        }
+        // For signup flow
+        elseif (isset($_SESSION['signup_data'])) {
             $data = $_SESSION['signup_data'];
 
-            if ($data['account_type'] == 'provider') {
-                $query = "INSERT INTO service_providers (
-                    businessname, provider_name, email, phone, service_id, 
-                    password, address, image, lisenceno, identityno, 
-                    identityimage, approved_action, description
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if ($data['account_type'] == 'user') {
+                $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password, image) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssss", $data['name'], $data['email'], $data['phone'], $data['password'], $data['image']);
 
-                $stmt = mysqli_prepare($conn, $query);
-
-                if (!$stmt) {
-                    $error = "Database error: " . mysqli_error($conn);
+                if ($stmt->execute()) {
+                    $_SESSION['user_id'] = $conn->insert_id;
+                    $_SESSION['user_type'] = 'user';
+                    header("Location: /ServiceHub/Homepage/home.php");
+                    exit();
                 } else {
-                    mysqli_stmt_bind_param(
-                        $stmt,
-                        "sssssssssssss",
-                        $data['businessname'],
-                        $data['provider_name'],
-                        $data['email'],
-                        $data['phone'],
-                        $data['service_id'],
-                        $data['password'],
-                        $data['address'],
-                        $data['image'],
-                        $data['lisenceno'],
-                        $data['identityno'],
-                        $data['identityimage'],
-                        $data['approved_action'],
-                        $data['description']
-                    );
+                    $error = "User registration failed. Please try again.";
+                }
+            } else {
+                // Provider signup
+                $stmt = $conn->prepare("INSERT INTO service_providers 
+                    (businessname, provider_name, email, phone, service_id, password, identityno, identityimage, approved_action) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
+                $stmt->bind_param(
+                    "ssssssss",
+                    $data['businessname'],
+                    $data['provider_name'],
+                    $data['email'],
+                    $data['phone'],
+                    $data['service_id'],
+                    $data['password'],
+                    $data['identityno'],
+                    $data['identityimage']
+                );
 
-                    $executeSuccess = mysqli_stmt_execute($stmt);
-
-                    if ($executeSuccess) {
-                        $_SESSION['provider_id'] = mysqli_insert_id($conn);
-                        $_SESSION['email'] = $data['email'];
-                        $_SESSION['account_type'] = 'provider';
-                        unset($_SESSION['signup_data'], $_SESSION['otp']);
-                        header("Location: /ServiceHub/s_pro/dash.php");
-                        exit();
-                    } else {
-                        $error = "Execution failed: " . mysqli_stmt_error($stmt);
-                    }
+                if ($stmt->execute()) {
+                    $_SESSION['provider_id'] = $conn->insert_id;
+                    $_SESSION['email'] = $data['email']; // Add this line
+                    $_SESSION['user_type'] = 'provider';
+                    unset($_SESSION['signup_data'], $_SESSION['otp']);
+                    header("Location: /ServiceHub/s_pro/dash.php");
+                    exit();
+                } else {
+                    $error = "Provider registration failed: " . mysqli_error($conn);
                 }
             }
-            // User signup handling remains the same...
         }
     } else {
         $error = "Wrong OTP entered. Please try again.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

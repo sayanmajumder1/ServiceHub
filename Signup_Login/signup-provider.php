@@ -4,50 +4,79 @@ require_once "connection.php";
 
 $error = '';
 
+// Fetch services from database
+$services = [];
+$service_query = mysqli_query($conn, "SELECT * FROM service");
+while ($service = mysqli_fetch_assoc($service_query)) {
+  $services[] = $service;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Process form data when submitted
-    $targetDir = "uploads/";
-    
-    // Create upload directory if it doesn't exist
-    if (!file_exists($targetDir)) {
-        mkdir($targetDir, 0777, true);
+  // Process form data when submitted
+  $targetDir = "uploads/";
+
+  // Create upload directory if it doesn't exist
+  if (!file_exists($targetDir)) {
+    mkdir($targetDir, 0777, true);
+  }
+
+  // Handle file upload
+  $identityImage = '';
+  // In signup-provider.php, move the file type check before upload
+  if (isset($_FILES['documentUpload'])) {
+    $allowed_types = ['image/jpeg', 'image/png', 'application/pdf'];
+    if (!in_array($_FILES['documentUpload']['type'], $allowed_types)) {
+      $error = "Only JPG, PNG, and PDF files are allowed";
+    } else {
+      $identityImage = $targetDir . uniqid() . "_" . basename($_FILES["documentUpload"]["name"]);
+      if (!move_uploaded_file($_FILES["documentUpload"]["tmp_name"], $identityImage)) {
+        $error = "Failed to upload document";
+      }
+    }
+  }
+
+  if (empty($error)) {
+    // Get the selected service_id
+    $service_id = (int)$_POST['service_id'];
+
+    // Validate service exists
+    $valid_service = false;
+    foreach ($services as $service) {
+      if ($service['service_id'] == $service_id) {
+        $valid_service = true;
+        break;
+      }
     }
 
-    // Handle file upload
-    $identityImage = '';
-    if (isset($_FILES['documentUpload'])) {
-        $identityImage = $targetDir . uniqid() . "_" . basename($_FILES["documentUpload"]["name"]);
-        if (!move_uploaded_file($_FILES["documentUpload"]["tmp_name"], $identityImage)) {
-            $error = "Failed to upload document";
-        }
-    }
+    if (!$valid_service) {
+      $error = "Please select a valid service";
+    } else {
+      $data = [
+        'account_type' => 'provider',
+        'businessname' => $_POST['businessName'],
+        'provider_name' => $_POST['ownerName'],
+        'address' => $_POST['businessAddress'],
+        'email' => $_POST['email'],
+        'phone' => $_POST['phone'],
+        'password' => $_POST['password'],
+        'identityno' => $_POST['idNumber'],
+        'lisenceno' => $_POST['licenseNumber'] ?? '',
+        'identityimage' => $identityImage,
+        'service_id' => $service_id,
+        'image' => "default_provider.png",
+        'description' => "New provider",
+        'approved_action' => "pending"
+      ];
 
-    if (empty($error)) {
-        $data = [
-            'account_type' => 'provider',
-            'businessname' => $_POST['businessName'],
-            'provider_name' => $_POST['ownerName'],
-            'address' => $_POST['businessAddress'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
-            'password' => $_POST['password'],
-            'identityno' => $_POST['idNumber'],
-            'lisenceno' => $_POST['licenseNumber'] ?? '',
-            'identityimage' => $identityImage,
-            'service_id' => $_POST['service'],
-            'image' => "default_provider.png",
-            'description' => "New provider",
-            'approved_action' => "pending"
-        ];
+      $_SESSION['otp'] = rand(100000, 999999);
+      $_SESSION['auth_type'] = 'signup';
+      $_SESSION['user_type'] = 'provider';
+      $_SESSION['signup_data'] = $data;
 
-        $_SESSION['otp'] = rand(100000, 999999);
-        $_SESSION['auth_type'] = 'signup';
-        $_SESSION['user_type'] = 'provider';
-        $_SESSION['signup_data'] = $data;
-        
-        header("Location: otpVerification.php");
-        exit();
+      header("Location: otpVerification.php");
+      exit();
     }
+  }
 }
 ?>
 
@@ -127,29 +156,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div>
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Personal Information</h2>
             <div class="mb-3">
-              <input id="businessName" name="businessName" type="text" placeholder="Business Name" 
-                     class="w-full p-3 border rounded capitalize" required>
+              <input id="businessName" name="businessName" type="text" placeholder="Business Name"
+                class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="ownerName" name="ownerName" type="text" placeholder="Owner Name" 
-                     class="w-full p-3 border rounded capitalize" required>
+              <input id="ownerName" name="ownerName" type="text" placeholder="Owner Name"
+                class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="businessAddress" name="businessAddress" type="text" placeholder="Business Address" 
-                     class="w-full p-3 border rounded capitalize" required>
+              <input id="businessAddress" name="businessAddress" type="text" placeholder="Business Address"
+                class="w-full p-3 border rounded capitalize" required>
             </div>
             <div class="mb-3">
-              <input id="email" name="email" type="email" placeholder="Email Address" 
-                     class="w-full p-3 border rounded" required>
+              <input id="email" name="email" type="email" placeholder="Email Address"
+                class="w-full p-3 border rounded" required>
             </div>
             <div class="flex items-center border rounded mb-3 w-full max-w-md overflow-hidden">
               <span class="px-3 py-2 bg-gray-100 text-gray-700 border-r">+91</span>
-              <input type="tel" name="phone" placeholder="Phone Number" 
-                     class="px-3 py-2 w-full focus:outline-none" required />
+              <input type="tel" name="phone" placeholder="Phone Number"
+                class="px-3 py-2 w-full focus:outline-none" required />
             </div>
             <div class="mb-3 relative">
-              <input id="password" name="password" type="password" placeholder="Password" 
-                     class="w-full p-3 border rounded pr-10" required>
+              <input id="password" name="password" type="password" placeholder="Password"
+                class="w-full p-3 border rounded pr-10" required>
               <span onclick="togglePassword()" class="absolute right-3 top-3 cursor-pointer text-gray-500">👀</span>
             </div>
           </div>
@@ -158,16 +187,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div>
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Legal Documents</h2>
             <div class="mb-3">
-              <input id="idNumber" name="idNumber" type="text" placeholder="ID Number" 
-                     class="w-full p-3 border rounded" required>
+              <input id="idNumber" name="idNumber" type="text" placeholder="ID Number"
+                class="w-full p-3 border rounded" required>
             </div>
             <div class="mb-3">
-              <input id="licenseNumber" name="licenseNumber" type="text" placeholder="License Number" 
-                     class="w-full p-3 border rounded">
+              <input id="licenseNumber" name="licenseNumber" type="text" placeholder="License Number"
+                class="w-full p-3 border rounded">
             </div>
             <div class="mb-3">
-              <input id="documentUpload" name="documentUpload" type="file" 
-                     class="w-full p-3 border rounded" accept=".pdf,.jpg,.jpeg,.png">
+              <input id="documentUpload" name="documentUpload" type="file"
+                class="w-full p-3 border rounded" accept=".pdf,.jpg,.jpeg,.png">
             </div>
           </div>
         </div>
@@ -179,59 +208,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <div class="services-container overflow-x-auto whitespace-nowrap pb-4">
             <div class="inline-flex space-x-4">
-              <!-- Plumbing -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Plumbing')">
-                <img src="./images/service1.png" alt="Plumbing Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Plumbing</h3>
-                <p class="text-sm text-gray-600 text-center">Tap, pipe, and drain services.</p>
-                <input type="radio" name="service" value="Plumbing" class="hidden" required>
-              </div>
-
-              <!-- Electrician -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Electrician')">
-                <img src="./images/service2.png" alt="Electrician Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Electrician</h3>
-                <p class="text-sm text-gray-600 text-center">Wiring, installations, repairs.</p>
-                <input type="radio" name="service" value="Electrician" class="hidden">
-              </div>
-
-              <!-- Cleaning -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Cleaning')">
-                <img src="./images/service3.png" alt="Cleaning Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Cleaning</h3>
-                <p class="text-sm text-gray-600 text-center">Home and office cleaning.</p>
-                <input type="radio" name="service" value="Cleaning" class="hidden">
-              </div>
-
-              <!-- Carpentry -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Carpentry')">
-                <img src="./images/service4.png" alt="Carpentry Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Carpentry</h3>
-                <p class="text-sm text-gray-600 text-center">Furniture and woodwork.</p>
-                <input type="radio" name="service" value="Carpentry" class="hidden">
-              </div>
-
-              <!-- Painting -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'Painting')">
-                <img src="./images/service5.png" alt="Painting Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">Painting</h3>
-                <p class="text-sm text-gray-600 text-center">Wall and furniture painting.</p>
-                <input type="radio" name="service" value="Painting" class="hidden">
-              </div>
-
-              <!-- AC Repair -->
-              <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
-                onclick="selectService(this, 'AC Repair')">
-                <img src="./images/service6.png" alt="AC Repair Service" class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                <h3 class="font-bold text-gray-800 text-center">AC Repair</h3>
-                <p class="text-sm text-gray-600 text-center">AC installation and maintenance.</p>
-                <input type="radio" name="service" value="AC Repair" class="hidden">
-              </div>
+              <?php foreach ($services as $service): ?>
+                <div class="service-card border rounded-xl shadow p-4 bg-white inline-block w-64"
+                  onclick="selectService(this, '<?php echo htmlspecialchars($service['service_name']); ?>')">
+                  <img src="/serviceHub/Admin/img/<?php echo htmlspecialchars($service['image']); ?>"
+                    alt="<?php echo htmlspecialchars($service['service_name']); ?>"
+                    class="w-full h-48 object-cover mb-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+                  <h3 class="font-bold text-gray-800 text-center"><?php echo htmlspecialchars($service['service_name']); ?></h3>
+                  <input type="radio" name="service_id" value="<?php echo $service['service_id']; ?>" class="hidden" required>
+                </div>
+              <?php endforeach; ?>
             </div>
           </div>
           <p id="selected-service-text" class="text-center mt-4 text-purple-600 font-medium hidden">
@@ -277,9 +263,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Update selected service text
       document.getElementById('selected-service-name').textContent = serviceName;
       document.getElementById('selected-service-text').classList.remove('hidden');
-
-      console.log("Selected Service:", serviceName);
     }
   </script>
 </body>
+
 </html>
