@@ -1,26 +1,33 @@
 <?php
 session_start();
-	 
-	 session_start();
-	
-    if(!isset($_SESSION["email"]))
-    {
-        header("location:/serviceHub/Signup_login/login.php");
-        exit;
-    }
 
-if (!isset($_SESSION["provider_id"])) {
-	header("location:/ServiceHub/Signup_Login/login.php");
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check if user is logged in as provider
+if (!isset($_SESSION["provider_id"]) || !isset($_SESSION["email"]) || $_SESSION["user_type"] !== 'provider') {
+	header("Location: /ServiceHub/Signup_Login/login.php");
 	exit;
 }
 
 include_once "connection.php";
 
+// Get provider details
 $res = mysqli_query($con, "SELECT service_providers.*, service.service_name 
     FROM service_providers 
     INNER JOIN service ON service_providers.service_id = service.service_id 
     WHERE service_providers.provider_id = " . $_SESSION['provider_id']);
+
+if (!$res) {
+	die("Database error: " . mysqli_error($con));
+}
+
 $row = mysqli_fetch_assoc($res);
+
+if (!$row) {
+	die("Provider not found in database");
+}
 
 $_SESSION['id'] = $row['provider_id'];
 ?>
@@ -44,8 +51,8 @@ $_SESSION['id'] = $row['provider_id'];
 				<div class="profile-info d-flex align-items-center">
 					<img src="./img/n1.jpg" alt="profile" class="profile-pic me-3">
 					<div>
-						<h6 class="mb-0"><?php echo $row['provider_name'] ?></h6>
-						<small class="text-muted"><?php echo $row['service_name'] ?></small>
+						<h6 class="mb-0"><?php echo htmlspecialchars($row['provider_name']); ?></h6>
+						<small class="text-muted"><?php echo htmlspecialchars($row['service_name']); ?></small>
 					</div>
 				</div>
 			</a>
@@ -59,7 +66,7 @@ $_SESSION['id'] = $row['provider_id'];
 								<div class="custom-card">
 									<h5 class="custom-title">Total Bookings</h5>
 									<?php
-									$res = mysqli_query($con, "select count(*) as total from booking where provider_id='" . $_SESSION['provider_id'] . "'");
+									$res = mysqli_query($con, "SELECT COUNT(*) AS total FROM booking WHERE provider_id='" . $_SESSION['provider_id'] . "'");
 									$row = mysqli_fetch_array($res);
 									?>
 									<p class="custom-number"><?php echo $row['total'] ?></p>
@@ -70,7 +77,7 @@ $_SESSION['id'] = $row['provider_id'];
 							<div class="custom-card">
 								<h5 class="custom-title">Pending Payments</h5>
 								<?php
-								$res = mysqli_query($con, "select count(*) as total from booking where provider_id='" . $_SESSION['provider_id'] . "' and payment_status='pending'");
+								$res = mysqli_query($con, "SELECT COUNT(*) AS total FROM booking WHERE provider_id='" . $_SESSION['provider_id'] . "' AND payment_status='pending'");
 								$row = mysqli_fetch_array($res);
 								?>
 								<p class="custom-number"><?php echo $row['total'] ?></p>
@@ -80,7 +87,7 @@ $_SESSION['id'] = $row['provider_id'];
 							<div class="custom-card">
 								<h5 class="custom-title">Completed Tasks</h5>
 								<?php
-								$res = mysqli_query($con, "select count(*) as total from booking where provider_id='" . $_SESSION['provider_id'] . "' and booking_status='completed'");
+								$res = mysqli_query($con, "SELECT COUNT(*) AS total FROM booking WHERE provider_id='" . $_SESSION['provider_id'] . "' AND booking_status='completed'");
 								$row = mysqli_fetch_array($res);
 								?>
 								<p class="custom-number"><?php echo $row['total'] ?></p>
@@ -107,15 +114,17 @@ $_SESSION['id'] = $row['provider_id'];
 						<h5 class="section-title">Customer Reviews</h5>
 						<div class="review-item">
 							<?php
-							$res = mysqli_query($con, "select review.*,users.name from review inner join users on review.user_id=users.user_id where review.provider_id='" . $_SESSION['provider_id'] . "' and rating=5");
+							$res = mysqli_query($con, "SELECT review.*, users.name FROM review 
+                                    INNER JOIN users ON review.user_id=users.user_id 
+                                    WHERE review.provider_id='" . $_SESSION['provider_id'] . "' AND rating=5");
 							while ($row = mysqli_fetch_array($res)) {
 							?>
 								<div class="review avatar">
 									<img src="img/n1.jpg" alt="User" class="user-icon me-2">
 									<div>
 										<div class="review-content">
-											<h6 class="username"><?php echo $row['name'] ?></h6>
-											<p class="review-text"><?php echo $row['comment'] ?></p>
+											<h6 class="username"><?php echo htmlspecialchars($row['name']); ?></h6>
+											<p class="review-text"><?php echo htmlspecialchars($row['comment']); ?></p>
 											<div class="text-warning">
 												<?php
 												for ($i = 1; $i <= 5; $i++) {
