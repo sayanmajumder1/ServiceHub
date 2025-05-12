@@ -30,7 +30,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart Page</title>
+    <title>About Page</title>
        <!-- Bootstrap CSS -->
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
       <!-- Font Awesome for Icons -->
@@ -40,6 +40,73 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
 
 <!-- SideBar Functionality  Js  Code Integrated Here  -->
     <script src= "SideBarFunction.js"></script>
+        <style>
+   .about-section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+    }
+
+    .about-section .about-title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #333;
+      cursor:pointer;
+    }
+
+    .about-section .about-subtitle {
+      text-align: center;
+      font-size: 18px;
+      color: #777;
+      margin-bottom: 50px;
+    }
+
+    .about-section .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .about-section .about-box {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: 0.4s ease;
+      width: 300px;
+      overflow: hidden;
+      text-align: center;
+      cursor:pointer;
+    }
+
+    .about-section .about-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    .about-section .about-box img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .about-section .about-box h4 {
+      margin: 20px 0 10px;
+      font-size: 22px;
+      color: #444;
+    }
+
+    .about-section .about-box p {
+      padding: 0 20px 20px;
+      color: #666;
+      font-size: 15px;
+    }
+  </style>
 </head>
 <body>
     
@@ -110,35 +177,37 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
             <li class="menu-icon" onclick="showSidebar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
         </ul>
     </nav>
+    <!--about section-->
+    <section class="about-section">
+    <h2 class="about-title">About Service Hub</h2>
+    <p class="about-subtitle">Your one-stop solution for trusted home service professionals near you.</p>
 
+    <div class="about-grid">
+      <div class="about-box">
+        <img src="img.jpg" alt="Mission">
+        <h4><i class="fas fa-bullseye"></i> Our Mission</h4>
+        <p>We aim to simplify home maintenance by connecting users with top professionals for cleaning, repairs, painting, and more.</p>
+      </div>
 
+      <div class="about-box">
+        <img src="img.jpg" alt="Why Choose Us">
+        <h4><i class="fas fa-thumbs-up"></i> Why Choose Us</h4>
+        <p>Verified professionals, transparent pricing, and 24/7 support make us the preferred choice for home services.</p>
+      </div>
 
+      <div class="about-box">
+        <img src="img.jpg" alt="Vision">
+        <h4><i class="fas fa-eye"></i> Our Vision</h4>
+        <p>To be the most trusted home service platform across the country, improving lives through quality and convenience.</p>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="service.php" class="btn btn-primary btn-lg px-5">Explore Our Services</a>
+    </div>
+  </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- Bootstrap JS (for responsive behavior) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Maintain The  Side Bar  Functionality Java Script    -->
-  
-
-
-
-
-
+    
+<!-- Fotter Section --->
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -173,15 +242,15 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
             </div>
         </div>
         <hr>
+        
         <div class="text-center copyright">
             <p>&copy; 2025 YourCompany. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
 
-
-
-
 </body>
 
 </html>
+
+

@@ -88,10 +88,10 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
            <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
         </li>
         <li>
-           <a href="#"><i class="fas fa-info-circle"></i> About</a>
+           <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
         </li>
         <li>
-           <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+           <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
 
         </li>
        
@@ -107,8 +107,8 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             <li class="hideOnMobile nav-link"><a href="home.php"  class="active">Home</a></li>
             <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
             <li class="hideOnMobile nav-link"><a href="cart.php">Cart</a></li>
-            <li class="hideOnMobile nav-link"><a href="#">About</a></li>
-            <li class="hideOnMobile nav-link"><a href="#">Contact</a></li>
+            <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
+            <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
             
                 <li class="navbar-profile" onclick="hideSidebar()">
                      <?php if (isset($_SESSION['user_id'])): ?>
