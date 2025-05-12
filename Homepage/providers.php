@@ -72,57 +72,70 @@
     </nav>
 
 
-<div class="container mt-5 pt-5 ">
-<?php
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<h4 class='text-center mt-5 text-danger'>Invalid category selected.</h4>";
-    exit;
-}
-$category_id = $_GET['id'];
-$category_result = $conn->query("SELECT service_name FROM services WHERE id = $category_id AND type = 'category'");
-// Select The Service Category  Name From Service Table 
-$category = $category_result->fetch_assoc();
-if (!$category) {
-    echo "<h4 class='text-center mt-5 text-danger'>Category not found.</h4>";
-    exit;
-}
-echo "<h2 class='text-center mt-5'>Providers in: " . htmlspecialchars($category['service_name']) . "</h2>";
-//This Line Fetch The Service Name 
-$provider_result = $conn->query("SELECT * FROM services WHERE type = 'provider' AND parent_id = $category_id");
-// Added Query According  To My Table You can change The QUery  According To Your Table, I Use This Query  Because I Use Category Id To The Parent Id Of The Service Provider Id. 
-if ($provider_result->num_rows > 0) {
-    echo "<div class='container'><div class='row mt-4 g-4'>"; // g-4 for spacing
-    while ($row = $provider_result->fetch_assoc()) {
-        $image_data = base64_encode($row['image_blob']);//encode BLOB Images 
-        echo '
-       <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card h-100 shadow border-0 rounded-4">
-                <img src="data:image/jpeg;base64,' . $image_data . '" 
-                     class="card-img-top rounded-top-4" 
-                     alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
-                <div class="card-body d-flex flex-column justify-content-between">
-                    <div>
-                        <h5 class="card-title fw-bold">' . htmlspecialchars($row['service_name']) . '</h5>
-                        <p class="card-text text-muted">Trusted service provider with great ratings and experience.</p>
-                    </div>
-                 <a href="#" class="btn btn-view-details mt-3 w-100">View Details</a>
-                </div>
-            </div>
-        </div>';
+<div class="container mt-5 pt-5">
+    <?php
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        echo "<h4 class='text-center mt-5 text-danger'>Invalid service selected.</h4>";
+        exit;
     }
-    //    <h5 class="card-title">' . htmlspecialchars($row['service_name']) . '</h5>
-    // This Line Will Be Fetch The    service Provider Name  , You can Also change The  Field Name 'service_name' to any Thing 
-    //  <img src="data:image/jpeg;base64,' . $image_data . '" class="card-img-top4" alt="' . htmlspecialchars($row['service_name']) . '" style="height:200px;object-fit:cover;">
-    // This Line Fetched the Service Provider  Image .
-    echo "</div></div>";
-} else {
-    echo "<p class='text-center mt-4'>No providers available in this category.</p>";
-}
-?>
 
-    </div>
+    $service_id = (int)$_GET['id'];
+
+    // Validate and safely query for the service
+    $service_query = $conn->query("SELECT service_name FROM service WHERE service_id = $service_id");
+
+    if (!$service_query) {
+        echo "<h4 class='text-center mt-5 text-danger'>Database query error: " . $conn->error . "</h4>";
+        exit;
+    }
+
+    $service = $service_query->fetch_assoc();
+
+    if (!$service) {
+        echo "<h4 class='text-center mt-5 text-danger'>Service not found.</h4>";
+        exit;
+    }
+
+    echo "<h2 class='text-center mt-5'>Providers for: " . htmlspecialchars($service['service_name']) . "</h2>";
+
+    // Fetch service providers
+    $provider_result = $conn->query("SELECT * FROM service_providers WHERE service_id = $service_id AND approved_action = 'approved'");
+
+    if (!$provider_result) {
+        echo "<p class='text-center text-danger mt-4'>Error fetching providers: " . $conn->error . "</p>";
+        exit;
+    }
+
+    if ($provider_result->num_rows > 0) {
+        
+        echo "<div class='container'><div class='row mt-4 g-4'>";
+        while ($row = $provider_result->fetch_assoc()) {
+          $image_data = '../Signup_Login/uploads/' . htmlspecialchars(trim($row['identityimage']));
+          echo '<pre>' . $row['identityimage'] . '</pre>';
+            echo '
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow border-0 rounded-4">
+                    <img src="' . $image_data . '" 
+                         class="card-img-top rounded-top-4" 
+                         alt="' . htmlspecialchars($row['provider_name']) . '" style="height:200px;object-fit:cover;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="card-title fw-bold">' . htmlspecialchars($row['provider_name']) . '</h5>
+                            <p class="card-text"><strong>Business:</strong> ' . htmlspecialchars($row['businessname']) . '</p>
+                            <p class="card-text"><i class="fas fa-envelope"></i> ' . htmlspecialchars($row['email']) . '</p>
+                            <p class="card-text"><i class="fas fa-phone"></i> ' . htmlspecialchars($row['phone']) . '</p>
+                        </div>
+                        <a href="booking.php" class="btn btn-primary mt-3 w-100">Book For Service </a>
+                    </div>
+                </div>
+            </div>';
+        }
+        echo "</div></div>";
+    } else {
+        echo "<p class='text-center mt-4'>No approved providers available for this service.</p>";
+    }
+    ?>
 </div>
-
 
 
 
