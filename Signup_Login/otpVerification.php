@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // For login flow
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['user_type'] == 'user') {
-                header("Location: /ServiceHub/Homepage/home.php");
+                header("Location: /ServiceHub/Homepage/index.php");
                 exit();
             }
         } elseif (isset($_SESSION['provider_id'])) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->execute()) {
                     $_SESSION['user_id'] = $conn->insert_id;
                     $_SESSION['user_type'] = 'user';
-                    header("Location: /ServiceHub/Homepage/home.php");
+                    header("Location: /ServiceHub/Homepage/index.php");
                     exit();
                 } else {
                     $error = "User registration failed. Please try again.";
