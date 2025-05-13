@@ -8,9 +8,10 @@ $row=mysqli_fetch_assoc($res);
 ?>
 <div class="sidebar">
     <div class="logo">
-        <div class="circle">SP</div>
-        <h4><?php  echo "welcome🤝".$row['businessname'] ?></h4><br><hr>
-        <p><h2>Task Maker<h2></p>
+        <img src="img/n1.jpg" alt="Profile Picture" class="circle">
+        <h6>Welcome 👋🏽</h6>
+        <h4><?php  echo $row['businessname'] ?></h4><br><hr>
+        <p><h2>ServiceHub<h2></p>
     </div>
     <nav>
         <a href="dash.php" class="main-link">Dashboard</a>

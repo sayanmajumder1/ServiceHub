@@ -353,7 +353,7 @@ nav {
 	}
 }
 .review-item:hover .user-icon{
-	transform:scale(1:1);
+	transform:scale(1.1);
 }
 .review-item:hover{
 	background: #f3e7ff;

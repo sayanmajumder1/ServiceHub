@@ -93,8 +93,8 @@ $_SESSION['id'] = $row['provider_id'];
 						</div>
 						<div class="col-md-6 mb-4">
 							<div class="custom-card">
-								<h5 class="custom-title">Total earning</h5>
-								<p class="custom-number">90%</p>
+								<h5 class="custom-title">Total Earnings</h5>
+								<p class="custom-number">₹5,200</p>
 							</div>
 						</div>
 					</div>
