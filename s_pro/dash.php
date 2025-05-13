@@ -39,6 +39,28 @@ $_SESSION['id'] = $row['provider_id'];
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.review-scroll-wrapper {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.review-scroll-content {
+    display: inline-block;
+    animation: scroll-up 10s linear infinite;
+}
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+	</style>
 </head>
 
 <body>
@@ -101,49 +123,46 @@ $_SESSION['id'] = $row['provider_id'];
 				</div>
 
 				<div class="col-lg-4 d-flex flex-column justify-content-between" style="min-height: 500px;">
-					<div class="custom-card service-card mb-4">
-						<h4 class="custom-title">Service Image</h4>
-						<div class="image-container text-center">
-							<img src="img/n1.jpg" alt="Service Image" class="img-fluid service-img">
-						</div>
-					</div>
+    <div class="custom-card service-card mb-4" style="height: 340px;">
+        <h4 class="custom-title">Customer Reviews</h4>
+        <div class="review-scroll-wrapper">
+            <div class="review-scroll-content">
+                <?php
+                $res = mysqli_query($con, "SELECT review.*, users.name FROM review 
+                    INNER JOIN users ON review.user_id=users.user_id 
+                    WHERE review.provider_id='" . $_SESSION['provider_id'] . "'");
+                while ($row = mysqli_fetch_array($res)) {
+                ?>
+                <div class="review avatar">
+                    <img src="img/n1.jpg" alt="User" class="user-icon me-2">
+                    <div>
+                        <div class="review-content">
+                            <h6 class="username"><?php echo htmlspecialchars($row['name']); ?></h6>
+                            <p class="review-text"><?php echo htmlspecialchars($row['comment']); ?></p>
+                            <div class="text-warning">
+                                <?php
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $row['rating']) {
+                                        echo '<i class="fas fa-star text-warning"></i>';
+                                    } else {
+                                        echo '<i class="far fa-star text-muted"></i>';
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<div class="review-card">
-						<h5 class="section-title">Customer Reviews</h5>
-						<div class="review-item">
-							<?php
-							$res = mysqli_query($con, "SELECT review.*, users.name FROM review 
-                                    INNER JOIN users ON review.user_id=users.user_id 
-                                    WHERE review.provider_id='" . $_SESSION['provider_id'] . "' AND rating=5");
-							while ($row = mysqli_fetch_array($res)) {
-							?>
-								<div class="review avatar">
-									<img src="img/n1.jpg" alt="User" class="user-icon me-2">
-									<div>
-										<div class="review-content">
-											<h6 class="username"><?php echo htmlspecialchars($row['name']); ?></h6>
-											<p class="review-text"><?php echo htmlspecialchars($row['comment']); ?></p>
-											<div class="text-warning">
-												<?php
-												for ($i = 1; $i <= 5; $i++) {
-													if ($i <= $row['rating']) {
-														echo '<i class="fas fa-star text-warning"></i>';
-													} else {
-														echo '<i class="far fa-star text-muted"></i>';
-													}
-												}
-												?>
-											</div>
-										</div>
-									</div>
-								</div>
-							<?php } ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
+
+					
+		
 	<script>
 		document.querySelectorAll('.main-link').forEach(link => {
 			if (window.location.href.includes(link.getAttribute('href'))) {
