@@ -58,7 +58,7 @@
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Provider Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value='<?php echo $row['email']?>'required>
+                    <input type="email" class="form-control" id="email" name="email" value='<?php echo $row['email']?>'readonly>
                 </div>
 
                 <div class="mb-3">

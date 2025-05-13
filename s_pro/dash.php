@@ -1,13 +1,15 @@
 <?php
 session_start();
 
+include_once "connection.php";
 // Check if user is logged in as provider
 if (!isset($_SESSION["provider_id"]) || !isset($_SESSION["email"]) || $_SESSION["user_type"] !== 'provider') {
 	header("Location: /ServiceHub/Signup_Login/login.php");
 	exit;
 }
 
-include_once "connection.php";
+
+
 
 // Get provider details
 $res = mysqli_query($con, "SELECT service_providers.*, service.service_name 
@@ -91,7 +93,7 @@ $_SESSION['id'] = $row['provider_id'];
 						</div>
 						<div class="col-md-6 mb-4">
 							<div class="custom-card">
-								<h5 class="custom-title">5 Star Reviews</h5>
+								<h5 class="custom-title">Total earning</h5>
 								<p class="custom-number">90%</p>
 							</div>
 						</div>

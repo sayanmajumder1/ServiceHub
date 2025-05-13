@@ -279,7 +279,7 @@ textarea.form-control:focus {
 
         <div class="mb-3">
           <label class="form-label">Date of Birth</label>
-          <input type="text" class="form-control" >
+          <input type="date" name="dob" value="<?php echo htmlspecialchars($user['dob']); ?>" class="form-control" >
         </div>
         <div class="mb-3">
           <label class="form-label">Enter Your Phone No </label>
