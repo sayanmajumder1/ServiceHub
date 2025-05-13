@@ -140,6 +140,7 @@
         <p><strong>Business Name:</strong><?php  echo $row['businessname'] ?></p>
         <p><strong>Lisence No:</strong><?php  echo $row['lisenceno'] ?></p>
         <p><strong>Identity No:</strong><?php  echo $row['identityno'] ?></p>
+        <p><strong>Price:</strong><?php  echo $row['price'] ?></p>
         <p><strong>Password:</strong><?php  echo $row['password'] ?></p>
       </div>
       <a href="profile_update.php"><button class="edit-btn">Edit Profile</button></a>
