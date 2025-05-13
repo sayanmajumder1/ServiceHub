@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // For login flow
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['user_type'] == 'user') {
-                header("Location: /ServiceHub/Homepage/home.php");
+                header("Location: /ServiceHub/Homepage/index.php");
                 exit();
             }
         } elseif (isset($_SESSION['provider_id'])) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->execute()) {
                     $_SESSION['user_id'] = $conn->insert_id;
                     $_SESSION['user_type'] = 'user';
-                    header("Location: /ServiceHub/Homepage/home.php");
+                    header("Location: /ServiceHub/Homepage/index.php");
                     exit();
                 } else {
                     $error = "User registration failed. Please try again.";
@@ -37,16 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Provider signup
                 $stmt = $conn->prepare("INSERT INTO service_providers 
-                    (businessname, provider_name, email, phone, service_id, password, identityno, identityimage, approved_action) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
+                    (businessname, provider_name,address, email, phone, service_id, password,lisenceno, identityno, identityimage, approved_action) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?, 'pending')");
                 $stmt->bind_param(
-                    "ssssssss",
+                    "ssssssssss",
                     $data['businessname'],
                     $data['provider_name'],
+                    $data['address'],
                     $data['email'],
                     $data['phone'],
                     $data['service_id'],
                     $data['password'],
+                    $data['lisenceno'],
                     $data['identityno'],
                     $data['identityimage']
                 );

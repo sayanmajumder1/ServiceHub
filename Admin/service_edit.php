@@ -41,7 +41,7 @@
                     <div class="card-body ab2">
                         <h2>Edit Services:</h2>
                         <p class="card-text"> 
-                            <form method="POST" action="service_update.php" >
+                            <form method="POST" action="service_update.php" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label>Service Name:</label><br>
                                     <input type="text" name="s_id" id="s_id" value="<?php echo $row['service_id']?>" class="con1" hidden>
@@ -51,8 +51,10 @@
                                
                                 <div class="mb-3">
                                     <label>Images:</label><br>
-                                    <!-- <input type="file" name="s_img" id="s_img" class="con1"required> -->
-                                    <img src="./img/<?php echo $row['image']?> "height="125px"width="150px">
+                                    
+                                    <img src="./img/<?php echo $row['image']?> "height="125px"width="150px"><br><br>
+                                    <label>Do you want to change the image:</label><br><br>
+                                    <input type="file" name="s_img" id="s_img" class="con1">
                                 </div>
                                 <button type="submit" class="btn btn-outline-success">Update Services</button>
                             </form>

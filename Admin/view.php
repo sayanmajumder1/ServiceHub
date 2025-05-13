@@ -76,6 +76,7 @@ $row = mysqli_fetch_assoc($res);
                         <p><strong>Description:</strong> <?php echo $row['description']; ?></p>
                         <p><strong>Lisence No:</strong> <?php echo $row['lisenceno']; ?></p>
                         <p><strong>Identity No:</strong> <?php echo $row['identityno']; ?></p>
+                        <p><strong>Identity Image:</strong> <img src="/serviceHub/Signup_Login/uploads/<?php echo $row['identityimage']; ?>"></p>
                         <p><strong>Status:</strong> <?php echo ucfirst($row['approved_action']); ?></p>
                     </div>
                 </div>

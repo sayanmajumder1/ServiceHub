@@ -36,7 +36,9 @@
           <?php
                                      
             include_once "connection.php";
-            $res=mysqli_query($con,"select count(*) as total from booking where provider_id='".$_SESSION['id']."' and booking_status='accepted'");
+            $res = mysqli_query($con, "SELECT COUNT(*) AS total FROM booking WHERE provider_id='".$_SESSION['id']."' AND 
+            booking_status IN ('accepted', 'completed')");
+
             $row=mysqli_fetch_array($res);
           ?>
           <p class="card-text fs-4"><?php  echo $row['total'] ?></p>
