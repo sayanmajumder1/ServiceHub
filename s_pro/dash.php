@@ -1,15 +1,12 @@
 <?php
 session_start();
-
 include_once "connection.php";
+
 // Check if user is logged in as provider
 if (!isset($_SESSION["provider_id"]) || !isset($_SESSION["email"]) || $_SESSION["user_type"] !== 'provider') {
-	header("Location: /ServiceHub/Signup_Login/login.php");
-	exit;
+    header("Location: /ServiceHub/Signup_Login/login.php");
+    exit;
 }
-
-
-
 
 // Get provider details
 $res = mysqli_query($con, "SELECT service_providers.*, service.service_name 
@@ -18,17 +15,26 @@ $res = mysqli_query($con, "SELECT service_providers.*, service.service_name
     WHERE service_providers.provider_id = " . $_SESSION['provider_id']);
 
 if (!$res) {
-	die("Database error: " . mysqli_error($con));
+    die("Database error: " . mysqli_error($con));
 }
 
 $row = mysqli_fetch_assoc($res);
 
 if (!$row) {
-	die("Provider not found in database");
+    die("Provider not found in database");
 }
 
+// ✅ Redirect to review.php if approved_status is 'pending'
+if ($row['approved_action'] === 'pending') {
+    header("Location: /ServiceHub/Signup_Login/review.php");
+    exit;
+}
+
+
+// Store provider ID in session
 $_SESSION['id'] = $row['provider_id'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
