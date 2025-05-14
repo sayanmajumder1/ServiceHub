@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2025 at 06:46 AM
+-- Generation Time: May 14, 2025 at 04:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,8 +73,8 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`) VALUES
-(3, 6, 27, 14, 'rejected', '2025-05-05 09:34:10', 0, '', 'failed', '1111111', '2025-05-05 07:36:35', 5555, 'bad behaviour'),
-(4, 9, 26, 14, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', 6666, '');
+(3, 6, 27, 14, 'completed', '2025-05-05 09:34:10', 0, '', 'success', '1111111', '2025-05-05 07:36:35', 5555, ''),
+(4, 9, 26, 14, 'rejected', '2025-05-05 09:34:10', 2001, 'paypal', 'failed', '555', '2025-05-05 07:36:35', 6666, '');
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE `review` (
 
 INSERT INTO `review` (`review_id`, `user_id`, `provider_id`, `rating`, `comment`, `created_at`) VALUES
 (1, 6, 14, 4, 'Wonderful services.', '2025-05-05 07:27:27'),
-(2, 9, 15, 5, 'very good performance.', '2025-05-05 07:27:27'),
+(2, 9, 14, 5, 'very good performance.', '2025-05-05 07:27:27'),
 (3, 6, 20, 4, 'beautiful', '2025-05-08 02:47:38'),
 (4, 9, 20, 5, 'wonderful', '2025-05-08 02:47:38'),
 (5, 11, 20, 4, 'beautiful', '2025-05-08 02:47:43'),
@@ -164,17 +164,18 @@ CREATE TABLE `service_providers` (
   `phone` int(10) DEFAULT NULL,
   `provider_name` varchar(100) NOT NULL,
   `password` text NOT NULL,
-  `address` text NOT NULL
+  `address` text NOT NULL,
+  `price` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_providers`
 --
 
-INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
-(14, '', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', 1234567891, 'Riya Das', 'Riya@2005', 'Burdwan'),
-(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', 987452410, 'Sayan Majumdar', 'sayan@2004', 'Mameri'),
-(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', 2147483647, 'Anik Santra', '1234', 'Jamalpur');
+INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`, `price`) VALUES
+(14, '5aed4e0f741714190a82621d0cde73d9.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', 1234567891, 'Riya Das', 'Riya@2005', 'Burdwan', '100'),
+(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', 987452410, 'Sayan Majumdar', 'sayan@2004', 'Mameri', ''),
+(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', 2147483647, 'Anik Santra', '1234', 'Jamalpur', '');
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `name`, `dob`, `email`, `password`, `phone`, `address`, `image`, `created_at`, `updated_at`) VALUES
 (6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'Kolkata', '2025-05-13_050657_user_6.jpg', '2025-05-05 07:04:49', '2025-05-13 03:46:51'),
-(9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '', '2025-05-05 07:09:27', '2025-05-05 07:09:27'),
+(9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '2025-05-14_162419_user_9.jpg', '2025-05-05 07:09:27', '2025-05-14 14:24:19'),
 (11, 'Soham dutta', '0000-00-00', 'soham@gmail.com', 'soham@2005', '7797472017', '', '', '2025-05-05 14:10:23', '2025-05-05 14:10:23'),
 (12, 'Sudipta Samanta', '0000-00-00', 'Sudipta@gmail.com', 'sudipta@2005', '6295069367', '', '', '2025-05-08 02:39:14', '2025-05-08 02:39:14');
 
