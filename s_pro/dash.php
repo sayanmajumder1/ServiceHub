@@ -45,6 +45,8 @@ $_SESSION['id'] = $row['provider_id'];
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 	<style>
 		.review-scroll-wrapper {
     height: 200px;
@@ -166,6 +168,7 @@ $_SESSION['id'] = $row['provider_id'];
     </div>
 </div>
 
+<canvas id="myChart" width="400" height="200"></canvas>
 
 
 					
@@ -176,6 +179,31 @@ $_SESSION['id'] = $row['provider_id'];
 				link.classList.add('active');
 			}
 		});
+	
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar', // You can use 'line', 'pie', 'doughnut', etc.
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May'],
+        datasets: [{
+            label: 'Sales',
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
 	</script>
 </body>
 
