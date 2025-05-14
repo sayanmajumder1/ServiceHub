@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       margin: 0;
@@ -104,6 +105,45 @@
       background: #7a0ed0;
     }
 
+    .profile-container1 {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .profile-img1 {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .icon-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.3s ease;
+      color: #fff;
+      font-size: 30px;
+    }
+
+    .profile-container1:hover .icon-overlay {
+      opacity: 1;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
     @media (max-width: 768px) {
       .profile-container {
         margin-left: 0;
@@ -129,7 +169,15 @@
         $row=mysqli_fetch_array($res);
     ?>
     <div class="profile-card">
-      <img src="img/n1.jpg" alt="Profile Picture" class="profile-img">
+      <!-- <img src="img/n1.jpg" alt="Profile Picture" class="profile-img"> -->
+      <form action="upload.php" method="POST" enctype="multipart/form-data">
+  <label for="file-upload" class="profile-container1">
+    <img src="./uploads2/<?php echo $row['image'] ?>" alt="Profile Picture" class="profile-img1">
+    <div class="icon-overlay"><i class="fa fa-camera"></i></div>
+  </label>
+  <input type="file" name="profile" id="file-upload" onchange="this.form.submit()">
+</form>
+
       <h3><?php  echo $row['provider_name'] ?></h3>
       <h6><?php  echo $row['service_name'] ?></h6>
       <div class="details">

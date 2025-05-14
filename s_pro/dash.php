@@ -75,7 +75,7 @@ $_SESSION['id'] = $row['provider_id'];
 		<div class="top-profile d-flex justify-content-end align-items-center mb-4">
 			<a href="profile-details.php" class="text-decoration-none text-dark">
 				<div class="profile-info d-flex align-items-center">
-					<img src="./img/n1.jpg" alt="profile" class="profile-pic me-3">
+					<img src="./uploads2/<?php echo htmlspecialchars($row['image']) ?>" alt="Profile Picture" class="profile-pic me-3">
 					<div>
 						<h6 class="mb-0"><?php echo htmlspecialchars($row['provider_name']); ?></h6>
 						<small class="text-muted"><?php echo htmlspecialchars($row['service_name']); ?></small>
@@ -134,13 +134,14 @@ $_SESSION['id'] = $row['provider_id'];
         <div class="review-scroll-wrapper">
             <div class="review-scroll-content">
                 <?php
-                $res = mysqli_query($con, "SELECT review.*, users.name FROM review 
+                $res = mysqli_query($con, "SELECT review.*, users.name,users.image FROM review 
                     INNER JOIN users ON review.user_id=users.user_id 
                     WHERE review.provider_id='" . $_SESSION['provider_id'] . "'");
                 while ($row = mysqli_fetch_array($res)) {
                 ?>
                 <div class="review avatar">
-                    <img src="img/n1.jpg" alt="User" class="user-icon me-2">
+				<img src="/ServiceHub/Homepage/assets/images/<?php echo $row['image'] ?>" alt="User" class="user-icon me-2">
+
                     <div>
                         <div class="review-content">
                             <h6 class="username"><?php echo htmlspecialchars($row['name']); ?></h6>

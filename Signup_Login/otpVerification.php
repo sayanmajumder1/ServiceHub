@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
         } elseif (isset($_SESSION['provider_id'])) {
-            header("Location: /ServiceHub/s_pro/dash.php");
+            header("Location: /ServiceHub/s_pro/index.php");
             exit();
         }
         // For signup flow
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['email'] = $data['email']; // Add this line
                     $_SESSION['user_type'] = 'provider';
                     unset($_SESSION['signup_data'], $_SESSION['otp']);
-                    header("Location: /ServiceHub/s_pro/dash.php");
+                    header("Location: /ServiceHub/s_pro/index.php");
                     exit();
                 } else {
                     $error = "Provider registration failed: " . mysqli_error($conn);
