@@ -186,10 +186,10 @@ const myChart = new Chart(ctx, {
     data: {
         labels: ['January', 'February', 'March', 'April', 'May'],
         datasets: [{
-            label: 'Sales',
-            data: [12, 19, 3, 5, 2],
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            label: 'Booking',
+            data: [12, 19, 23, 25, 12],
+            backgroundColor: 'rgba(176, 67, 206, 0.5)',
+            borderColor: 'rgb(194, 51, 230)',
             borderWidth: 1
         }]
     },
