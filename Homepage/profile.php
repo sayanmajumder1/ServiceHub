@@ -281,6 +281,13 @@ textarea.form-control:focus {
           <label class="form-label">Date of Birth</label>
           <input type="date" name="dob" value="<?php echo htmlspecialchars($user['dob']); ?>" class="form-control" >
         </div>
+          
+
+        <div class="mb-3">
+          <label class="form-label">Enter Your Address</label>
+        <textarea name="address" class="form-control" rows="3" placeholder="Enter your address"><?php echo htmlspecialchars($user['address']); ?></textarea>
+        </div>
+
         <div class="mb-3">
           <label class="form-label">Enter Your Phone No </label>
           <input type="phone" class="form-control" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
