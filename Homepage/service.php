@@ -76,7 +76,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
               <a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a>
             </li>
             <li>
-           <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
+           <a href="booking.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
            </li>
             <li>
               <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
