@@ -36,28 +36,29 @@
                         <h2>Add Sub Services:</h2>
                         <p class="card-text"> 
                          <?php
-                            include_once "connection.php";
-                             $res=mysqli_query($con,"select * from service");
+                           
                     
                           ?>
-                            <form method="POST" action="#.php" enctype="multipart/form-data">
+                            <form method="POST" action="subservice_data.php" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label>Service Name:</label><br>
-                                   
-                                    <!-- <input type="number" name="s_id" id="s_id" value="<?php echo $row['s_id']?>" class="con1" required>
-                                    <input type="text" name="s_name" id="s_name" value="<?php echo $row['s_name']?>" class="con1" required> -->
-                                  
-                                    <select id="s_id" name="s_id">  
-                                          <?php
-                                       while($row=mysqli_fetch_array($res))
-                                       {
-                                    ?>                    
+                                    <select id="s_id" name="s_id" class="con1" required>  
+                                        <option >Select Service</option>  
+                                    <?php
+                                        include_once "connection.php";
+                                        $res=mysqli_query($con,"select * from service");
+                                        while($row=mysqli_fetch_array($res))
+                                        {
+                                    ?> 
+                                                     
                                     <option value="<?php echo $row['service_id']?>"><?php echo $row['service_name']?></option>
+                                    
+                                
+                                    <?php
+                                        }
+                                    ?>
                                     </select>
                                 </div>
-                            <?php
-                                    }
-                            ?>
                                 <div class="mb-3">
                                     <label>Sub Service Name:</label><br>
                                     <input type="text" name="sub_name" id="sub_name" Placeholder="Enter Sub Service Name"class="con1" required>
