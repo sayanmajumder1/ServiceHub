@@ -41,6 +41,12 @@
                     <li class="nav-item">
                         <a href="manageservice.php" class="nav-link  hv1" onclick="service2_click()">Manage Service</a>
                     </li>
+                     <li class="nav-item">
+                        <a href="addsubservice.php" class="nav-link  hv1" onclick="service3_click()">Add Sub Service</a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="manageservice.php" class="nav-link  hv1" onclick="service4_click()">Manage Sub Service</a>
+                    </li>
                 </ul>
             </div>
         </li>
