@@ -43,6 +43,20 @@ dashboardLink3?.addEventListener('click', () => {
     }
 });
 
+const dashboardLink10 = document.querySelector('[onclick="service3_click()"]');
+dashboardLink3?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+
+const dashboardLink11 = document.querySelector('[onclick="service4_click()"]');
+dashboardLink3?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+
 const dashboardLink4 = document.querySelector('[onclick="sp1_click()"]');
 dashboardLink4?.addEventListener('click', () => {
     if (window.innerWidth < 992) {

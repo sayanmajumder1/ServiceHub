@@ -1,10 +1,7 @@
 <?php
 
-
 session_start(); // Start the session
-
 include_once "db_connect.php";
-
 // Use session safely now
 //$user_id = $_SESSION['user_id'] ?? null;
 //if (!$user_id) {
@@ -20,7 +17,6 @@ mysqli_stmt_bind_param($stmt, "i", $user_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $user = mysqli_fetch_assoc($result);
-
 // Handle profile image
 $image = $user['image'] ?? '';
 $displayImage = !empty($image) ? $image : 'default.jpg';}
@@ -37,7 +33,6 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-
 <!-- SideBar Functionality  Js  Code Integrated Here  -->
     <script src= "SideBarFunction.js"></script>
     <style>
@@ -47,7 +42,6 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
   background-color: #f3eaff;
   font-family: 'Arial', sans-serif;
 }
-
 .contact-container {
   max-width: 1100px;
   margin: auto;
@@ -58,7 +52,6 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
-
 .contact-info {
   flex: 1;
   padding: 30px;
