@@ -339,14 +339,15 @@ body {
         $user_id = $_SESSION['user_id'];
         
         // Fetch bookings with service and provider details
-        $query = "SELECT b.*, s.service_name, LOWER(REPLACE(s.service_name, ' ', '')) as service_filter, 
-                         s.image as service_image, p.provider_name, p.businessname, p.address, p.image as provider_image
-                  FROM booking b
-                  JOIN service s ON b.service_id = s.service_id
-                  JOIN service_providers p ON b.provider_id = p.provider_id
-                  WHERE b.user_id = ?
-                  ORDER BY b.created_at DESC";
-        
+         // Fetch bookings with service and provider details
+    $query = "SELECT b.*, s.service_name, LOWER(REPLACE(s.service_name, ' ', '')) as service_filter, 
+                     s.image as service_image, p.provider_name, p.businessname, p.address, p.image as provider_image
+              FROM booking b
+              JOIN service s ON b.service_id = s.service_id
+              JOIN service_providers p ON b.provider_id = p.provider_id
+              WHERE b.user_id = ?
+              ORDER BY b.created_at DESC";
+
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "i", $user_id);
         mysqli_stmt_execute($stmt);
@@ -388,35 +389,38 @@ body {
                               'assets/images/services/' . $booking['service_image'] : 
                               'https://via.placeholder.com/150');
     ?>
-    <div class="card booking-card mb-3" data-service="<?php echo strtolower(str_replace(' ', '', $booking['service_name'])); ?>">
-        <div class="row g-0">
-            <div class="col-4">
-                <img src="<?php echo $image_path; ?>" class="img-fluid rounded-start h-100 object-fit-cover" alt="<?php echo htmlspecialchars($booking['service_name']); ?>">
-            </div>
-            <div class="col-8">
-                <div class="card-body">
-                    <h6 class="card-title fw-bold"><?php echo htmlspecialchars($booking['businessname']); ?></h6>
-                    <p class="card-text small"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($booking['address']); ?></p>
-                    <p class="card-text small mb-1">Service: <?php echo htmlspecialchars($booking['service_name']); ?></p>
-                    <p class="card-text small">Date: <?php echo $booking_time; ?></p>
-                    <p class="text-theme fw-bold mb-1">$<?php echo number_format($booking['amount'], 2); ?></p>
-                    <span class="badge <?php echo $status_class; ?> text-white"><?php echo $status_text; ?></span>
-                    <?php if (!empty($booking['reason'])): ?>
-                        <p class="card-text small mt-1">Reason: <?php echo htmlspecialchars($booking['reason']); ?></p>
-                    <?php endif; ?>
-                </div>
+  <div class="card booking-card mb-3" 
+     onclick="window.location.href='booking_status.php?booking_id=<?php echo $booking['booking_id']; ?>'"
+     data-service="<?php echo strtolower(str_replace(' ', '', $booking['service_name'])); ?>"
+     style="cursor: pointer;">
+    <div class="row g-0">
+        <div class="col-4">
+            <img src="<?php echo $image_path; ?>" class="img-fluid rounded-start h-100 object-fit-cover" alt="<?php echo htmlspecialchars($booking['service_name']); ?>">
+        </div>
+        <div class="col-8">
+            <div class="card-body">
+                <h6 class="card-title fw-bold"><?php echo htmlspecialchars($booking['businessname']); ?></h6>
+                <p class="card-text small"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($booking['address']); ?></p>
+                <p class="card-text small mb-1">Service: <?php echo htmlspecialchars($booking['service_name']); ?></p>
+                <p class="card-text small">Date: <?php echo $booking_time; ?></p>
+                <p class="text-theme fw-bold mb-1">$<?php echo number_format($booking['amount'], 2); ?></p>
+                <span class="badge <?php echo $status_class; ?> text-white"><?php echo $status_text; ?></span>
+                <?php if (!empty($booking['reason'])): ?>
+                    <p class="card-text small mt-1">Reason: <?php echo htmlspecialchars($booking['reason']); ?></p>
+                <?php endif; ?>
             </div>
         </div>
     </div>
-    <?php
-            }
-        } else {
-            echo '<div class="alert alert-info">No bookings found.</div>';
+</div>
+<?php
         }
     } else {
-        echo '<div class="alert alert-warning">Please login to view your bookings.</div>';
+        echo '<div class="alert alert-info">No bookings found.</div>';
     }
-    ?>
+} else {
+    echo '<div class="alert alert-warning">Please login to view your bookings.</div>';
+}
+?>
 </div>
 
 <script>

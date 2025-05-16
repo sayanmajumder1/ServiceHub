@@ -246,9 +246,9 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
                             $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']);
                             break;
                         case 'completed':
-                            $button_class = 'btn-info';
-                            $button_text = 'Completed';
-                            $target_page = 'booking_status.php?id=' . $booking['booking_id'];
+                            $button_class = 'btn-primary';
+                            $button_text = 'Book For Service';
+                            $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']);
                             break;
                         default:
                             $button_class = 'btn-primary';
