@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 04:42 PM
+-- Generation Time: May 17, 2025 at 05:43 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -164,18 +164,17 @@ CREATE TABLE `service_providers` (
   `phone` varchar(15) DEFAULT NULL,
   `provider_name` varchar(100) NOT NULL,
   `password` text NOT NULL,
-  `address` text NOT NULL,
-  `price` text NOT NULL
+  `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_providers`
 --
 
-INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`, `price`) VALUES
-(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan', '1000'),
-(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Mameri', ''),
-(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', '2147483647', 'Anik Santra', '1234', 'Jamalpur', '');
+INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
+(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan'),
+(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Mameri'),
+(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', '2147483647', 'Anik Santra', '1234', 'Jamalpur');
 
 -- --------------------------------------------------------
 
@@ -188,7 +187,6 @@ CREATE TABLE `subservice` (
   `service_id` int(11) NOT NULL,
   `subservice_name` varchar(20) NOT NULL,
   `service_des` text NOT NULL,
-  `price` varchar(15) NOT NULL,
   `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -319,7 +317,7 @@ ALTER TABLE `service_providers`
 -- AUTO_INCREMENT for table `subservice`
 --
 ALTER TABLE `subservice`
-  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -12,7 +12,7 @@
     include_once "connection.php";
 
     $res=mysqli_query($con,"update service_providers set description='".$_POST['description']."',email='".$_POST['email']."',
-    phone='".$_POST['no']."',address='".$_POST['address']."',price='".$_POST['price']."',password='".$_POST['password']."' 
+    phone='".$_POST['no']."',address='".$_POST['address']."',password='".$_POST['password']."' 
     where provider_id='".$_POST['id']."'");
    
 

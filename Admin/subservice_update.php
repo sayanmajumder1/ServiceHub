@@ -25,8 +25,7 @@ if (!empty($_FILES['s_img']['tmp_name'])) {
     }
 }
 
-$sql = "UPDATE subservice SET service_id='$service_id',subservice_name='$sub_name', service_des='$s_des',
-price='$s_price' $update_image WHERE subservice_id = '$s_id'";
+$sql = "UPDATE subservice SET service_id='$service_id',subservice_name='$sub_name', service_des='$s_des' $update_image WHERE subservice_id = '$s_id'";
 $res = mysqli_query($con, $sql);
 
 if (!$res) {

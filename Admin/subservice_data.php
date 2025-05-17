@@ -14,7 +14,7 @@
     move_uploaded_file($_FILES['s_img']['tmp_name'],$file_name);
 
     $query="insert into subservice set service_id='".$_POST['s_id']."',subservice_name='".$_POST['sub_name']."', service_des='".$_POST['s_des']."',
-    price='".$_POST['s_price']."',image='".$f_name."'";
+    image='".$f_name."'";
 
     $res=mysqli_query($con,$query);
 

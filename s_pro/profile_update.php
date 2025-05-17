@@ -76,10 +76,7 @@
                     <input type="text" class="form-control" id="address" name="address" value='<?php echo $row['address']?>' required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="Price" class="form-label">Start Price</label>
-                    <input type="text" class="form-control" id="price" name="price" value='<?php echo $row['price']?>' required>
-                </div>
+                
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
