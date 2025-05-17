@@ -55,7 +55,7 @@
 
                     <td><?php   echo $row['subservice_name']?></td>
                     <td><?php   echo $row['service_des']?></td>
-                     <td><?php   echo $row['service_des']?></td>
+                     <td></td>
                     <td>
                         <a href="#.php?id="><button class="btn-accept">Add</button>
                         <a href="#.php?id="><button class="btn-reject">Edit</button>
