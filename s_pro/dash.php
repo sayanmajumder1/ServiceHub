@@ -33,6 +33,7 @@ if ($row['approved_action'] === 'pending') {
 
 // Store provider ID in session
 $_SESSION['id'] = $row['provider_id'];
+$_SESSION['service_id']=$row['service_id'];
 ?>
 
 <!DOCTYPE html>

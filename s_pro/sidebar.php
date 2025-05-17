@@ -15,6 +15,7 @@ $row=mysqli_fetch_assoc($res);
     </div>
     <nav>
         <a href="dash.php" class="main-link">Dashboard</a>
+        <a href="manageservices.php" class="main-link">Manage Services</a>
 		<a href="bookings.php" class="main-link">Bookings</a>
         <a href="ongoingbooking.php" class="main-link">Ongoing Booking</a>
 
