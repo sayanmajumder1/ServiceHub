@@ -59,7 +59,7 @@
                     <th>Booking No</th>
                     <th>User Name</th>
                     <th>Service Provider</th>
-                    <th>Service Category</th>
+                    <th>Service Name</th>
                     <th>Action</th>
                 </tr>
                 </thead>

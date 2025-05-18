@@ -57,10 +57,7 @@
                                     <label>Service Description:</label><br>
                                     <input type="text" name="s_des" id="s_des" value="<?php echo $row['service_des']?>"class="con1" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label>Service price:</label><br>
-                                    <input type="text" name="s_price" id="s_price" value="<?php echo $row['price']?>"class="con1" required>
-                                </div>
+                               
                                 <div class="mb-3">
                                     <label>Images:</label><br>
                                     <img src="./img/<?php echo $row['image']?> "height="125px"width="150px"><br><br>

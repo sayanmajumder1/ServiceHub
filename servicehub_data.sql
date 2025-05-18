@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 04:42 PM
+-- Generation Time: May 18, 2025 at 09:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,16 +65,40 @@ CREATE TABLE `booking` (
   `transaction_id` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `booking_no` varchar(100) NOT NULL,
-  `reason` text NOT NULL
+  `reason` text NOT NULL,
+  `subservice_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`) VALUES
-(3, 6, 27, 14, 'completed', '2025-05-05 09:34:10', 0, '', 'success', '1111111', '2025-05-05 07:36:35', '5555', ''),
-(4, 9, 26, 14, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour');
+INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`, `subservice_id`) VALUES
+(4, 9, 26, 15, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour', 5),
+(7, 6, 26, 15, 'accepted', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
+(3, 'Riya Das', 'rd@gmail.com', 'fiii', '2025-05-18 05:57:21'),
+(4, 'Riya Das', 'rd3456@gmail.com', 'hi guysssss', '2025-05-18 06:01:05'),
+(5, 'shouvik banerjee', 'shouvik@gmail.com', 'wow', '2025-05-18 06:22:59');
 
 -- --------------------------------------------------------
 
@@ -164,18 +188,17 @@ CREATE TABLE `service_providers` (
   `phone` varchar(15) DEFAULT NULL,
   `provider_name` varchar(100) NOT NULL,
   `password` text NOT NULL,
-  `address` text NOT NULL,
-  `price` text NOT NULL
+  `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_providers`
 --
 
-INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`, `price`) VALUES
-(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan', '1000'),
-(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Mameri', ''),
-(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', '2147483647', 'Anik Santra', '1234', 'Jamalpur', '');
+INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
+(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan'),
+(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Memeri'),
+(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', '2147483647', 'Anik Santra', '1234', 'Jamalpur');
 
 -- --------------------------------------------------------
 
@@ -188,9 +211,42 @@ CREATE TABLE `subservice` (
   `service_id` int(11) NOT NULL,
   `subservice_name` varchar(20) NOT NULL,
   `service_des` text NOT NULL,
-  `price` varchar(15) NOT NULL,
   `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subservice`
+--
+
+INSERT INTO `subservice` (`subservice_id`, `service_id`, `subservice_name`, `service_des`, `image`) VALUES
+(5, 26, 'Gas Pipe Repairing', 'we provide better repairing', '16f365ab23faa72a9eaf2c585075efef.jpg'),
+(6, 26, 'Foam Wash', 'we provide better Foam Wash', '2569191a5406adbf3503969a55783d5c.jpg'),
+(7, 24, 'wairing', 'we provide better repairing', 'd439c618e976eded7450b293767e66a7.jpg'),
+(8, 26, 'Ac installation', 'we provide better repairing', 'af737a013c3c45a3793937e0ad1488d0.jpg'),
+(9, 26, 'Repair', 'we provide better repairing', 'ea9654df2ac1d5b95518c600ff98a763.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subservice_price_map`
+--
+
+CREATE TABLE `subservice_price_map` (
+  `subprice_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `subservice_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subservice_price_map`
+--
+
+INSERT INTO `subservice_price_map` (`subprice_id`, `service_id`, `subservice_id`, `provider_id`, `price`) VALUES
+(1, 26, 5, 15, 2005),
+(2, 26, 6, 15, 5000),
+(3, 26, 8, 15, 6000);
 
 -- --------------------------------------------------------
 
@@ -239,6 +295,12 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`booking_id`);
 
 --
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
@@ -269,6 +331,12 @@ ALTER TABLE `subservice`
   ADD PRIMARY KEY (`subservice_id`);
 
 --
+-- Indexes for table `subservice_price_map`
+--
+ALTER TABLE `subservice_price_map`
+  ADD PRIMARY KEY (`subprice_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -289,7 +357,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `notification`
@@ -319,7 +393,13 @@ ALTER TABLE `service_providers`
 -- AUTO_INCREMENT for table `subservice`
 --
 ALTER TABLE `subservice`
-  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `subservice_price_map`
+--
+ALTER TABLE `subservice_price_map`
+  MODIFY `subprice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

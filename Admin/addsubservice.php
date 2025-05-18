@@ -69,11 +69,8 @@
                                     <input type="text" name="s_des" id="s_des" Placeholder="Enter Service Description"class="con1" required>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label>Service Price:</label><br>
-                                    <input type="text" name="s_price" id="s_price" Placeholder="Enter Service Price"class="con1" required>
-                                </div>
-
+                              
+                              
                                 <div class="mb-3">
                                     <label>Images:</label><br>
                                     <input type="file" name="s_img" id="s_img" class="con1"required>

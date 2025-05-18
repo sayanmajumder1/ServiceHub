@@ -40,7 +40,6 @@
                         <th scope="col">Service Name</th>
                         <th scope="col">Sub Service Name</th>
                         <th scope="col">Service Description</th>
-                        <th scope="col">Service Price</th>
                         <th colspan='2'>Action</th>
                         </tr>
                     </thead>
@@ -62,7 +61,6 @@
                         <td data-label="Service name"><?php echo $row['service_name'] ?></td>
                         <td data-label="Sub Service name"><?php echo $row['subservice_name'] ?></td>
                         <td data-label="Service Description"><?php echo $row['service_des'] ?></td>
-                        <td data-label="Service Price"><?php echo $row['price'] ?></td>
                         <td data-label="Action"><a href="subservice_edit.php?id=<?php echo $row['subservice_id']?>"><button type="button" class="btn btn-outline-info">Edit</button></a></td>
                         <td data-label="Action"><a href="subservice_delete.php?id=<?php echo $row['subservice_id']?>"><button type="button" class="btn btn-outline-danger">Delete</button></a></td>
                         </tr>
