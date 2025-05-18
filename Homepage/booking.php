@@ -11,8 +11,9 @@ include_once "db_connect.php";
   //  header("Location:/ServiceHub/Signup_Login/login.php ");
     //exit();
 //}
+// In providers.php after getting $subservice_id
 
-
+ $subservice_id = isset($_GET['subservice_id']) ? (int)$_GET['subservice_id'] : 0;
 
 // Check if provider_id is passed in URL
 if (!isset($_GET['provider_id']) || !is_numeric($_GET['provider_id'])) {
@@ -339,7 +340,10 @@ a.btn:hover {
 
    <input type="hidden" name="provider_id" value="<?php echo $provider['provider_id']; ?>">
     <input type="hidden" name="service_id" value="<?php echo $provider['service_id']; ?>">
-    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>"> <!-- Assuming session is active -->
+    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+    <input type="hidden" name="subservice_id" value="<?php echo $subservice_id; ?>">
+
+   
     <input type="hidden" name="option" value="Standard">
 
     <!-- Contact/Select Button -->
@@ -488,4 +492,4 @@ function bookService() {
 </footer>
 
 </body>
-</html>
+</html> 
