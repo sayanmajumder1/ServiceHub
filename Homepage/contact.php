@@ -230,10 +230,15 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
     </div>
     <div class="contact-form">
       <h2>Contact Us</h2>
-      <form>
-        <input type="text" placeholder="Your Name" required>
-        <input type="email" placeholder="Your Email" required>
-        <textarea placeholder="Message" required></textarea>
+      <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+        <p class="success-msg">Message sent successfully!</p>
+    <?php elseif (isset($_GET['status']) && $_GET['status'] === 'error'): ?>
+        <p class="error-msg">Something went wrong. Try again.</p>
+      <?php endif; ?>
+      <form action="submit_contact.php" method="post">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" id="message" required></textarea>
         <button type="submit">Send Message</button>
       </form>
     </div>
