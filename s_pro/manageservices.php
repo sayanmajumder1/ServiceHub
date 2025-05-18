@@ -40,8 +40,8 @@
             <?php
                                      
                  include_once "connection.php";
-                $res=mysqli_query($con,"select subservice.* from subservice inner join service_providers on subservice.service_id=service_providers.service_id
-                where subservice.service_id='".$_SESSION['service_id']."'");
+                 $res=mysqli_query($con,"select * from subservice where service_id='".$_SESSION['service_id']."'");
+                 
                  $count=1;
                  while($row=mysqli_fetch_array($res))
                 {
@@ -52,13 +52,45 @@
                     <td>
                         <img src="/ServiceHub/Admin/img/<?php echo $row['image']?> "height="125px"width="150px">
                     </td>
-
+                    
                     <td><?php   echo $row['subservice_name']?></td>
                     <td><?php   echo $row['service_des']?></td>
-                     <td></td>
+                    <?php
+                        $res1=mysqli_query($con,"select price from subservice_price_map where subservice_id='".$row['subservice_id']."'");
+                        $row1=mysqli_fetch_assoc($res1);
+                        if(empty($row1['price']))
+                        {
+                    ?>
+                    <td> <?php   echo "Nil"?></td>
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                        <td> <?php   echo $row1['price']?></td>
+
+                    <?php
+                        }
+                    ?>
+                    
+                 
                     <td>
-                        <a href="#.php?id="><button class="btn-accept">Add</button>
-                        <a href="#.php?id="><button class="btn-reject">Edit</button>
+                        <?php
+                            if(empty($row1['price']))
+                            {
+                            ?>
+                            <a href="addsubservice_price.php?id=<?php echo $row['subservice_id'] ?>"><button class="btn-accept">Add Price</button>
+                        <?php
+                            }
+                            else
+                            {
+                        ?>
+                        <a href="updatesubservice_price.php?id=<?php echo $row['subservice_id'] ?>"><button class="btn btn-primary">Edit Price</button>
+                        <?php
+                            }
+                        ?>
+                        
+                        
                     </td>
                 </tr>
                 <?php
