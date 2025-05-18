@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 06:20 AM
+-- Generation Time: May 18, 2025 at 08:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,6 +76,28 @@ INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `bo
 (3, 6, 27, 14, 'completed', '2025-05-05 09:34:10', 0, '', 'success', '1111111', '2025-05-05 07:36:35', '5555', ''),
 (4, 9, 26, 14, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour'),
 (7, 6, 26, 15, 'pending', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
+(3, 'Riya Das', 'rd@gmail.com', 'fiii', '2025-05-18 05:57:21'),
+(4, 'Riya Das', 'rd3456@gmail.com', 'hi guysssss', '2025-05-18 06:01:05');
 
 -- --------------------------------------------------------
 
@@ -272,6 +294,12 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`booking_id`);
 
 --
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification`
 --
 ALTER TABLE `notification`
@@ -329,6 +357,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `booking`
   MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `notification`
