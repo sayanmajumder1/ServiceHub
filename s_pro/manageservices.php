@@ -56,7 +56,8 @@
                     <td><?php   echo $row['subservice_name']?></td>
                     <td><?php   echo $row['service_des']?></td>
                     <?php
-                        $res1=mysqli_query($con,"select price from subservice_price_map where subservice_id='".$row['subservice_id']."'");
+                        $res1=mysqli_query($con,"select price from subservice_price_map where subservice_id='".$row['subservice_id']."' and 
+                        provider_id='".$_SESSION['id']."'");
                         $row1=mysqli_fetch_assoc($res1);
                         if(empty($row1['price']))
                         {

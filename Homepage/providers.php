@@ -133,11 +133,11 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
         exit;
     }
 
-    $service_id = (int)$_GET['id'];
+    $subservice_id = (int)$_GET['id'];
     $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
     // Validate and safely query for the service
-    $service_query = $conn->query("SELECT service_name FROM service WHERE service_id = $service_id");
+    $service_query = $conn->query("SELECT subservice_name FROM subservice WHERE subservice_id = $subservice_id");
 
     if (!$service_query) {
         echo "<h4 class='text-center mt-5 text-danger'>Database query error: " . htmlspecialchars($conn->error) . "</h4>";
@@ -196,12 +196,14 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
 
     <div class='container text-center mt-5'>
         <h2 class='fw-bold animated-heading'>
-            Providers For: " . htmlspecialchars($service['service_name']) . "
+            Providers For: " . htmlspecialchars($service['subservice_name']) . "
         </h2>
     </div>";
 
     // Fetch service providers
-    $provider_result = $conn->query("SELECT * FROM service_providers WHERE service_id = $service_id AND approved_action = 'approved'");
+    $provider_result = $conn->query("SELECT subservice_price_map.*, service_providers.* FROM subservice_price_map INNER JOIN service_providers
+    ON subservice_price_map.provider_id = service_providers.provider_id WHERE subservice_price_map.subservice_id = $subservice_id AND 
+    service_providers.approved_action = 'approved'");
 
     if ($provider_result === false) {
         echo "<p class='text-center text-danger mt-4'>Error fetching providers: " . htmlspecialchars($conn->error) . "</p>";
@@ -215,7 +217,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             $provider_id = $row['provider_id'];
             
             // Check if this user has any bookings with this provider
-            $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id  ORDER BY created_at DESC LIMIT 1   ");
+            $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id AND subservice_id = $subservice_id   ORDER BY created_at DESC LIMIT 1   ");
             
             // Initialize default values
             $has_booking = false;
@@ -248,12 +250,16 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
                         case 'completed':
                             $button_class = 'btn-primary';
                             $button_text = 'Book For Service';
-                            $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']);
+                            $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']) . 
+                            '&service_id=' . urlencode($row['service_id']);
+
                             break;
                         default:
                             $button_class = 'btn-primary';
                             $button_text = 'Book For Service';
-                            $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']);
+                            $target_page = 'booking.php?provider_id=' . urlencode($row['provider_id']) . 
+                            '&service_id=' . urlencode($row['service_id']);
+
                     }
                 }
                         

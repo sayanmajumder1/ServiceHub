@@ -134,7 +134,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';}
                             $image_data = '../Admin/img/' . $row['image']; 
                             echo '
                         <div class="col-4 col-md-4 col-lg-4 mb-3">
-                            <a href="' . (!empty($user_id) ? 'providers.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="text-decoration-none text-dark">
+                            <a href="' . (!empty($user_id) ? 'subservices.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="text-decoration-none text-dark">
                                 <div class="service-box">
                                     <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
                                     <p>' . htmlspecialchars($row['service_name']) . '</p>

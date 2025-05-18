@@ -222,7 +222,7 @@ if (isset($_SESSION['user_id'])) {
                             <span class="ml-1">4.83</span>
                         </div>
                         <p class="text-sm font-medium">Starts at ₹49</p>
-                        <a href="providers.php?id=<?php echo $row['service_id'] ?>" class="text-decoration-none text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-full text-sm text-center mb-2 w-20 p-2">Book</a>
+                        <a href="providers.php?id=<?php echo $row['subservice_id'] ?>" class="text-decoration-none text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-full text-sm text-center mb-2 w-20 p-2">Book</a>
                     </div>
 
                     <!-- Right Side -->
