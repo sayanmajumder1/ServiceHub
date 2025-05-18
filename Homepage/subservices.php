@@ -213,7 +213,7 @@ if (isset($_SESSION['user_id'])) {
             $res = $conn->query('SELECT * FROM subservice WHERE service_id = "' . $_GET['id'] . '"');
             while ($row = mysqli_fetch_array($res)) {
             ?>
-                <div class="lg:w-full w-2.5/3 flex justify-between items-center border-2 border-gray-200 p-4 rounded-md shadow-sm transform transition duration-500 hover:scale-105">
+                <div class="lg:w-full w-2.5/3 flex justify-between items-center border-2 border-gray-200 p-4 rounded-md shadow-sm transform transition duration-500 hover:scale-103 mb-3">
                     <!-- Left Side -->
                     <div class="flex flex-col space-y-1">
                         <h2 class="font-semibold text-lg"><?php echo $row['subservice_name'] ?></h2>
