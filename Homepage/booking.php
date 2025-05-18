@@ -382,6 +382,64 @@ function selectOption(el, option) {
     document.querySelector('.price-btn').innerText = 'Select ' + option + ' ($100)';
      document.getElementById('booking_option').value = option; // Set hidden input value
 }
+
+
+function validateBooking() {
+    // Check if address exists in user profile
+    fetch('check_address.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.hasAddress) {
+                // Address exists, submit the form
+                document.querySelector('form').submit();
+            } else {
+                // Show popup to add address
+                showAddressPopup();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while checking your address');
+        });
+}
+
+function showAddressPopup() {
+    // Create popup element
+    const popup = document.createElement('div');
+    popup.style.position = 'fixed';
+    popup.style.top = '0';
+    popup.style.left = '0';
+    popup.style.width = '100%';
+    popup.style.height = '100%';
+    popup.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    popup.style.display = 'flex';
+    popup.style.justifyContent = 'center';
+    popup.style.alignItems = 'center';
+    popup.style.zIndex = '1000';
+    
+    // Popup content
+    popup.innerHTML = `
+        <div style="background: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center;">
+            <h5>Address Required</h5>
+            <p>Please add your address to your profile before booking.</p>
+            <div style="margin-top: 20px;">
+                <a href="profile.php" class="btn btn-primary">Go to Profile</a>
+                <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn btn-secondary" style="margin-left: 10px;">Cancel</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(popup);
+}
+
+// Update the bookService function to use validateBooking
+function bookService() {
+    event.preventDefault(); // Prevent form submission
+    validateBooking();
+}
+
+
+
 </script>
 
 
