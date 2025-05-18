@@ -39,7 +39,7 @@
                         <th scope="col">Booking No</th>
                         <th scope="col">User Name</th>
                         <th scope="col">Service Provider</th>
-                        <th scope="col">Service Category</th>
+                        <th scope="col">Service Name</th>
                         <th scope="col">Payment status</th>
                         <th colspan='2'>Action</th>
                         </tr>

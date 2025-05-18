@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 08:19 AM
+-- Generation Time: May 18, 2025 at 09:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,17 +65,17 @@ CREATE TABLE `booking` (
   `transaction_id` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `booking_no` varchar(100) NOT NULL,
-  `reason` text NOT NULL
+  `reason` text NOT NULL,
+  `subservice_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`) VALUES
-(3, 6, 27, 14, 'completed', '2025-05-05 09:34:10', 0, '', 'success', '1111111', '2025-05-05 07:36:35', '5555', ''),
-(4, 9, 26, 14, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour'),
-(7, 6, 26, 15, 'pending', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '');
+INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`, `subservice_id`) VALUES
+(4, 9, 26, 15, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour', 5),
+(7, 6, 26, 15, 'accepted', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '', 6);
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,8 @@ CREATE TABLE `contact_messages` (
 
 INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
 (3, 'Riya Das', 'rd@gmail.com', 'fiii', '2025-05-18 05:57:21'),
-(4, 'Riya Das', 'rd3456@gmail.com', 'hi guysssss', '2025-05-18 06:01:05');
+(4, 'Riya Das', 'rd3456@gmail.com', 'hi guysssss', '2025-05-18 06:01:05'),
+(5, 'shouvik banerjee', 'shouvik@gmail.com', 'wow', '2025-05-18 06:22:59');
 
 -- --------------------------------------------------------
 
@@ -243,7 +244,7 @@ CREATE TABLE `subservice_price_map` (
 --
 
 INSERT INTO `subservice_price_map` (`subprice_id`, `service_id`, `subservice_id`, `provider_id`, `price`) VALUES
-(1, 26, 5, 15, 2000),
+(1, 26, 5, 15, 2005),
 (2, 26, 6, 15, 5000),
 (3, 26, 8, 15, 6000);
 
@@ -362,7 +363,7 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `notification`

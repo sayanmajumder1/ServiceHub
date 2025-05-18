@@ -43,9 +43,9 @@
 include_once "connection.php";
 
 // For example purposes, we fetch row with ID = 1
-$res = mysqli_query($con, "SELECT *, users.name, users.email, service_providers.provider_name, service.service_name
+$res = mysqli_query($con, "SELECT *, users.name, users.email, service_providers.provider_name, service.service_name,subservice.subservice_name
 FROM booking JOIN users ON booking.user_id = users.user_id JOIN service_providers ON booking.provider_id = service_providers.provider_id JOIN service ON
- booking.service_id = service.service_id where booking_id='".$_GET['id']."'");
+ booking.service_id = service.service_id JOIN subservice ON booking.subservice_id = subservice.subservice_id where booking_id='".$_GET['id']."'");
 $row = mysqli_fetch_assoc($res);
 ?>
 <div class="d-flex">
@@ -73,7 +73,8 @@ $row = mysqli_fetch_assoc($res);
                         <p><strong>Address:</strong> <?php echo ucfirst($row['address']); ?></p>
                         <p><strong>Booking No:</strong> <?php echo $row['booking_no']; ?></p>
                         <p><strong>Service Provider Name:</strong> <?php echo $row['provider_name']; ?></p>
-                        <p><strong>Service Category:</strong> <?php echo $row['service_name']; ?></p>
+                        <p><strong>Service Name:</strong> <?php echo $row['service_name']; ?></p>
+                        <p><strong>Service Category:</strong> <?php echo $row['subservice_name']; ?></p>
                         <p><strong>Booking Time:</strong> <?php echo $row['booking_time']; ?></p>
                         <p><strong>Booking Status:</strong> <?php echo ucfirst($row['booking_status']); ?></p>
                         <p><strong>Amount:</strong> <?php echo ucfirst($row['amount']); ?></p>

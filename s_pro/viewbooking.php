@@ -72,8 +72,8 @@
             <?php
                                      
                  include_once "connection.php";
-                $res=mysqli_query($con,"select booking.*,users.*,service.service_name from booking inner join users on booking.user_id=users.user_id 
-                inner join service on booking.service_id=service.service_id where booking_id='".$_GET['id']."' and booking_status='accepted'");
+                $res=mysqli_query($con,"select booking.*,users.*,subservice.subservice_name from booking inner join users on booking.user_id=users.user_id 
+                inner join subservice on booking.subservice_id=subservice.subservice_id where booking_id='".$_GET['id']."' and booking_status='accepted'");
                  $count=1;
                  while($row=mysqli_fetch_array($res))
                 {
@@ -92,7 +92,7 @@
                         <p><strong>Phone:</strong> <?php echo $row['phone']; ?></p>
                         <p><strong>Address:</strong> <?php echo ucfirst($row['address']); ?></p>
                         <!-- <p><strong>Service Provider Name:</strong> <?php echo $row['provider_name']; ?></p> -->
-                        <p><strong>Service Category:</strong> <?php echo $row['service_name']; ?></p>
+                        <p><strong>Service Category:</strong> <?php echo $row['subservice_name']; ?></p>
                         <p><strong>Booking No:</strong> <?php echo $row['booking_no']; ?></p>
                         <p><strong>Booking Time:</strong> <?php echo $row['booking_time']; ?></p>
                         <p><strong>Booking Status:</strong> <?php echo ucfirst($row['booking_status']); ?></p>
