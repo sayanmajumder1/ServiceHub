@@ -85,7 +85,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
            <a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a>
         </li>
         <li>
-           <a href="booking.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
+           <a href="booking.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
         </li>
         <li>
            <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
@@ -106,7 +106,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             
             <li class="hideOnMobile nav-link"><a href="home.php"  class="active">Home</a></li>
             <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
-            <li class="hideOnMobile nav-link"><a href="booking.php">Cart</a></li>
+            <li class="hideOnMobile nav-link"><a href="booking.php">Bookings</a></li>
             <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
             <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
             
@@ -173,7 +173,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
                             $image_data ='../Admin/img/' . $row['image']; 
                            echo '
                         <div class="col-4 col-md-4 col-lg-4 mb-3">
-                            <a href="' . (!empty($user_id) ? 'providers.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="text-decoration-none text-dark">
+                            <a href="' . (!empty($user_id) ? 'subservices.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="text-decoration-none text-dark">
                                 <div class="service-box">
                                     <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="img-fluid">
                                     <p>' . htmlspecialchars($row['service_name']) . '</p>

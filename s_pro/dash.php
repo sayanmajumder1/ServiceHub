@@ -168,7 +168,7 @@ $_SESSION['id'] = $row['provider_id'];
     </div>
 </div>
 
-<canvas id="myChart" width="400" height="200"></canvas>
+<!-- <canvas id="myChart" width="400" height="200"></canvas> -->
 
 
 					

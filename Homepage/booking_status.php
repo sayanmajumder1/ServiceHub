@@ -201,7 +201,7 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'prima
     </li>
     <li><a href="home.php"><i class="fas fa-home"></i> Home</a></li>
     <li><a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a></li>
-    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a></li>
+    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a></li>
     <li><a href="about.php"><i class="fas fa-info-circle"></i> About</a></li>
     <li><a href="contact.php"><i class="fas fa-envelope"></i> Contact</a></li>
   </ul>
@@ -213,7 +213,7 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'prima
     </li>
     <li class="hideOnMobile nav-link"><a href="home.php">Home</a></li>
     <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
-    <li class="hideOnMobile nav-link"><a href="cart.php">Cart</a></li>
+    <li class="hideOnMobile nav-link"><a href="cart.php">Bookings</a></li>
     <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
     <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
     <li class="navbar-profile" onclick="hideSidebar()">
