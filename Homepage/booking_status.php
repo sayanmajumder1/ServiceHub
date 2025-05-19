@@ -378,38 +378,12 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'prima
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" id="confirmCancel">Confirm Cancel</button>
+        <a href ="cancel_booking.php?id=<?php  echo $booking['booking_id']?>"><button type="button" class="btn btn-danger" id="confirmCancel">Confirm Cancel</button>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-// Cancel booking functionality
-document.getElementById('confirmCancel')?.addEventListener('click', function() {
-  fetch('cancel_booking.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      booking_id: <?php echo $booking_id; ?>
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      window.location.reload();
-    } else {
-      alert('Error: ' + (data.message || 'Failed to cancel booking'));
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('An error occurred while canceling the booking');
-  });
-});
-</script>
 
 </body>
 </html>
