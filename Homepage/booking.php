@@ -326,15 +326,18 @@ a.btn:hover {
         ?>
     </p>
 
+    <?php
+
+        $res=mysqli_query($conn,"select * from subservice_price_map where subservice_id=$subservice_id");
+        $row=mysqli_fetch_assoc($res);
+    ?>
     <!-- Service Options -->
-    <div class="tabs d-flex justify-content-around border-bottom mb-3">
-        <button class="active" onclick="selectOption(this, 'Standard')">Standard</button>
-        <button onclick="selectOption(this, 'Middle')">Middle</button>
-        <button onclick="selectOption(this, 'Pro')">Pro</button>
+    <div class="tabs d-flex justify-content-left border-bottom mb-3">
+       <p>Price: <span style="font-size: 1rem; font-weight: bold;"><?php echo $row['price']; ?></span></p>
+
     </div>
 
-    <!-- Selected Tab Info -->
-    <p id="option-detail" class="mb-4 fw-medium">Standard <?php echo htmlspecialchars($provider['businessname']); ?></p>
+    
 
 <form method ="POST" action="booking_process.php">
 
@@ -342,7 +345,7 @@ a.btn:hover {
     <input type="hidden" name="service_id" value="<?php echo $provider['service_id']; ?>">
     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
     <input type="hidden" name="subservice_id" value="<?php echo $subservice_id; ?>">
-
+    <input type="hidden" name="amount" value="<?php  echo $row['price']; ?>">
    
     <input type="hidden" name="option" value="Standard">
 
@@ -355,7 +358,7 @@ a.btn:hover {
             </a>
 
         <button  type =" submit"  class="price-btn flex-grow-1" onclick="bookService()">
-            Select Standard ($100)
+            Book Now
         </button>
     </div>
 </div>

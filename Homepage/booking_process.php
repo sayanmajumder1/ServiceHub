@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $provider_id = (int)$_POST['provider_id'];
     $service_id = (int)$_POST['service_id'];
     $subservice_id = (int)$_POST['subservice_id'];
+    $amount=(int)$_POST['amount'];
     $booking_option = htmlspecialchars(trim($_POST['option']));
 
     // Check for existing pending booking
@@ -63,7 +64,7 @@ $created_at = date('Y-m-d H:i:s');
 $booking_time = date('Y-m-d H:i:s'); // Add booking_time
 $booking_status = "pending";
 $payment_status = "pending";
-$amount = 0;
+$amount = $amount;
 $payment_method = 'pending';
 $transaction_id = ''; // Initialize empty transaction ID
 $reason = ''; // Initialize empty reason
@@ -115,7 +116,7 @@ $bind_result = $insert_stmt->bind_param(
         'booking_no' => $booking_no ?? '',
         'subservice_id' => $subservice_id,
         'provider_id' => $provider_id,
-        'amount' => 100
+        'amount' => $amount
     ];
 
     header("Location: payment_for_booking.php?booking_id=$booking_id");

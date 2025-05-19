@@ -57,7 +57,7 @@ if (!$booking_details) {
 </head>
 <body>
     <!-- Include your navigation if needed -->
-    
+    <p>Amount:<?php echo $booking['amount'] ?></p>
     <div class="container payment-container">
         <h2 class="text-center mb-4">Complete Your Booking</h2>
         <div class="card mb-4">
