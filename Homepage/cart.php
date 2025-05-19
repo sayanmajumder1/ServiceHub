@@ -385,11 +385,17 @@ if (isset($_SESSION['user_id'])) {
               <div class="col-4">
                 <img src="<?php echo $image_path; ?>" class="img-fluid rounded-start h-100 object-fit-cover" alt="<?php echo htmlspecialchars($booking['service_name']); ?>">
               </div>
+              <?php
+                      $id=$booking['subservice_id'];
+                      $res=mysqli_query($conn,"select * from subservice where subservice_id=$id");
+                      $row=mysqli_fetch_assoc($res);  
+              ?>
               <div class="col-8">
                 <div class="card-body">
                   <h6 class="card-title fw-bold"><?php echo htmlspecialchars($booking['businessname']); ?></h6>
                   <p class="card-text small"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($booking['address']); ?></p>
                   <p class="card-text small mb-1">Service: <?php echo htmlspecialchars($booking['service_name']); ?></p>
+                  <p class="card-text small mb-1">Service Category: <?php echo htmlspecialchars($row['subservice_name']); ?></p>
                   <p class="card-text small">Date: <?php echo $booking_time; ?></p>
                   <p class="text-theme fw-bold mb-1">$<?php echo number_format($booking['amount'], 2); ?></p>
                   <span class="badge <?php echo $status_class; ?> text-white"><?php echo $status_text; ?></span>
