@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id'])) {
 <>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Page</title>
+  <title>About Us</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <!-- Font Awesome for Icons -->
@@ -289,9 +289,6 @@ if (isset($_SESSION['user_id'])) {
           <a href="home.php"><i class="fas fa-home"></i> Home</a>
         </li>
         <li>
-          <a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a>
-        </li>
-        <li>
           <a href="booking.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
         </li>
         <li>
@@ -308,7 +305,6 @@ if (isset($_SESSION['user_id'])) {
 
         </li>
         <li class="hideOnMobile nav-link"><a href="home.php">Home</a></li>
-        <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
         <li class="hideOnMobile nav-link"><a href="booking.php">Bookings</a></li>
         <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
         <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
