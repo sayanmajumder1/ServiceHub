@@ -324,7 +324,7 @@ a.btn:hover {
 
     <?php
 
-        $res=mysqli_query($conn,"select * from subservice_price_map where subservice_id=$subservice_id");
+        $res=mysqli_query($conn,"select * from subservice_price_map where subservice_id=$subservice_id and provider_id=$provider_id");
         $row=mysqli_fetch_assoc($res);
     ?>
     <!-- Service Options -->

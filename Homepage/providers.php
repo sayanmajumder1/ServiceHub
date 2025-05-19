@@ -209,9 +209,9 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
         </h2>
     </div>";
     // Fetch service providers
-    $provider_result = $conn->query("SELECT service_providers.* FROM service_providers INNER JOIN subservice_price_map ON 
-    service_providers.service_id = subservice_price_map.service_id WHERE service_providers.service_id = $service_id AND 
-    subservice_price_map.subservice_id = $subservice_id AND service_providers.approved_action = 'approved'");
+    $provider_result = $conn->query("SELECT subservice_price_map.*, service_providers.* FROM subservice_price_map INNER JOIN service_providers
+    ON subservice_price_map.provider_id = service_providers.provider_id WHERE subservice_price_map.subservice_id = $subservice_id AND 
+    service_providers.approved_action = 'approved'");
 
     if ($provider_result === false) {
         echo "<p class='text-center text-danger mt-4'>Error fetching providers: " . htmlspecialchars($conn->error) . "</p>";
