@@ -180,6 +180,16 @@ if (isset($_SESSION['user_id'])) {
       border-radius: 10px;
       border: 1px solid #ccc;
     }
+    .btn-custom {
+  background-color: #ad67c8;
+  color: white;
+  border-color: #ad67c8;
+    }
+
+.btn-custom:hover {
+  background-color: #9c56b7;
+  border-color: #9c56b7;
+}
 
     @media (max-width: 768px) {
       .service-img {
@@ -359,6 +369,7 @@ if (isset($_SESSION['user_id'])) {
               break;
             case 'completed':
               $status_class = 'bg-success';
+              $review_button = true ;
               break;
             case 'rejected':
             case 'cancelled':
@@ -399,7 +410,9 @@ if (isset($_SESSION['user_id'])) {
                   <p class="card-text small">Date: <?php echo $booking_time; ?></p>
                   <p class="text-theme fw-bold mb-1">$<?php echo number_format($booking['amount'], 2); ?></p>
                   <span class="badge <?php echo $status_class; ?> text-white"><?php echo $status_text; ?></span>
-
+                  <?php if (isset(  $review_button ) &&   $review_button ): ?>
+                <button class="btn btn-sm  btn-custom ms-2" onclick="event.stopPropagation(); window.location.href='review.php?booking_id=<?php echo $booking['booking_id']; ?>'">Review</button>
+                <?php endif; ?>
                 </div>
               </div>
             </div>
@@ -445,6 +458,54 @@ if (isset($_SESSION['user_id'])) {
 
   <footer class="footer">
     <!-- Your existing footer code here -->
+
+
+
+
+ <div class="container">
+        <div class="row">
+            <!-- About Section -->
+            <div class="col-md-4 footer-section">
+                <h5>About Us</h5>
+                <p>We provide high-quality home services including cleaning, repair, and painting. Our goal is to make your home beautiful and functional.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 footer-section">
+                <h5>Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="col-md-4 footer-section">
+                <h5>Contact Us</h5>
+                <p>Email: support@example.com</p>
+                <p>Phone: +123 456 7890</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="text-center copyright">
+            <p>&copy; 2025 YourCompany. All Rights Reserved.</p>
+        </div>
+    </div>
+
+
+
+
+
+
+
   </footer>
 
 </body>
