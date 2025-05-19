@@ -82,10 +82,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
           <a href="#"><i class="fas fa-home"></i> Home</a>
         </li>
         <li>
-           <a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a>
-        </li>
-        <li>
-           <a href="booking.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
+           <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
         </li>
         <li>
            <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
@@ -105,8 +102,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
             </li>
             
             <li class="hideOnMobile nav-link"><a href="home.php"  class="active">Home</a></li>
-            <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
-            <li class="hideOnMobile nav-link"><a href="booking.php">Bookings</a></li>
+            <li class="hideOnMobile nav-link"><a href="cart.php">Bookings</a></li>
             <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
             <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
             

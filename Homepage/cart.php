@@ -224,9 +224,6 @@ if (isset($_SESSION['user_id'])) {
         <a href="home.php"><i class="fas fa-home"></i> Home</a>
       </li>
       <li>
-        <a href="service.php"><i class="fas fa-concierge-bell"></i>Service</a>
-      </li>
-      <li>
         <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
       </li>
       <li>
@@ -242,7 +239,6 @@ if (isset($_SESSION['user_id'])) {
         <img src="assets/images/logo.png" alt="Electricity">
       </li>
       <li class="hideOnMobile nav-link"><a href="home.php">Home</a></li>
-      <li class="hideOnMobile nav-link"><a href="service.php">Service</a></li>
       <li class="hideOnMobile nav-link"><a href="cart.php">Bookings</a></li>
       <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
       <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
