@@ -20,6 +20,13 @@
             </a>
         </li>
 
+        <!-- Users -->
+        <li class="nav-item">
+            <a href="user.php" class="nav-link  hv1" onclick="user_click()">
+                <i class="bi bi-people-fill me-2"></i>      Users
+            </a>
+        </li>
+
         <!-- Booking -->
         <li class="nav-item">
             <a href="booking.php" class="nav-link  hv1" onclick="booking_click()">
@@ -79,6 +86,12 @@
             </a>
         </li>
 
+        <!-- feedback Section -->
+        <li class="nav-item">
+            <a href="feedback.php" class="nav-link  hv1" onclick="feedback_click()">
+               <i class="bi bi-chat-left-text-fill me-2"></i> Feedback
+            </a>
+        </li>
        <!-- Setting Section (Dropdown with Arrow) -->
        <li class="nav-item">
             <a class="nav-link hv1 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#providerMenu1" role="button" aria-expanded="false" aria-controls="providerMenu1">

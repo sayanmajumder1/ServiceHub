@@ -22,12 +22,8 @@ dashboardLink?.addEventListener('click', () => {
     }
 });
 
-const dashboardLink1 = document.querySelector('[onclick="booking_click()"]');
-dashboardLink1?.addEventListener('click', () => {
-    if (window.innerWidth < 992) {
-        sidebar.classList.add('d-none');
-    }
-});
+
+
 
 const dashboardLink2 = document.querySelector('[onclick="service1_click()"]');
 dashboardLink2?.addEventListener('click', () => {
@@ -43,19 +39,7 @@ dashboardLink3?.addEventListener('click', () => {
     }
 });
 
-const dashboardLink10 = document.querySelector('[onclick="service3_click()"]');
-dashboardLink3?.addEventListener('click', () => {
-    if (window.innerWidth < 992) {
-        sidebar.classList.add('d-none');
-    }
-});
 
-const dashboardLink11 = document.querySelector('[onclick="service4_click()"]');
-dashboardLink3?.addEventListener('click', () => {
-    if (window.innerWidth < 992) {
-        sidebar.classList.add('d-none');
-    }
-});
 
 const dashboardLink4 = document.querySelector('[onclick="sp1_click()"]');
 dashboardLink4?.addEventListener('click', () => {
@@ -94,6 +78,32 @@ dashboardLink6?.addEventListener('click', () => {
 
 const dashboardLink9 = document.querySelector('[onclick="se2_click()"]');
 dashboardLink6?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+const dashboardLink10 = document.querySelector('[onclick="service3_click()"]');
+dashboardLink3?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+
+const dashboardLink11 = document.querySelector('[onclick="service4_click()"]');
+dashboardLink3?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+const dashboardLink12 = document.querySelector('[onclick="user_click()"]');
+dashboardLink1?.addEventListener('click', () => {
+    if (window.innerWidth < 992) {
+        sidebar.classList.add('d-none');
+    }
+});
+
+const dashboardLink13 = document.querySelector('[onclick="feedback_click()"]');
+dashboardLink1?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
