@@ -11,25 +11,23 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 20px;
+    padding: 0 20px;
     box-sizing: border-box;
 	min-height: 100vh;
 }
 
 .logo {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .circle {
-    width: 60px;
-    height: 60px;
-    background-color: #9810FA;
-    color: white;
+    width: 100px;
+    height: 100px;
+    color: #9810FA;
     font-size: 20px;
     line-height: 60px;
     border-radius: 50%;
-    margin: 0 auto 10px;
 }
 
 .logo h2 {
@@ -102,7 +100,7 @@ nav {
 }
 
 .logout {
-    margin-top: 15px;
+    margin-top: 5px;
     font-size: 16px;
 }
 
