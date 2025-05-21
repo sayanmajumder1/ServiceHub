@@ -400,7 +400,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
       </div>
       <div class="text-center mt-4">
-        <a href="service.php" class="btn btn-primary btn-lg px-5">Explore Our Services</a>
+        <a href="home.php" class="btn btn-primary btn-lg px-5">Explore Our Services</a>
       </div>
     </section>
     <br>

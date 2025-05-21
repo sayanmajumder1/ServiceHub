@@ -332,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                 });
             <?php else: ?>
                 // Initialize empty stars
-                const stars = document.querySelectorAll('.star');
+                stars = document.querySelectorAll('.star');
                 stars.forEach(star => star.classList.add('far'));
             <?php endif; ?>
         });

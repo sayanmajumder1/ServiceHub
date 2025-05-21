@@ -3,7 +3,7 @@ session_start();
 include_once "db_connect.php";
 
 if (!isset($_SESSION['current_booking']) || !isset($_GET['booking_id'])) {
-    header("Location: service.php");
+    header("Location: home.php");
     exit();
 }
 $booking_id = (int)$_GET['booking_id'];
@@ -17,7 +17,7 @@ $result = $stmt->get_result();
 $booking_details = $result->fetch_assoc();
 
 if (!$booking_details) {
-    header("Location: service.php");
+    header("Location: home.php");
     exit();
 }
 

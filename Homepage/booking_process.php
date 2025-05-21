@@ -4,9 +4,9 @@ include_once "db_connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate required fields
-    $required_fields = ['user_id', 'provider_id', 'service_id', 'subservice_id', 'option'];
+    $required_fields = ['user_id', 'provider_id', 'service_id', 'subservice_ids'];
     foreach ($required_fields as $field) {
-        if (!isset($_POST[$field])) {
+        if (empty($_POST[$field])) {
             die("Error: Missing required field '$field'");
         }
     }
@@ -15,115 +15,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = (int)$_POST['user_id'];
     $provider_id = (int)$_POST['provider_id'];
     $service_id = (int)$_POST['service_id'];
-    $subservice_id = (int)$_POST['subservice_id'];
-    $amount=(int)$_POST['amount'];
-    $booking_option = htmlspecialchars(trim($_POST['option']));
+    $subservice_ids = $_POST['subservice_ids'];
 
-    // Check for existing pending booking
-    $check_sql = "SELECT booking_id FROM booking 
-                 WHERE user_id = ? 
-                 AND provider_id = ?
-                 AND subservice_id = ?
-                 AND booking_status = 'pending'
-                 LIMIT 1";
-    
-    $check_stmt = $conn->prepare($check_sql);
-    if (!$check_stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
-    
-    $check_stmt->bind_param("iii", $user_id, $provider_id, $subservice_id);
-    $check_stmt->execute();
-    $existing_booking = $check_stmt->get_result()->fetch_assoc();
-
-    if ($existing_booking) {
-        // Update existing booking
-        $update_sql = "UPDATE booking 
-                      SET booking_option = ?,
-                          updated_at = NOW() 
-                      WHERE booking_id = ?";
-        
-        $update_stmt = $conn->prepare($update_sql);
-        if (!$update_stmt) {
-            die("Prepare failed: " . $conn->error);
-        }
-        
-        $update_stmt->bind_param("si", $booking_option, $existing_booking['booking_id']);
-        
-        if ($update_stmt->execute()) {
-            $booking_id = $existing_booking['booking_id'];
-        } else {
-            $_SESSION['booking_error'] = "Failed to update booking: " . $conn->error;
-            header("Location: booking.php?provider_id=$provider_id&subservice_id=$subservice_id");
-            exit();
-        }
-    } else {
-       // Create new booking
-$booking_no = strtoupper(uniqid('BOOK'));
-$created_at = date('Y-m-d H:i:s');
-$booking_time = date('Y-m-d H:i:s'); // Add booking_time
-$booking_status = "pending";
-$payment_status = "pending";
-$amount = $amount;
-$payment_method = 'pending';
-$transaction_id = ''; // Initialize empty transaction ID
-$reason = ''; // Initialize empty reason
-
-$insert_sql = "INSERT INTO booking (
-              user_id, provider_id, service_id, subservice_id, 
-              booking_status, payment_status, 
-              amount, payment_method, created_at, booking_no,
-              booking_time, transaction_id, reason
-              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-$insert_stmt = $conn->prepare($insert_sql);
-if (!$insert_stmt) {
-    die("Prepare failed: " . $conn->error);
-}
-
-$bind_result = $insert_stmt->bind_param(
-    "iiiissdssssss", // Updated type string (13 parameters)
-    $user_id,
-    $provider_id,
-    $service_id,
-    $subservice_id,
-    $booking_status,
-    $payment_status,
-    $amount,
-    $payment_method,
-    $created_at,
-    $booking_no,
-    $booking_time,
-    $transaction_id,
-    $reason
-);
-        if (!$bind_result) {
-            die("Bind failed: " . $insert_stmt->error);
-        }
-
-        if ($insert_stmt->execute()) {
-            $booking_id = $conn->insert_id;
-        } else {
-            $_SESSION['booking_error'] = "Failed to create booking: " . $conn->error;
-            header("Location: booking.php?provider_id=$provider_id&subservice_id=$subservice_id");
-            exit();
-        }
+    // Calculate total amount (sum of selected subservices)
+    $total_amount = 0.00;
+    foreach ($subservice_ids as $subservice_id) {
+        $subservice_id = (int)$subservice_id;
+        $price_query = "SELECT price FROM subservice_price_map 
+                   WHERE provider_id = ? AND subservice_id = ?";
+        $stmt = mysqli_prepare($conn, $price_query);
+        mysqli_stmt_bind_param($stmt, "ii", $provider_id, $subservice_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $price = mysqli_fetch_assoc($result)['price'];
+        $total_amount += $price;
     }
 
-    // Store booking info in session
+    // Create booking record (using current datetime for booking_time)
+    $booking_no = strtoupper(uniqid('BOOK'));
+    $created_at = date('Y-m-d H:i:s');
+    $booking_time = $created_at; // Same-day service uses current time
+    $booking_status = "pending";
+    $payment_status = "pending";
+    $payment_method = 'pending';
+    $transaction_id = '';
+    $reason = '';
+
+    // For simplicity, we'll create one booking per subservice as per your table structure
+    foreach ($subservice_ids as $subservice_id) {
+        $subservice_id = (int)$subservice_id;
+
+        // Get the price for this specific subservice
+        $price_query = "SELECT price FROM subservice_price_map 
+                       WHERE provider_id = ? AND subservice_id = ?";
+        $stmt = mysqli_prepare($conn, $price_query);
+        mysqli_stmt_bind_param($stmt, "ii", $provider_id, $subservice_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $subservice_price = mysqli_fetch_assoc($result)['price'];
+
+        $amount = $subservice_price;
+
+        $insert_sql = "INSERT INTO booking (
+                      user_id, provider_id, service_id, subservice_id,
+                      booking_status, payment_status, 
+                      amount, payment_method, created_at, booking_no,
+                      booking_time, transaction_id, reason
+                      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($conn, $insert_sql);
+        mysqli_stmt_bind_param(
+            $stmt,
+            "iiiissdssssss",
+            $user_id,
+            $provider_id,
+            $service_id,
+            $subservice_id,
+            $booking_status,
+            $payment_status,
+            $amount,
+            $payment_method,
+            $created_at,
+            $booking_no,
+            $booking_time,
+            $transaction_id,
+            $reason
+        );
+
+        if (!mysqli_stmt_execute($stmt)) {
+            $_SESSION['booking_error'] = "Failed to create booking: " . mysqli_error($conn);
+            header("Location: booking.php?provider_id=$provider_id");
+            exit();
+        }
+
+        $booking_id = mysqli_insert_id($conn);
+    }
+
+    // Store the first booking ID in session for payment page
     $_SESSION['current_booking'] = [
         'booking_id' => $booking_id,
-        'booking_no' => $booking_no ?? '',
-        'subservice_id' => $subservice_id,
+        'booking_no' => $booking_no,
         'provider_id' => $provider_id,
-        'amount' => $amount
+        'amount' => $total_amount
     ];
 
     header("Location: payment_for_booking.php?booking_id=$booking_id");
     exit();
-
 } else {
-    header("Location: service.php");
+    header("Location: booking.php?provider_id=$provider_id");
     exit();
 }
-?>

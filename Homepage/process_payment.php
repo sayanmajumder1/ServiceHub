@@ -3,7 +3,7 @@ session_start();
 include_once "db_connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_SESSION['current_booking'])) {
-    header("Location: service.php");
+    header("Location: home.php");
     exit();
 }
 
@@ -19,7 +19,7 @@ $result = $stmt->get_result();
 $booking = $result->fetch_assoc();
 
 if (!$booking) {
-    header("Location: service.php");
+    header("Location: home.php");
     exit();
 }
 // Update booking with payment details
