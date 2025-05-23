@@ -47,6 +47,21 @@ if (isset($_SESSION['user_id'])) {
     $image = $user['image'] ?? '';
     $displayImage = !empty($image) ? $image : 'default.jpg';
 }
+
+// Get the selected subservice price if coming from providers.php
+$selected_subservice_price = 0;
+if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
+    $subservice_id = (int)$_GET['subservice_id'];
+    $price_query = "SELECT price FROM subservice_price_map 
+                   WHERE provider_id = ? AND subservice_id = ?";
+    $stmt = mysqli_prepare($conn, $price_query);
+    mysqli_stmt_bind_param($stmt, "ii", $provider_id, $subservice_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($result)) {
+        $selected_subservice_price = $row['price'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,6 +106,11 @@ if (isset($_SESSION['user_id'])) {
             50% {
                 transform: translateY(-5px);
             }
+        }
+
+        .selected-service {
+            border-color: #9f7aea !important;
+            background-color: #f5f3ff !important;
         }
     </style>
 </head>
@@ -211,6 +231,9 @@ if (isset($_SESSION['user_id'])) {
 
             <!-- Services List -->
             <div class="space-y-3 mb-6">
+                <?php $selected_subservice_id = isset($_GET['subservice_id']) ? (int)$_GET['subservice_id'] : 0; ?>
+
+                <!-- // Then in the checkbox loop, add checked attribute if it matches: -->
                 <?php while ($subservice = mysqli_fetch_assoc($subservices)): ?>
                     <div class="service-item">
                         <input type="checkbox"
@@ -218,7 +241,8 @@ if (isset($_SESSION['user_id'])) {
                             name="subservice_ids[]"
                             value="<?php echo $subservice['subservice_id']; ?>"
                             class="service-checkbox hidden"
-                            data-price="<?php echo $subservice['price']; ?>">
+                            data-price="<?php echo $subservice['price']; ?>"
+                            <?php echo ($subservice['subservice_id'] == $selected_subservice_id) ? 'checked' : ''; ?>>
                         <label for="service-<?php echo $subservice['subservice_id']; ?>"
                             class="flex justify-between items-center p-4 border rounded-lg cursor-pointer transition-colors hover:bg-purple-50">
                             <div>
@@ -231,17 +255,19 @@ if (isset($_SESSION['user_id'])) {
                 <?php endwhile; ?>
             </div>
 
+
+
             <!-- Summary -->
             <div class="bg-gray-50 p-4 rounded-lg mb-6">
                 <h3 class="font-semibold text-gray-800 mb-2">Order Summary</h3>
                 <div class="flex justify-between mb-1">
                     <span class="text-gray-600">Services</span>
-                    <span id="services-count" class="font-medium">0 selected</span>
+                    <span id="services-count" class="font-medium"><?php echo ($selected_subservice_price > 0) ? '1 selected (₹' . number_format($selected_subservice_price, 2) . ')' : '0 selected'; ?></span>
                 </div>
                 <div class="border-t border-gray-200 my-2"></div>
                 <div class="flex justify-between">
                     <span class="text-gray-800 font-semibold">Total</span>
-                    <span id="total" class="text-purple-600 font-bold">₹0</span>
+                    <span id="total" class="text-purple-600 font-bold"><?php echo ($selected_subservice_price > 0) ? '₹' . number_format($selected_subservice_price, 2) : '₹0'; ?></span>
                 </div>
             </div>
 
@@ -273,10 +299,37 @@ if (isset($_SESSION['user_id'])) {
                 servicesTotal += parseFloat(checkbox.dataset.price);
             });
 
-            document.getElementById('services-count').textContent = selectedCount + ' selected (₹' + servicesTotal.toFixed(2) + ')';
-
+            document.getElementById('services-count').textContent =
+                selectedCount + ' selected (₹' + servicesTotal.toFixed(2) + ')';
             document.getElementById('total').textContent = '₹' + servicesTotal.toFixed(2);
+
+            // Add visual feedback for selected services
+            document.querySelectorAll('.service-checkbox').forEach(checkbox => {
+                const label = checkbox.closest('.service-item').querySelector('label');
+                if (checkbox.checked) {
+                    label.classList.add('selected-service');
+                } else {
+                    label.classList.remove('selected-service');
+                }
+            });
         }
+
+        // Initialize with selected subservice price if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedPrice = <?php echo $selected_subservice_price; ?>;
+            if (selectedPrice > 0) {
+                // Find the checkbox for the selected subservice and trigger change
+                const checkboxes = document.querySelectorAll('.service-checkbox');
+                checkboxes.forEach(checkbox => {
+                    if (parseFloat(checkbox.dataset.price) === selectedPrice) {
+                        checkbox.checked = true;
+                        checkbox.closest('.service-item').querySelector('label').classList.add('selected-service');
+                        // Update summary immediately
+                        updateSummary();
+                    }
+                });
+            }
+        });
     </script>
 </body>
 
