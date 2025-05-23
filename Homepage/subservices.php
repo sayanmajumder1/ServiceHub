@@ -28,6 +28,7 @@ if (isset($_SESSION['user_id'])) {
     <title>Select Sub Service</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
@@ -221,7 +222,7 @@ if (isset($_SESSION['user_id'])) {
                             <!-- Change the Book button link to pass subservice_id -->
                             <a href="providers.php?service_id=<?php echo $row['service_id'] ?>&subservice_id=<?php echo $row['subservice_id'] ?>" 
                             class="text-decoration-none text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-full text-sm text-center mb-2 w-20 p-2">
-                            Book
+                            Book <i class="bi bi-arrow-right"></i>
                             </a>
                     </div>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 09:13 AM
+-- Generation Time: May 23, 2025 at 05:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -74,8 +74,10 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`, `subservice_id`) VALUES
-(4, 9, 26, 15, 'completed', '2025-05-05 09:34:10', 2001, 'paypal', 'success', '555', '2025-05-05 07:36:35', '6666', 'bad behaviour', 5),
-(7, 6, 26, 15, 'accepted', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '', 6);
+(7, 6, 26, 15, 'accepted', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '', 6),
+(8, 6, 26, 15, 'accepted', '2025-05-18 17:19:13', 100, 'cash', 'pending', '', '2025-05-18 11:49:13', 'BOOK6829FA715C749', '', 8),
+(10, 6, 26, 15, 'accepted', '2025-05-18 17:39:37', 100, 'cash', 'pending', '', '2025-05-18 12:09:37', 'BOOK6829FF39CF400', '', 0),
+(12, 6, 26, 15, 'accepted', '2025-05-18 17:42:27', 100, 'cash', 'pending', '', '2025-05-18 12:12:27', 'BOOK6829FFE3A5437', '', 5);
 
 -- --------------------------------------------------------
 
@@ -196,9 +198,14 @@ CREATE TABLE `service_providers` (
 --
 
 INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
-(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 27, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan'),
-(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Memeri'),
-(22, '', 28, '', 'approved', '2025-05-13 03:49:27', 'Santra Hub', 'A222111A', 'A111A', 'uploads/6822c141cad44_naihati ma.jpg', 'Anik@gmail.com', '2147483647', 'Anik Santra', '1234', 'Jamalpur');
+(23, 'eaf5d61b2d9ee75141a1ff6bac387e4a.jpg', 24, '', 'approved', '2025-05-23 14:29:02', 'Santra Hub', 'A222111A', 'A111A', 'uploads/68308626e1d17_naihati ma.jpg', 'Anik@gmail.com', '1234567890', 'Anik Santra', '1234', 'Jamalpur'),
+(24, '', 24, '', 'approved', '2025-05-23 14:47:17', 'ghosh electronic', 'C222111C', 'C111C', 'uploads/68308a6f4f7c8_naihati ma.jpg', 'chinmoy@gmail.com', '6296364507', 'chinmoy ghosh', '1234', 'Burdwan'),
+(25, '', 26, '', 'approved', '2025-05-23 14:50:12', 'Majumdar Stores', 'S222111S', 'S111S', 'uploads/68308b1e0895b_naihati ma.jpg', 'sayan@gmail.com', '9784563210', 'sayan Majumdar', '1234', 'Memari'),
+(26, '', 26, '', 'approved', '2025-05-23 14:53:03', 'Dutta Services', 'So111222So', 'So111So', 'uploads/68308bc90d819_naihati ma.jpg', 'soham@gmail.com', '9647853210', 'Soham Dutta', '1234', 'Bhater'),
+(27, '', 28, '', 'approved', '2025-05-23 14:55:30', 'Ghosh Automobile', 'R111222R', 'R111R', 'uploads/68308c5d28803_naihati ma.jpg', 'rupam@gmail.com', '1234567890', 'Rupam Ghosh', '1234', 'gurap'),
+(28, '5b0c346cf20130dcc0330fc030593e9c.jpg', 28, '', 'approved', '2025-05-23 14:56:58', 'Garai services', 'Ra111222Ra', 'Ra111Ra', 'uploads/68308cb3c9553_naihati ma.jpg', 'rana@gmail.com', '9647853210', 'Rana garai', '1234', 'Burdwan'),
+(29, '', 27, '', 'approved', '2025-05-23 14:58:39', 'DesignX', 'Ri111222Ri', 'Ri111Ri', 'uploads/68308d1747f98_naihati ma.jpg', 'riya@gmail.com', '6296364507', 'Riya Das', '1234', 'Burdwan'),
+(30, '', 27, '', 'approved', '2025-05-23 15:00:10', 'Dey designer', 'An111222An', 'An111An', 'uploads/68308d6c3a0e0_naihati ma.jpg', 'ankita@gmail.com', '9647853210', 'Ankita Dey', '1234', 'hooghly');
 
 -- --------------------------------------------------------
 
@@ -209,7 +216,7 @@ INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `descript
 CREATE TABLE `subservice` (
   `subservice_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
-  `subservice_name` varchar(20) NOT NULL,
+  `subservice_name` varchar(40) NOT NULL,
   `service_des` text NOT NULL,
   `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -219,11 +226,17 @@ CREATE TABLE `subservice` (
 --
 
 INSERT INTO `subservice` (`subservice_id`, `service_id`, `subservice_name`, `service_des`, `image`) VALUES
-(5, 26, 'Gas Pipe Repairing', 'we provide better repairing', '16f365ab23faa72a9eaf2c585075efef.jpg'),
-(6, 26, 'Foam Wash', 'we provide better Foam Wash', '2569191a5406adbf3503969a55783d5c.jpg'),
-(7, 24, 'wairing', 'we provide better repairing', 'd439c618e976eded7450b293767e66a7.jpg'),
-(8, 26, 'Ac installation', 'we provide better repairing', 'af737a013c3c45a3793937e0ad1488d0.jpg'),
-(9, 26, 'Repair', 'we provide better repairing', 'ea9654df2ac1d5b95518c600ff98a763.jpg');
+(5, 26, 'Gas Pipe Repairing', 'we provide better repairing', '6b68c7d37ef7aea4a9edc34e70ef22f4.jpg'),
+(6, 26, 'Foam Wash', 'we provide better Foam Wash', '5250dd5077d47d75540e2716ab093832.jpg'),
+(7, 24, 'wairing', 'we provide better repairing', '9f6fb8aec30ae780c5cbb35b9778c0d4.jpg'),
+(8, 26, 'Ac installation', 'we provide better repairing', '0e617143bc5a591636470e50d6757fa2.jpg'),
+(9, 26, 'Repair', 'we provide better repairing', '230bc0b7e45b0572fa0a8fc210747bc2.jpg'),
+(10, 28, 'Tyre Repair', 'we provide better Tyre repair', 'cbb479c476e2f6d9d8dfbdbfd04e461e.jpg'),
+(11, 28, 'Car Wash', 'we provide better car wash', 'b7a6bdffcbe4a64b1c91347b41622790.jpg'),
+(12, 28, 'Oil change', 'we provide better service', 'f249846836f5a66a0c3e1b760cc10eca.jpg'),
+(13, 24, 'Fan Repair', 'we provide better fan repair.', 'a30bc205ab09a14fc0ceb2042e7202fa.jpg'),
+(14, 27, 'Interior Construction', 'we provide better interior construction.', '78aaf07daa2408265347c4472040739d.jpg'),
+(15, 27, 'Painting', 'we provide better painting services.', '490a38bc0ce239290403934ee0dc86db.jpg');
 
 -- --------------------------------------------------------
 
@@ -244,9 +257,28 @@ CREATE TABLE `subservice_price_map` (
 --
 
 INSERT INTO `subservice_price_map` (`subprice_id`, `service_id`, `subservice_id`, `provider_id`, `price`) VALUES
-(1, 26, 5, 15, 2005),
-(2, 26, 6, 15, 5000),
-(3, 26, 8, 15, 6000);
+(8, 27, 14, 29, 40000),
+(9, 27, 15, 29, 12000),
+(10, 27, 14, 30, 60000),
+(11, 27, 15, 30, 15000),
+(12, 26, 5, 25, 4500),
+(13, 26, 6, 25, 8000),
+(14, 26, 8, 25, 10000),
+(15, 26, 9, 25, 15000),
+(16, 26, 5, 26, 5000),
+(17, 26, 6, 26, 8000),
+(18, 26, 8, 26, 15000),
+(19, 26, 9, 26, 25000),
+(20, 24, 7, 23, 30000),
+(21, 24, 13, 23, 4000),
+(22, 24, 7, 24, 45000),
+(23, 24, 13, 24, 1000),
+(24, 28, 10, 27, 5000),
+(25, 28, 11, 27, 4000),
+(26, 28, 12, 27, 2000),
+(27, 28, 10, 28, 2000),
+(28, 28, 11, 28, 3000),
+(29, 28, 12, 28, 6000);
 
 -- --------------------------------------------------------
 
@@ -272,7 +304,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `dob`, `email`, `password`, `phone`, `address`, `image`, `created_at`, `updated_at`) VALUES
-(6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'Kolkata', '2025-05-13_050657_user_6.jpg', '2025-05-05 07:04:49', '2025-05-13 03:46:51'),
+(6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'kolkata', '2025-05-13_050657_user_6.jpg', '2025-05-05 07:04:49', '2025-05-19 04:52:14'),
 (9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '2025-05-14_162419_user_9.jpg', '2025-05-05 07:09:27', '2025-05-14 14:59:14'),
 (11, 'Soham dutta', '0000-00-00', 'soham@gmail.com', 'soham@2005', '7797472017', '', '', '2025-05-05 14:10:23', '2025-05-05 14:10:23'),
 (12, 'Sudipta Samanta', '0000-00-00', 'Sudipta@gmail.com', 'sudipta@2005', '6295069367', '', '', '2025-05-08 02:39:14', '2025-05-08 02:39:14');
@@ -357,7 +389,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `contact_messages`
@@ -387,19 +419,19 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT for table `service_providers`
 --
 ALTER TABLE `service_providers`
-  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `subservice`
 --
 ALTER TABLE `subservice`
-  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `subservice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `subservice_price_map`
 --
 ALTER TABLE `subservice_price_map`
-  MODIFY `subprice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `subprice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`

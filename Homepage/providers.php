@@ -292,7 +292,7 @@ $displayImage = !empty($image) ? $image : 'default.jpg';
         }
         echo "</div></div>";
     } else {
-        echo "<p class='text-center mt-4'>No approved providers available for this service.</p>";
+        echo "<p class='text-center mt-4'>No providers available for this service.</p>";
     }
     ?>
 </div>
