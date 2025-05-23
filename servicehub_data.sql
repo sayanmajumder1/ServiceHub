@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 09:54 AM
+-- Generation Time: May 23, 2025 at 05:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -198,8 +198,14 @@ CREATE TABLE `service_providers` (
 --
 
 INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
-(14, '651c83cfb989c9b7e91285fad7c9c83f.jpg', 26, 'We provide a good service.', 'approved', '2025-05-05 07:23:20', 'DesignX', '1111100000', '25206547', '', 'riya@gmail.com', '1234567890', 'Riya Das', 'Riya@2005', 'Burdwan'),
-(15, '', 26, 'we provide good service. very good. ', 'approved', '2025-05-05 07:23:20', 'Sony Max', '222111', '147852', '', 'sayan@gmail.com', '987452410', 'Sayan Majumdar', 'sayan@2004', 'Memeri');
+(23, 'eaf5d61b2d9ee75141a1ff6bac387e4a.jpg', 24, '', 'approved', '2025-05-23 14:29:02', 'Santra Hub', 'A222111A', 'A111A', 'uploads/68308626e1d17_naihati ma.jpg', 'Anik@gmail.com', '1234567890', 'Anik Santra', '1234', 'Jamalpur'),
+(24, '', 24, '', 'approved', '2025-05-23 14:47:17', 'ghosh electronic', 'C222111C', 'C111C', 'uploads/68308a6f4f7c8_naihati ma.jpg', 'chinmoy@gmail.com', '6296364507', 'chinmoy ghosh', '1234', 'Burdwan'),
+(25, '', 26, '', 'approved', '2025-05-23 14:50:12', 'Majumdar Stores', 'S222111S', 'S111S', 'uploads/68308b1e0895b_naihati ma.jpg', 'sayan@gmail.com', '9784563210', 'sayan Majumdar', '1234', 'Memari'),
+(26, '', 26, '', 'approved', '2025-05-23 14:53:03', 'Dutta Services', 'So111222So', 'So111So', 'uploads/68308bc90d819_naihati ma.jpg', 'soham@gmail.com', '9647853210', 'Soham Dutta', '1234', 'Bhater'),
+(27, '', 28, '', 'approved', '2025-05-23 14:55:30', 'Ghosh Automobile', 'R111222R', 'R111R', 'uploads/68308c5d28803_naihati ma.jpg', 'rupam@gmail.com', '1234567890', 'Rupam Ghosh', '1234', 'gurap'),
+(28, '5b0c346cf20130dcc0330fc030593e9c.jpg', 28, '', 'approved', '2025-05-23 14:56:58', 'Garai services', 'Ra111222Ra', 'Ra111Ra', 'uploads/68308cb3c9553_naihati ma.jpg', 'rana@gmail.com', '9647853210', 'Rana garai', '1234', 'Burdwan'),
+(29, '', 27, '', 'approved', '2025-05-23 14:58:39', 'DesignX', 'Ri111222Ri', 'Ri111Ri', 'uploads/68308d1747f98_naihati ma.jpg', 'riya@gmail.com', '6296364507', 'Riya Das', '1234', 'Burdwan'),
+(30, '', 27, '', 'approved', '2025-05-23 15:00:10', 'Dey designer', 'An111222An', 'An111An', 'uploads/68308d6c3a0e0_naihati ma.jpg', 'ankita@gmail.com', '9647853210', 'Ankita Dey', '1234', 'hooghly');
 
 -- --------------------------------------------------------
 
@@ -251,13 +257,28 @@ CREATE TABLE `subservice_price_map` (
 --
 
 INSERT INTO `subservice_price_map` (`subprice_id`, `service_id`, `subservice_id`, `provider_id`, `price`) VALUES
-(1, 26, 5, 15, 2005),
-(2, 26, 6, 15, 5000),
-(3, 26, 8, 15, 60000),
-(4, 26, 5, 14, 1000),
-(5, 26, 6, 14, 5000),
-(6, 26, 9, 14, 200),
-(7, 26, 9, 15, 400);
+(8, 27, 14, 29, 40000),
+(9, 27, 15, 29, 12000),
+(10, 27, 14, 30, 60000),
+(11, 27, 15, 30, 15000),
+(12, 26, 5, 25, 4500),
+(13, 26, 6, 25, 8000),
+(14, 26, 8, 25, 10000),
+(15, 26, 9, 25, 15000),
+(16, 26, 5, 26, 5000),
+(17, 26, 6, 26, 8000),
+(18, 26, 8, 26, 15000),
+(19, 26, 9, 26, 25000),
+(20, 24, 7, 23, 30000),
+(21, 24, 13, 23, 4000),
+(22, 24, 7, 24, 45000),
+(23, 24, 13, 24, 1000),
+(24, 28, 10, 27, 5000),
+(25, 28, 11, 27, 4000),
+(26, 28, 12, 27, 2000),
+(27, 28, 10, 28, 2000),
+(28, 28, 11, 28, 3000),
+(29, 28, 12, 28, 6000);
 
 -- --------------------------------------------------------
 
@@ -398,7 +419,7 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT for table `service_providers`
 --
 ALTER TABLE `service_providers`
-  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `provider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `subservice`
@@ -410,7 +431,7 @@ ALTER TABLE `subservice`
 -- AUTO_INCREMENT for table `subservice_price_map`
 --
 ALTER TABLE `subservice_price_map`
-  MODIFY `subprice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `subprice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
