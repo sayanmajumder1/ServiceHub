@@ -1,6 +1,5 @@
 <?php
-session_start();
-include_once "db_connect.php";
+include "navbar.php";
 
 // Check if provider_id is passed in URL
 if (!isset($_GET['provider_id']) || !is_numeric($_GET['provider_id'])) {
@@ -33,21 +32,6 @@ mysqli_stmt_bind_param($stmt, "i", $provider_id);
 mysqli_stmt_execute($stmt);
 $subservices = mysqli_stmt_get_result($stmt);
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    // Get user details from DB
-    $query = "SELECT * FROM users WHERE user_id = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "i", $user_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $user = mysqli_fetch_assoc($result);
-
-    // Handle profile image
-    $image = $user['image'] ?? '';
-    $displayImage = !empty($image) ? $image : 'default.jpg';
-}
-
 // Get the selected subservice price if coming from providers.php
 $selected_subservice_price = 0;
 if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
@@ -71,18 +55,15 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Services - <?php echo htmlspecialchars($provider['businessname']); ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Bootstrap CSS
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
 
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    <!-- Maintain The  Side Bar  Functionality Java Script    -->
-    <script src="SideBarFunction.js"> </script>
 
     <!-- Bootstrap JS (for responsive behavior) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -116,77 +97,6 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
 </head>
 
 <body class="bg-gray-50">
-    <!-- Navigation (same as your other pages) -->
-    <nav>
-        <!-- Side Bar Section-->
-        <ul class="sidebar" id="sidebar">
-            <li onclick="hideSidebar()" class="navbar-profile-two d-flex  align-items-center padding-top-bottom" onclick="showSidebar()" style="height: 100px;">
-                <a href="#"><i class="fa-solid fa-times"></i></a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="profile.php" class="d-inline-block position-relative">
-                        <img
-                            src="assets/images/<?php echo $displayImage; ?>"
-                            alt="User profile"
-                            class="img-fluid rounded-circle shadow profile-img-animate"
-                            style="width: 80px; height: 80px; object-fit: cover;" />
-
-                    </a>
-                <?php else: ?>
-                    <a href="/ServiceHub/Signup_Login/login.php" class="fw-bold" style="text-decoration: none;color: #010913FF;">
-                        Signup or Login
-                    </a>
-                <?php endif; ?>
-            </li>
-
-
-            <li>
-                <a href="#"><i class="fas fa-home"></i> Home</a>
-            </li>
-            <li>
-                <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Bookings</a>
-            </li>
-            <li>
-                <a href="about.php"><i class="fas fa-info-circle"></i> About</a>
-            </li>
-            <li>
-                <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
-
-            </li>
-
-
-        </ul>
-        <!-- Nav  Bar Section-->
-        <ul>
-            <li class="logo">
-                <img loading="lazy " src="assets/images/logo.png" alt="Service Hub Icon ">
-                <!-- <span>Service Hub</span>-->
-            </li>
-
-            <li class="hideOnMobile nav-link"><a href="home.php" class="active">Home</a></li>
-            <li class="hideOnMobile nav-link"><a href="cart.php">Bookings</a></li>
-            <li class="hideOnMobile nav-link"><a href="about.php">About</a></li>
-            <li class="hideOnMobile nav-link"><a href="contact.php">Contact</a></li>
-
-            <li class="navbar-profile" onclick="hideSidebar()">
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="profile.php">
-                        <img
-                            src="assets/images/<?php echo $displayImage; ?>"
-                            alt="User profile"
-                            class="img-fluid rounded-circle shadow"
-                            style="width: 50px; height: 50px; object-fit: cover;" />
-                    </a>
-                <?php else: ?>
-                    <a href="/ServiceHub/Signup_Login/login.php" class=" fw-bold" style="text-decoration: none;color: #010913FF;">
-                        Signup or Login
-                    </a>
-                <?php endif; ?>
-            </li>
-
-            <li class="menu-icon" onclick="showSidebar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
-        </ul>
-    </nav>
-
     <div class="container mx-auto px-4 py-8 max-w-4xl">
         <!-- Provider Header -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 mt-20">
@@ -278,11 +188,11 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
             </button>
         </form>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-100 mt-12">
-        <!-- Your existing footer code here -->
-    </footer>
+        
+    <?php
+        include_once "footer.php"; 
+    ?>
+    
 
     <script>
         // Calculate total when services are selected

@@ -258,7 +258,7 @@ include "navbar.php";
   <!-- About Intro -->
   <section class="about-intro">
     <div class="a-container">
-      <h1>About Us</h1>
+      <h1 class="text-3xl font-bold mb-5">About Us</h1>
       <p>We believe in delivering exceptional home services with a personal touch. Your satisfaction is our mission.</p>
       <img src="assets/images/i1.jpg" alt="Team photo">
     </div>

@@ -81,10 +81,10 @@ if (isset($_SESSION['user_id'])) {
                 <img loading="lazy" src="assets/images/logo.png" alt="Service Hub Icon" class="h-10">
             </li>
 
-            <li class="hidden md:block"><a href="home.php" class="px-4 py-2 text-purple-600 font-medium">Home</a></li>
-            <li class="hidden md:block"><a href="cart.php" class="px-4 py-2 original-nav-link hover:text-purple-600">Bookings</a></li>
-            <li class="hidden md:block"><a href="about.php" class="px-4 py-2 original-nav-link hover:text-purple-600">About</a></li>
-            <li class="hidden md:block"><a href="contact.php" class="px-4 py-2 original-nav-link hover:text-purple-600">Contact</a></li>
+            <li class="hidden md:block"><a href="home.php" class="px-4 py-2 text-purple-600 font-medium no-underline">Home</a></li>
+            <li class="hidden md:block"><a href="cart.php" class="px-4 py-2 original-nav-link hover:text-purple-600 no-underline">Bookings</a></li>
+            <li class="hidden md:block"><a href="about.php" class="px-4 py-2 original-nav-link hover:text-purple-600 no-underline">About</a></li>
+            <li class="hidden md:block"><a href="contact.php" class="px-4 py-2 original-nav-link hover:text-purple-600 no-underline">Contact</a></li>
 
             <li class="navbar-profile ml-4" onclick="hideSidebar()">
                 <?php if (isset($_SESSION['user_id'])): ?>

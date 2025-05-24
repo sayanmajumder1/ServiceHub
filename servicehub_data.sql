@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 05:24 PM
+-- Generation Time: May 24, 2025 at 05:56 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -161,13 +161,13 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`service_id`, `service_name`, `image`) VALUES
-(24, 'Electrician', 'b1fa214830d20693ddb1cf357a4b0146.jpg'),
-(25, 'Cleaning', '504123278efd205df7aabb9764967ad3.jpg'),
-(26, 'AC Technician', '493b032192f9e5b0aac6e38cb86476c4.jpg'),
-(27, 'Interior Designer', '0cad8dc4e42fa830745515897bd1e7b1.jpg'),
-(28, 'Car Mechanic', 'b95e591a4378b1149c4fc8efff3e802d.jpg'),
-(29, 'Carpenter', '6091ff8ee4440af26ec9fd5c0f92fb23.jpg'),
-(30, 'Plumber', '1c6445f2df7b290de11c78245a1916db.jpg');
+(24, 'Electrician', '105f079cd12f41c7dc3b73374f2d4b5a.jpg'),
+(25, 'Cleaning', '85cedc6a50e404cd92a34a9a82469986.jpg'),
+(26, 'AC Technician', '76c1ebc3ea8a0e0b934013785f9a109b.jpg'),
+(27, 'Interior Designer', '841c4e6087521ef3f82fd55cbf6f375b.jpg'),
+(28, 'Car Mechanic', '192e918a3778813052216d87559e92cd.jpg'),
+(29, 'Carpenter', '0fa31bb8f82a6900c2ca0ea31ae8cbc1.jpg'),
+(30, 'Plumber', '1dd66a389a6886bf96b905938807832a.jpg');
 
 -- --------------------------------------------------------
 
@@ -305,7 +305,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `name`, `dob`, `email`, `password`, `phone`, `address`, `image`, `created_at`, `updated_at`) VALUES
 (6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'kolkata', '2025-05-13_050657_user_6.jpg', '2025-05-05 07:04:49', '2025-05-19 04:52:14'),
-(9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '2025-05-14_162419_user_9.jpg', '2025-05-05 07:09:27', '2025-05-14 14:59:14'),
+(9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '2025-05-24_055315_user_9.png', '2025-05-05 07:09:27', '2025-05-24 03:53:18'),
 (11, 'Soham dutta', '0000-00-00', 'soham@gmail.com', 'soham@2005', '7797472017', '', '', '2025-05-05 14:10:23', '2025-05-05 14:10:23'),
 (12, 'Sudipta Samanta', '0000-00-00', 'Sudipta@gmail.com', 'sudipta@2005', '6295069367', '', '', '2025-05-08 02:39:14', '2025-05-08 02:39:14');
 
