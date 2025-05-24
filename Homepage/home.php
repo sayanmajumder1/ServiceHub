@@ -147,7 +147,7 @@ include "navbar.php"
                         $image_data = '../Admin/img/' . $row['image'];
                         echo '
                         <div class="group">
-                            <a href="' . (!empty($user_id) ? 'subservices.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
+                            <a href="' . (!empty($user_id) ? 'providers.php?id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 service-card hover:shadow-lg">
                                     <div class="h-48 overflow-hidden">
                                         <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
