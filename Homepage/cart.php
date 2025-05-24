@@ -182,14 +182,6 @@ include "navbar.php";
       <h4 class="fw-bold">My Booking</h4>
       <i class="bi bi-calendar fs-4"></i>
     </div>
-
-    <div class="search-box-one">
-      <div class="search-box-two">
-        <input type="text" class="form-control mb-3 search-box" placeholder="Search..." id="bookingSearch">
-      </div>
-    </div>
-
-
     <!-- Dynamic Filter Buttons -->
     <div class="d-flex flex-wrap gap-2 mb-4" id="serviceFilters">
       <button class="btn filter-btn active" data-filter="all">All Service</button>

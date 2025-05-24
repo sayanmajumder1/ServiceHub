@@ -12,7 +12,7 @@ include "navbar.php"
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script src="Search_Function.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -120,8 +120,8 @@ include "navbar.php"
                             class="w-full py-4 px-6 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-purple-300 transition-all duration-300"
                           
                             placeholder="What service are you looking for?"
-                             oninput="filterServices()">
-                        <button    oninput="filterServices()" class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
+                             >
+                        <button    onclick="filterServices()" class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
                             <i class="fas fa-search"></i> Search
                         </button>
                     </div>
@@ -141,30 +141,18 @@ include "navbar.php"
             <div id="searchResultsCount" class="text-center text-purple-600 font-medium mb-4 hidden">
             Found <span id="resultsCount">0</span> services matching your search
             </div>
-            <div  id="servicesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div  id="servicesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <?php
                 $user_id = $_SESSION['user_id'] ?? null;
 
                 include 'db_connect.php';
 
-                // Modified query to include search if parameter exists
-                $search_term = isset($_GET['search']) ? $_GET['search'] : '';
+               
+                  // Get services ordered by service_id descending
+                $sql = "SELECT * FROM service ORDER BY service_id DESC";
+                $result = $conn->query($sql);
 
-                $sql = "SELECT * FROM service";
-
-                // Add search condition if term exists
-                if (!empty($search_term)) {
-                    $sql .= " WHERE service_name LIKE ?";
-                    $stmt = $conn->prepare($sql);
-                    $search_param = "%" . $search_term . "%";
-                    $stmt->bind_param("s", $search_param);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                } else {
-                    $sql .= " ORDER BY service_id DESC"; // Newest first
-                    $result = $conn->query($sql);
-                }
-
+               
 
 
         
@@ -192,7 +180,7 @@ include "navbar.php"
                         </div>';
                     }
                 } else {
-                echo '<p class="text-center col-span-full text-gray-600">No services found'.(!empty($search_term) ? ' matching "'.htmlspecialchars($search_term).'"' : '').'</p>';
+             echo '<p class="text-center col-span-full text-gray-600">No services available at the moment</p>';
                 }
                 $conn->close();
                 ?>
@@ -284,72 +272,38 @@ include "navbar.php"
             });
         });
 
+ function filterServices() {
+        const searchInput = document.getElementById('serviceSearch').value.toLowerCase();
+        const serviceCards = document.querySelectorAll('[data-service-name]');
+        let matchCount = 0;
 
-
-
-
-  function filterServices() {
-            const searchTerm = document.getElementById('serviceSearch').value.toLowerCase();
-            const serviceCards = document.querySelectorAll('.service-card');
-            const resultsCountElement = document.getElementById('resultsCount');
-            const searchResultsCount = document.getElementById('searchResultsCount');
-            
-            let visibleCount = 0;
-            
-            serviceCards.forEach(card => {
-                const serviceName = card.getAttribute('data-service-name');
-                const nameElement = card.querySelector('.service-name');
-                
-                if (serviceName && nameElement) {
-                    const originalName = nameElement.dataset.originalName || nameElement.textContent;
-                    nameElement.dataset.originalName = originalName;
-                    
-                    if (searchTerm === '' || serviceName.includes(searchTerm)) {
-                        card.style.display = 'block';
-                        visibleCount++;
-                        
-                        if (searchTerm !== '') {
-                            const regex = new RegExp(searchTerm, 'gi');
-                            nameElement.innerHTML = originalName.replace(regex, 
-                                match => `<span class="search-highlight">${match}</span>`);
-                        } else {
-                            nameElement.textContent = originalName;
-                        }
-                    } else {
-                        card.style.display = 'none';
-                    }
-                }
-            });
-            
-            if (resultsCountElement && searchResultsCount) {
-                resultsCountElement.textContent = visibleCount;
-                if (searchTerm !== '') {
-                    searchResultsCount.classList.remove('hidden');
-                } else {
-                    searchResultsCount.classList.add('hidden');
-                }
+        serviceCards.forEach(card => {
+            const serviceName = card.getAttribute('data-service-name');
+            if (serviceName.includes(searchInput)) {
+                card.style.display = 'block';
+                matchCount++;
+            } else {
+                card.style.display = 'none';
             }
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchParam = urlParams.get('search');
-            
-            if (searchParam) {
-                document.getElementById('serviceSearch').value = searchParam;
-                filterServices();
-            }
-            
-            // Add input event listener
-            document.getElementById('serviceSearch').addEventListener('input', filterServices);
         });
 
+        const resultsCountContainer = document.getElementById('searchResultsCount');
+        const resultsCount = document.getElementById('resultsCount');
 
+        if (searchInput.trim() === "") {
+            resultsCountContainer.classList.add("hidden");
+        } else {
+            resultsCount.textContent = matchCount;
+            resultsCountContainer.classList.remove("hidden");
+        }
+    }
 
-
-
-
+    // Optional: trigger search on Enter key press
+    document.getElementById('serviceSearch').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            filterServices();
+        }
+    });
     </script>
 
 
