@@ -10,7 +10,8 @@ $otp4 = $_POST['otp4'] ?? '';
 $full_otp = $otp1 . $otp2 . $otp3 . $otp4;
 
 if ($_SESSION['OTP'] == $full_otp) {
-    $res = mysqli_query($con, "UPDATE booking SET  payment_status='success', booking_status='completed' WHERE booking_no='{$_POST['no']}'");
+    $res = mysqli_query($con, "UPDATE booking SET  payment_status='success', booking_status='completed' WHERE booking_no='{$_POST['no']}' and
+    booking_id='".$_POST['id']."'");
     
     if ($res) {
         

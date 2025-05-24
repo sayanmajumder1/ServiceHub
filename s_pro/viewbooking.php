@@ -113,6 +113,7 @@
                         <div id="declineForm" class="mt-3" style="display: none;">
                             <form action="update-reason.php" method="POST" >
                                 <div class="mb-3">
+                                    <input type="text" id="id" name="id" value="<?php echo $row['booking_id']?>"class="form-control" hidden>
                                     <input type="text" id="no" name="no" value="<?php echo $row['booking_no']?>"class="form-control" hidden>  
                                     <label for="amount" class="form-label">Write the Reason for reject</label>
                                     <input type="text" id="reason" name="reason" class="form-control" required>
@@ -130,6 +131,7 @@
                                     <p style="color:green">Your 4 digits OTP code is :<?php echo $_SESSION['OTP'] ?></p>
                                     <form method="POST" action="Update_booking.php">
                                         <div class="d-flex justify-content-center mb-3">
+                                            <input type="text" id="id" name="id" value="<?php echo $row['booking_id']?>"class="form-control" hidden>
                                             <input type="text" id="no" name="no" value="<?php echo $row['booking_no']?>"class="form-control" hidden>
                                             <input type="text" maxlength="1" class="otp-input"
                                                 oninput="moveToNext(this, 'otp2')" onkeydown="moveBack(event, null)" id="otp1" name="otp1" autofocus required>
