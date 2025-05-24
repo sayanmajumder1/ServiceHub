@@ -5,6 +5,6 @@ session_unset();
 // Destroy the session
 session_destroy();
 // Redirect to login page
-header("Location: /ServiceHub/Signup_Login/login.php");
+header("Location: /ServiceHub/Homepage/index.php");
 exit(); // Don't forget to call exit() after header() to stop further execution
 ?>
