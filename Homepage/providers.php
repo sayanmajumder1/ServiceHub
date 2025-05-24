@@ -30,12 +30,12 @@ include "navbar.php"
 
 <div class="container mt-5 pt-5">
     <?php
-    if (!isset($_GET['id']) || !is_numeric($_GET['id']))  {
+    if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id']))  {
         echo "<h4 class='text-center mt-5 text-danger'>Invalid service selected.</h4>";
         exit;
     }
 
-    $service_id = (int)$_GET['id'];
+    $service_id = (int)$_GET['service_id'];
     $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
             // Get SubserviceID 
@@ -45,7 +45,7 @@ include "navbar.php"
 
 
     // Validate and safely query for the service
-    $service_query = $conn->query("SELECT * FROM service WHERE service_id = '".$_GET['id']."'");
+    $service_query = $conn->query("SELECT * FROM service WHERE service_id = '".$_GET['service_id']."'");
 
     if (!$service_query) {
         echo "<h4 class='text-center mt-5 text-danger'>Database query error: " . htmlspecialchars($conn->error) . "</h4>";
