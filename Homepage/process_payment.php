@@ -8,94 +8,89 @@ if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_SESSION['current_booking'])
 }
 
 // Get payment details
-$booking_id = (int)$_POST['booking_id'];
-$amount = (float)$_POST['amount'];
 $payment_method = $_POST['payment_method'];
-$user_id = $_SESSION['user_id'];
+$booking_data = $_SESSION['current_booking'];
 
-// Verify booking belongs to user
-$stmt = $conn->prepare("SELECT * FROM booking WHERE booking_id = ? AND user_id = ?");
-$stmt->bind_param("ii", $booking_id, $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$booking = $result->fetch_assoc();
-
-if (!$booking) {
-    header("Location: home.php");
+// Validate payment method
+if (!in_array($payment_method, ['cash', 'card'])) {
+    $_SESSION['payment_error'] = "Invalid payment method selected";
+    header("Location: payment_for_booking.php");
     exit();
 }
 
-// Set payment status and transaction ID
+// Set payment status based on method
 $payment_status = ($payment_method == 'cash') ? 'pending' : 'completed';
 $transaction_id = ($payment_method == 'card') ? 'card_' . uniqid() : '';
+$booking_status = 'pending'; // Define as variable
+$reason = ''; // Define as variable
 
 // Start transaction
 mysqli_begin_transaction($conn);
 
 try {
-    // Check if we have multiple bookings to update
-    if (isset($_SESSION['current_booking']['all_booking_ids'])) {
-        $all_booking_ids = $_SESSION['current_booking']['all_booking_ids'];
+    $booking_ids = [];
 
-        // Create placeholders for the IN clause
-        $placeholders = implode(',', array_fill(0, count($all_booking_ids), '?'));
-        $types = str_repeat('i', count($all_booking_ids));
+    foreach ($booking_data['subservices'] as $subservice) {
+        $insert_sql = "INSERT INTO booking (
+            user_id, provider_id, service_id, subservice_id,
+            booking_status, payment_status, amount, 
+            payment_method, created_at, booking_no,
+            booking_time, transaction_id, reason
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $update_sql = "UPDATE booking SET 
-                        amount = ?,
-                        payment_method = ?,
-                        payment_status = ?,
-                        transaction_id = ?,
-                        booking_status = 'pending'
-                       WHERE booking_id IN ($placeholders) AND user_id = ?";
+        $stmt = mysqli_prepare($conn, $insert_sql);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . mysqli_error($conn));
+        }
 
-        $stmt = $conn->prepare($update_sql);
-
-        // Prepare parameters - amount, method, status, transaction_id, booking_ids, user_id
-        $params = array_merge(
-            [$amount, $payment_method, $payment_status, $transaction_id],
-            $all_booking_ids,
-            [$user_id]
+        // Bind variables instead of literals
+        $bind_result = mysqli_stmt_bind_param(
+            $stmt,
+            "iiiissdssssss",
+            $booking_data['user_id'],
+            $booking_data['provider_id'],
+            $booking_data['service_id'],
+            $subservice['id'],
+            $booking_status, // Now a variable
+            $payment_status,
+            $subservice['price'],
+            $payment_method,
+            $booking_data['created_at'],
+            $booking_data['booking_no'],
+            $booking_data['created_at'],
+            $transaction_id,
+            $reason // Now a variable
         );
 
-        // Bind parameters dynamically
-        $stmt->bind_param("dsss" . $types . "i", ...$params);
-    } else {
-        // Single booking update
-        $update_sql = "UPDATE booking SET 
-                        amount = ?,
-                        payment_method = ?,
-                        payment_status = ?,
-                        transaction_id = ?,
-                        booking_status = 'pending'
-                       WHERE booking_id = ? AND user_id = ?";
+        if (!$bind_result) {
+            throw new Exception("Bind failed: " . mysqli_stmt_error($stmt));
+        }
 
-        $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("dsssii", $amount, $payment_method, $payment_status, $transaction_id, $booking_id, $user_id);
+        if (!mysqli_stmt_execute($stmt)) {
+            throw new Exception("Execute failed: " . mysqli_stmt_error($stmt));
+        }
+
+        $booking_ids[] = mysqli_insert_id($conn);
+        mysqli_stmt_close($stmt);
     }
 
-    if (!$stmt->execute()) {
-        throw new Exception("Payment processing failed: " . $stmt->error);
-    }
-
-    // Commit transaction if all updates succeeded
+    // Commit transaction
     mysqli_commit($conn);
 
-    // Payment successful
+    // Regenerate session ID for security
+    session_regenerate_id(true);
+
+    // Clear session data
     unset($_SESSION['current_booking']);
 
-    // Redirect to booking status page
-    header("Location: booking_status.php?booking_id=$booking_id");
+    // Redirect to success page with first booking ID
+    header("Location: cart.php");
     exit();
 } catch (Exception $e) {
-    // Rollback transaction on error
+    // Rollback on error
     mysqli_rollback($conn);
-
-    // Log error (in a real application, you'd want to log this properly)
     error_log("Payment Error: " . $e->getMessage());
-
-    // Set error message and redirect back
     $_SESSION['payment_error'] = "Payment processing failed. Please try again.";
-    header("Location: payment_for_booking.php?booking_id=$booking_id");
+    header("Location: payment_for_booking.php");
     exit();
 }

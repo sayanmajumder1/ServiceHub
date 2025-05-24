@@ -2,27 +2,12 @@
 session_start();
 include_once "db_connect.php";
 
-if (!isset($_SESSION['current_booking']) || !isset($_GET['booking_id'])) {
-    error_log("Redirecting to home - missing booking data");
+if (!isset($_SESSION['current_booking'])) {
     header("Location: home.php");
     exit();
 }
 
-$booking_id = (int)$_GET['booking_id'];
 $booking = $_SESSION['current_booking'];
-
-// Verify booking belongs to user
-$stmt = $conn->prepare("SELECT * FROM booking WHERE booking_id = ? AND user_id = ?");
-$stmt->bind_param("ii", $booking_id, $_SESSION['user_id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$booking_details = $result->fetch_assoc();
-
-if (!$booking_details) {
-    error_log("Redirecting to home - booking not found or not owned by user");
-    header("Location: home.php");
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,12 +162,11 @@ if (!$booking_details) {
 
         <div class="booking-card">
             <h5><i class="bi bi-ticket"></i> Booking #<?php echo $booking['booking_no']; ?></h5>
-            <p><i class="bi bi-currency-dollar"></i> Amount to pay: <strong>$<?php echo $booking['amount']; ?></strong></p>
+            <p><i class="bi bi-currency-dollar"></i> Amount to pay: <strong>$<?php echo $booking['total_amount']; ?></strong></p>
         </div>
 
         <form action="process_payment.php" method="POST">
-            <input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>">
-            <input type="hidden" name="amount" value="<?php echo $booking['amount']; ?>">
+            <input type="hidden" name="amount" value="<?php echo $booking['total_amount']; ?>">
 
             <div class="payment-options">
                 <h5 class="mb-3">Payment Method</h5>
