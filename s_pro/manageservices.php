@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       .modal-header{
+            background-color:rgb(150, 60, 186);
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -86,7 +92,8 @@
                             else
                             {
                         ?>
-                        <a href="updatesubservice_price.php?id=<?php echo $row['subservice_id'] ?>"><button class="btn btn-primary">Edit Price</button>
+                        <a href="updatesubservice_price.php?subservice_id=<?php echo $row['subservice_id'] ?>&provider_id=<?php echo $_SESSION['id']; ?>">
+                            <button class="btn btn-primary">Edit Price</button>
                         <?php
                             }
                         ?>
@@ -100,8 +107,60 @@
             </tbody>
         </table>
     </div>
-
 </div>
+
+<!-- Modal HTML -->
+<div class="modal fade" id="acceptedModal"  aria-labelledby="acceptedModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="acceptedModalLabel">Message</h1>
+      </div>
+      <div class="modal-body">
+        <?php
+        if (isset($_GET['status']) && $_GET['status'] == 0)
+        {
+        ?>
+            Thank you! for added service prices.
+        <?php
+        }
+        else if (isset($_GET['status']) && $_GET['status'] == 1)
+        {
+        ?>
+             Thank you! for updated service prices.
+        <?php
+        }
+        ?>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+<?php 
+    if (isset($_GET['status']) && $_GET['status'] == 0)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+    else if(isset($_GET['status']) && $_GET['status'] == 1)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+?>
 <script src="script.js"></script>
 </body>
 </html>

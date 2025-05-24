@@ -15,6 +15,7 @@
      $res=mysqli_query($con,"insert into subservice_price_map set service_id='".$_POST['service_id']."',subservice_id='".$_POST['subservice_id']."',
      provider_id='".$_POST['provider_id']."',price='".$_POST['price']."'");
 
-     header('location:manageservices.php');
+     header('location:manageservices.php?status=0');
+     exit;
 
 ?>

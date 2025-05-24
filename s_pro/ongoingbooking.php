@@ -16,6 +16,13 @@
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+     <style>
+        .modal-header{
+            background-color:rgb(150, 60, 186);
+            color: white;
+        }
+       
+    </style>
 </head>
 <body>
 
@@ -68,15 +75,15 @@
 
 <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
 <!-- Modal -->
+
 <div class="modal fade" id="taskCompletedModal" tabindex="-1" aria-labelledby="taskCompletedLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered"> <!-- ADDED THIS CLASS -->
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="taskCompletedLabel">MESSAGE</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Your task has been completed successfully!
+        Booking is rejected.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -84,6 +91,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
