@@ -115,10 +115,13 @@ include "navbar.php"
                 <div class="flex justify-center max-w-2xl mx-auto">
                     <div class="relative w-full">
                         <input
+                            id = "serviceSearch"
                             type="text"
                             class="w-full py-4 px-6 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-purple-300 transition-all duration-300"
-                            placeholder="What service are you looking for?">
-                        <button class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
+                          
+                            placeholder="What service are you looking for?"
+                             oninput="filterServices()">
+                        <button    oninput="filterServices()" class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
                             <i class="fas fa-search"></i> Search
                         </button>
                     </div>
@@ -134,19 +137,44 @@ include "navbar.php"
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">Services Category</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Browse through our wide range of home services</p>
             </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <!-- Added search results count -->
+            <div id="searchResultsCount" class="text-center text-purple-600 font-medium mb-4 hidden">
+            Found <span id="resultsCount">0</span> services matching your search
+            </div>
+            <div  id="servicesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <?php
                 $user_id = $_SESSION['user_id'] ?? null;
-                include 'db_connect.php';
-                $sql = "SELECT * FROM service";
-                $result = $conn->query($sql);
 
+                include 'db_connect.php';
+
+                // Modified query to include search if parameter exists
+                $search_term = isset($_GET['search']) ? $_GET['search'] : '';
+
+                $sql = "SELECT * FROM service";
+
+                // Add search condition if term exists
+                if (!empty($search_term)) {
+                    $sql .= " WHERE service_name LIKE ?";
+                    $stmt = $conn->prepare($sql);
+                    $search_param = "%" . $search_term . "%";
+                    $stmt->bind_param("s", $search_param);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                } else {
+                    $sql .= " ORDER BY service_id DESC"; // Newest first
+                    $result = $conn->query($sql);
+                }
+
+
+
+        
+ 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $image_data = '../Admin/img/' . $row['image'];
                         echo '
-                        <div class="group">
+                        <div class="service-card group" data-service-name="'.strtolower(htmlspecialchars($row['service_name'])).'">
+
                             <a href="' . (!empty($user_id) ? 'providers.php?service_id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 service-card hover:shadow-lg">
                                     <div class="h-48 overflow-hidden">
@@ -164,7 +192,7 @@ include "navbar.php"
                         </div>';
                     }
                 } else {
-                    echo '<p class="text-center col-span-full text-gray-600">No services available at the moment</p>';
+                echo '<p class="text-center col-span-full text-gray-600">No services found'.(!empty($search_term) ? ' matching "'.htmlspecialchars($search_term).'"' : '').'</p>';
                 }
                 $conn->close();
                 ?>
@@ -255,7 +283,81 @@ include "navbar.php"
                 wrapper.style.animationPlayState = 'running';
             });
         });
+
+
+
+
+
+  function filterServices() {
+            const searchTerm = document.getElementById('serviceSearch').value.toLowerCase();
+            const serviceCards = document.querySelectorAll('.service-card');
+            const resultsCountElement = document.getElementById('resultsCount');
+            const searchResultsCount = document.getElementById('searchResultsCount');
+            
+            let visibleCount = 0;
+            
+            serviceCards.forEach(card => {
+                const serviceName = card.getAttribute('data-service-name');
+                const nameElement = card.querySelector('.service-name');
+                
+                if (serviceName && nameElement) {
+                    const originalName = nameElement.dataset.originalName || nameElement.textContent;
+                    nameElement.dataset.originalName = originalName;
+                    
+                    if (searchTerm === '' || serviceName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                        
+                        if (searchTerm !== '') {
+                            const regex = new RegExp(searchTerm, 'gi');
+                            nameElement.innerHTML = originalName.replace(regex, 
+                                match => `<span class="search-highlight">${match}</span>`);
+                        } else {
+                            nameElement.textContent = originalName;
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+            
+            if (resultsCountElement && searchResultsCount) {
+                resultsCountElement.textContent = visibleCount;
+                if (searchTerm !== '') {
+                    searchResultsCount.classList.remove('hidden');
+                } else {
+                    searchResultsCount.classList.add('hidden');
+                }
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchParam = urlParams.get('search');
+            
+            if (searchParam) {
+                document.getElementById('serviceSearch').value = searchParam;
+                filterServices();
+            }
+            
+            // Add input event listener
+            document.getElementById('serviceSearch').addEventListener('input', filterServices);
+        });
+
+
+
+
+
+
     </script>
+
+
+
+
+
+
+
 </body>
 
 </html>

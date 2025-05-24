@@ -27,8 +27,7 @@
 include "navbar.php"
 ?>
 
-
-<div class="container mt-5 pt-5">
+<div class="container mt-5 pt-5 ">
     <?php
     if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id']))  {
         echo "<h4 class='text-center mt-5 text-danger'>Invalid service selected.</h4>";
@@ -38,10 +37,8 @@ include "navbar.php"
     $service_id = (int)$_GET['service_id'];
     $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
-            // Get SubserviceID 
-            // At the top, get subservice_id
-            $subservice_id = isset($_GET['subservice_id']) ? (int)$_GET['subservice_id'] : 0;
-
+   
+       
 
 
     // Validate and safely query for the service
@@ -100,6 +97,13 @@ include "navbar.php"
             transform: scaleX(1);
         }
     }
+         /* Added custom spacing for cards */
+    .provider-card {
+        margin-bottom: 2.5rem; /* Space between card rows */
+    }
+    .card-body {
+        padding-bottom: 1.5rem; /* Extra padding at bottom of card */
+    }
     </style>
 
     <div class='container text-center mt-5'>
@@ -116,14 +120,14 @@ include "navbar.php"
     }
 
     if ($provider_result->num_rows > 0) {
-        echo "<div class='container'><div class='row mt-4 g-4'>";
+        echo "<div class='container '   ><div class='row mt-4 g-4 '>";
         while ($row = $provider_result->fetch_assoc()) {
             $image_data = '../s_pro/uploads2/' . htmlspecialchars(trim($row['image']));
             $provider_id = $row['provider_id'];
             
             // Check if this user has any bookings with this provider
-            $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id AND subservice_id = $subservice_id ORDER BY created_at DESC LIMIT 1   ");
-            
+        $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id ORDER BY created_at DESC LIMIT 1");
+
             // Initialize default values
             $has_booking = false;
             $button_class = 'btn-primary';
@@ -167,6 +171,7 @@ include "navbar.php"
                         
                                     
             echo '
+          
             <div class="col-sm-12 col-md-6 col-lg-4   provider-card ">
                 <div class="card h-100 shadow border-0 rounded-4">
                     <img src="' . $image_data . '" 
@@ -184,7 +189,8 @@ include "navbar.php"
                            class="btn ' . $button_class . ' mt-3 w-100">' . $button_text . '</a>
                     </div>
                 </div>
-            </div>';
+            </div>
+            ';
         }
         echo "</div></div>";
     } else {
@@ -193,14 +199,8 @@ include "navbar.php"
     ?>
 </div>
 
-
-
-
 <?php
 include "footer.php"
 ?>
-
-
-
 </body>
 </html>

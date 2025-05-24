@@ -264,7 +264,7 @@ h1 .text-primary-custom {
   transition: 0.3s;
   background: #fafafa;
   padding-bottom: 30px;
-
+ 
 }
 .provider-card img {
   width: 100%;
@@ -289,6 +289,3 @@ h1 .text-primary-custom {
 .card:hover img {
   transform: scale(1.05);
 }
-.padding-bottom-card{padding-bottom:10px;}
-
-    
