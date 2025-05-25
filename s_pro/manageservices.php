@@ -118,16 +118,16 @@
       </div>
       <div class="modal-body">
         <?php
-        if (isset($_GET['status']) && $_GET['status'] == 0)
+        if (isset($_GET['add']) && $_GET['add'] == 1)
         {
         ?>
-            Thank you! for added service prices.
+            Thank you! for added service price.
         <?php
         }
-        else if (isset($_GET['status']) && $_GET['status'] == 1)
+        else if (isset($_GET['update']) && $_GET['update'] == 1)
         {
         ?>
-             Thank you! for updated service prices.
+             Thank you! for updated service price.
         <?php
         }
         ?>  
@@ -140,7 +140,7 @@
 </div>
 <script src="script.js"></script>
 <?php 
-    if (isset($_GET['status']) && $_GET['status'] == 0)
+    if (isset($_GET['add']) && $_GET['add'] == 1)
     {
 ?>
     <script>
@@ -150,7 +150,7 @@
     </script>
 <?php
     }
-    else if(isset($_GET['status']) && $_GET['status'] == 1)
+    else if(isset($_GET['update']) && $_GET['update'] == 1)
     {
 ?>
     <script>

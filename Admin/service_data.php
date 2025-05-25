@@ -17,6 +17,7 @@
 
     $res=mysqli_query($con,$query);
 
-    header("location:addservice.php");
+    header("location:addservice.php?add=1");
+    exit;
 
 ?>

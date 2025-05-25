@@ -13,6 +13,7 @@
 
     $res=mysqli_query($con,"update service_providers set approved_action='$value'where provider_id='".$_GET['id']."'");
 
-    header("location:addprovider.php");
+    header("location:addprovider.php?rejected=1");
+    exit;
 
 ?>

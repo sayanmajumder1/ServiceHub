@@ -29,5 +29,6 @@ if (!$res) {
     die("Query failed: " . mysqli_error($con));
 }
 
-header("location:manageservice.php");
+header("location:manageservice.php?add=1");
+exit;
 ?>

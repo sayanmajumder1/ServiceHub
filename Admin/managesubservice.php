@@ -15,10 +15,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage sub Service</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="custom.css">
+       <style>
+        .modal-header{
+            background-color:rgb(150, 60, 186);
+            color: white;
+        }
+       
+    </style>
 </head>
 <body>
     <div class="d-flex ">
@@ -72,8 +80,60 @@
                 </div>
         </div>
     </div>
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="./js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Modal HTML -->
+<div class="modal fade" id="acceptedModal"  aria-labelledby="acceptedModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="acceptedModalLabel">Message</h1>
+      </div>
+      <div class="modal-body">
+        <?php
+        if (isset($_GET['add']) && $_GET['add'] == 1)
+        {
+        ?>
+            Sub Service  Successfully Updated!
+        <?php
+        }
+        else if (isset($_GET['delete']) && $_GET['delete'] == 1)
+        {
+        ?>
+            Sub Service  Successfully deleted!
+        <?php
+        }
+        ?>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
     <script src="btn.js"></script>
+<?php 
+    if (isset($_GET['add']) && $_GET['add'] == 1)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+    else if(isset($_GET['delete']) && $_GET['delete'] == 1)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+?>
 </body>
 </html>

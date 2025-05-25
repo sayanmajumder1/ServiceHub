@@ -10,7 +10,8 @@
 
     $res=mysqli_query($con,"delete from service where service_id='".$_GET['id']."'");
 
-    header("Location:manageservice.php");
+    header("Location:manageservice.php?delete=1");
+    exit;
 
 
 ?>

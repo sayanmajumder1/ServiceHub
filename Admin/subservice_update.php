@@ -32,5 +32,6 @@ if (!$res) {
     die("Query failed: " . mysqli_error($con));
 }
 
-header("location:managesubservice.php");
+header("location:managesubservice.php?add=1");
+exit;
 ?>

@@ -10,7 +10,8 @@
 
     $res=mysqli_query($con,"delete from subservice where subservice_id='".$_GET['id']."'");
 
-    header("Location:managesubservice.php");
+    header("Location:managesubservice.php?delete=1");
+    exit;
 
 
 ?>

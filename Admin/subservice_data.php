@@ -18,6 +18,7 @@
 
     $res=mysqli_query($con,$query);
 
-    header("location:addsubservice.php");
+    header("location:addsubservice.php?add=1");
+    exit;
 
 ?>

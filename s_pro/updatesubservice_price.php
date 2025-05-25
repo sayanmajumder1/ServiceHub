@@ -1,51 +1,65 @@
 <?php
-session_start();
-if (!isset($_SESSION["email"])) {
-    header("location:/serviceHub/Signup_login/login.php");
-    exit;
-}
-include_once "connection.php";
 
-// Sanitize inputs
-$subId = mysqli_real_escape_string($con, $_GET['subservice_id']);
-$providerId = mysqli_real_escape_string($con, $_GET['provider_id']);
+    session_start();
+   
+	 
 
-$res = mysqli_query($con, "SELECT * FROM subservice_price_map WHERE subservice_id='$subId' AND provider_id='$providerId'");
-$row = mysqli_fetch_assoc($res);
+     if(!isset($_SESSION["email"]))
+     {
+         header("location:/serviceHub/Signup_login/login.php");
+         exit;
+     }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Service Price</title>
+    <title>Upadte Service Price</title>
     <link rel="stylesheet" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <?php include 'sidebar.php'; ?>
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar already included above -->
+        <?php
+
+            include_once "connection.php";
+            $res=mysqli_query($con,"select * from subservice_price_map where subservice_id='".$_GET['subservice_id']."' and provider_id='".$_GET['provider_id']."'");
+            $row=mysqli_fetch_assoc($res);
+        ?>
+        <!-- Main content area -->
         <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-4">
             <h2>Update Service Price</h2>
-            <form action="updatesubservice_price_data.php" method="POST">
-                <input type="hidden" name="id" value='<?php echo $row['subprice_id']?>'>
+            <form action="updatesubservice_price_data.php" method="POST" >
+                
                 <div class="mb-3">
-                    <label for="price" class="form-label">Enter Service Price</label>
-                    <input type="number" class="form-control" id="price" name="price" value='<?php echo $row['price']?>' required >
+                    <label for="text" class="form-label">Enter Service Price</label>
+                    <input type="text" class="form-control" id="id" name="id" value='<?php echo $row['subprice_id']?>' required hidden>
+                    <input type="text" class="form-control" id="price" name="price" value='<?php echo $row['price']?>' required>
                 </div>
-                <button type="submit" class="btn btn-outline-success">Update Price</button>
+                <button type="submit" class="btn btn-outline-success">Add Price</button>
             </form>
         </div>
     </div>
 </div>
 
+
+</body>
+</html>
+
+
 <script>
-document.querySelectorAll('.main-link').forEach(link => {
-    if (window.location.href.includes(link.getAttribute('href'))) {
-        link.classList.add('active');
-    }
-});
+    document.querySelectorAll('.main-link').forEach(link => {
+        if (window.location.href.includes(link.getAttribute('href'))) {
+            link.classList.add('active');
+        }
+    });
 </script>
 </body>
 </html>

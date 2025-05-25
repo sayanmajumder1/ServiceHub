@@ -11,6 +11,7 @@
 
     $res=mysqli_query($con,"delete from service_providers where provider_id='".$_GET['id']."'");
 
-    header("location:rejectprovider.php");
+    header("location:rejectprovider.php?rejected=1");
+    exit;
 
 ?>
