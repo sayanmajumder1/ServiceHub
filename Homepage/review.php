@@ -100,16 +100,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                 $rating, 
                 $comment
             );
-            
-            if ($insert_stmt->execute()) {
-                // Update booking to mark as reviewed (optional)
-                $update_stmt = $conn->prepare("UPDATE booking SET is_reviewed = 1 WHERE booking_id = ?");
+                    if ($insert_stmt->execute()) {
+            // Update booking to mark as reviewed (optional - only if column exists)
+            $update_sql = "UPDATE booking SET is_reviewed = 1 WHERE booking_id = ?";
+            if ($update_stmt = $conn->prepare($update_sql)) {
                 $update_stmt->bind_param("i", $booking_id);
                 $update_stmt->execute();
                 $update_stmt->close();
+            }
                 
                 $_SESSION['success'] = "Thank you for your review!";
-                header("Location: bookings.php");
+                header("Location: cart.php");
                 exit();
             } else {
                 $error = "There was an error submitting your review. Please try again.";
