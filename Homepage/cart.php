@@ -127,6 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   color: white;
 }
 
+
+
+
+
+
 .date-range-toggle {
   font-size: 0.95rem;
 }
