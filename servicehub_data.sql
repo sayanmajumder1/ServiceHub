@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2025 at 05:56 AM
+-- Generation Time: May 25, 2025 at 05:57 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -69,16 +69,6 @@ CREATE TABLE `booking` (
   `subservice_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`, `subservice_id`) VALUES
-(7, 6, 26, 15, 'accepted', '2025-05-18 05:29:03', 0, '', 'pending', '', '2025-05-18 12:29:03', 'BOOK682953FFDBC00', '', 6),
-(8, 6, 26, 15, 'accepted', '2025-05-18 17:19:13', 100, 'cash', 'pending', '', '2025-05-18 11:49:13', 'BOOK6829FA715C749', '', 8),
-(10, 6, 26, 15, 'accepted', '2025-05-18 17:39:37', 100, 'cash', 'pending', '', '2025-05-18 12:09:37', 'BOOK6829FF39CF400', '', 0),
-(12, 6, 26, 15, 'accepted', '2025-05-18 17:42:27', 100, 'cash', 'pending', '', '2025-05-18 12:12:27', 'BOOK6829FFE3A5437', '', 5);
-
 -- --------------------------------------------------------
 
 --
@@ -92,15 +82,6 @@ CREATE TABLE `contact_messages` (
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `contact_messages`
---
-
-INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
-(3, 'Riya Das', 'rd@gmail.com', 'fiii', '2025-05-18 05:57:21'),
-(4, 'Riya Das', 'rd3456@gmail.com', 'hi guysssss', '2025-05-18 06:01:05'),
-(5, 'shouvik banerjee', 'shouvik@gmail.com', 'wow', '2025-05-18 06:22:59');
 
 -- --------------------------------------------------------
 
@@ -131,18 +112,6 @@ CREATE TABLE `review` (
   `comment` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `review`
---
-
-INSERT INTO `review` (`review_id`, `user_id`, `provider_id`, `rating`, `comment`, `created_at`) VALUES
-(1, 6, 14, 4, 'Wonderful services.', '2025-05-05 07:27:27'),
-(2, 9, 14, 5, 'very good performance.', '2025-05-05 07:27:27'),
-(3, 6, 20, 4, 'beautiful', '2025-05-08 02:47:38'),
-(4, 9, 20, 5, 'wonderful', '2025-05-08 02:47:38'),
-(5, 11, 20, 4, 'beautiful', '2025-05-08 02:47:43'),
-(6, 12, 20, 5, 'wonderful', '2025-05-08 02:47:43');
 
 -- --------------------------------------------------------
 
