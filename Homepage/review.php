@@ -100,7 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                 $rating, 
                 $comment
             );
-                    if ($insert_stmt->execute()) {
+           
+           
+            if ($insert_stmt->execute()) {
             // Update booking to mark as reviewed (optional - only if column exists)
             $update_sql = "UPDATE booking SET is_reviewed = 1 WHERE booking_id = ?";
             if ($update_stmt = $conn->prepare($update_sql)) {
