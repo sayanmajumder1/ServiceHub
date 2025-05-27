@@ -64,6 +64,20 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#AD46FF',
+                        secondary: '#9820f7',
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Bootstrap JS (for responsive behavior) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -188,11 +202,11 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
             </button>
         </form>
     </div>
-        
+
     <?php
-        include_once "footer.php"; 
+    include_once "footer.php";
     ?>
-    
+
 
     <script>
         // Calculate total when services are selected

@@ -1,62 +1,74 @@
+<?php
+include "navbar.php"
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Service Providers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  
-      <!-- Font Awesome for Icons -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-      <!-- Maintain The  Side Bar  Functionality Java Script     -->
+    <!-- Maintain The  Side Bar  Functionality Java Script     -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#AD46FF',
+                        secondary: '#9820f7',
+                    }
+                }
+            }
+        }
+    </script>
 
-<!-- SideBar Functionality  Js  Code Integrated Here  -->
-<script src="SideBarFunction.js"></script>
 
 
+    <!-- Bootstrap JS (for responsive behavior) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
- <!-- Bootstrap JS (for responsive behavior) -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
 
 </head>
+
 <body>
 
-<?php
-include "navbar.php"
-?>
+    <div class="container mt-5 pt-5 ">
+        <?php
+        if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id'])) {
+            echo "<h4 class='text-center mt-5 text-danger'>Invalid service selected.</h4>";
+            exit;
+        }
 
-<div class="container mt-5 pt-5 ">
-    <?php
-    if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id']))  {
-        echo "<h4 class='text-center mt-5 text-danger'>Invalid service selected.</h4>";
-        exit;
-    }
-
-    $service_id = (int)$_GET['service_id'];
-    $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
-
-   
-       
+        $service_id = (int)$_GET['service_id'];
+        $user_id = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
 
-    // Validate and safely query for the service
-    $service_query = $conn->query("SELECT * FROM service WHERE service_id = '".$_GET['service_id']."'");
 
-    if (!$service_query) {
-        echo "<h4 class='text-center mt-5 text-danger'>Database query error: " . htmlspecialchars($conn->error) . "</h4>";
-        exit;
-    }
 
-    $service = $service_query->fetch_assoc();
 
-    if (!$service) {
-        echo "<h4 class='text-center mt-5 text-danger'>Service not found.</h4>";
-        exit;
-    }
+        // Validate and safely query for the service
+        $service_query = $conn->query("SELECT * FROM service WHERE service_id = '" . $_GET['service_id'] . "'");
 
-    echo "
+        if (!$service_query) {
+            echo "<h4 class='text-center mt-5 text-danger'>Database query error: " . htmlspecialchars($conn->error) . "</h4>";
+            exit;
+        }
+
+        $service = $service_query->fetch_assoc();
+
+        if (!$service) {
+            echo "<h4 class='text-center mt-5 text-danger'>Service not found.</h4>";
+            exit;
+        }
+
+        echo "
     <style>
     @keyframes fadeInUp {
         0% {
@@ -111,35 +123,35 @@ include "navbar.php"
             Providers For: " . htmlspecialchars($service['service_name']) . "
         </h2>
     </div>";
-    // Fetch service providers
-    $provider_result = $conn->query("select * from service_providers where service_id='$service_id'");
+        // Fetch service providers
+        $provider_result = $conn->query("select * from service_providers where service_id='$service_id'");
 
-    if ($provider_result === false) {
-        echo "<p class='text-center text-danger mt-4'>Error fetching providers: " . htmlspecialchars($conn->error) . "</p>";
-        exit;
-    }
+        if ($provider_result === false) {
+            echo "<p class='text-center text-danger mt-4'>Error fetching providers: " . htmlspecialchars($conn->error) . "</p>";
+            exit;
+        }
 
-    if ($provider_result->num_rows > 0) {
-        echo "<div class='container '   ><div class='row mt-4 g-4 '>";
-        while ($row = $provider_result->fetch_assoc()) {
-            $image_data = '../s_pro/uploads2/' . htmlspecialchars(trim($row['image']));
-            $provider_id = $row['provider_id'];
-            
-            // Check if this user has any bookings with this provider
-        $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id ORDER BY created_at DESC LIMIT 1");
+        if ($provider_result->num_rows > 0) {
+            echo "<div class='container '   ><div class='row mt-4 g-4 '>";
+            while ($row = $provider_result->fetch_assoc()) {
+                $image_data = '../s_pro/uploads2/' . htmlspecialchars(trim($row['image']));
+                $provider_id = $row['provider_id'];
 
-            // Initialize default values
-            $has_booking = false;
-            $button_class = 'btn-primary';
-            $button_text = 'Book For Service';
-            $base_booking_url = 'booking.php?provider_id=' . urlencode($row['provider_id']) ; 
-        
-            $target_page = $base_booking_url;
+                // Check if this user has any bookings with this provider
+                $booking_check = $conn->query("SELECT * FROM booking WHERE user_id = $user_id AND provider_id = $provider_id ORDER BY created_at DESC LIMIT 1");
 
-                        if ($booking_check !== false && $booking_check->num_rows > 0) {
+                // Initialize default values
+                $has_booking = false;
+                $button_class = 'btn-primary';
+                $button_text = 'Book For Service';
+                $base_booking_url = 'booking.php?provider_id=' . urlencode($row['provider_id']);
+
+                $target_page = $base_booking_url;
+
+                if ($booking_check !== false && $booking_check->num_rows > 0) {
                     $booking = $booking_check->fetch_assoc();
                     $booking_status = strtolower($booking['booking_status'] ?? '');
-                    
+
                     switch ($booking_status) {
                         case 'accepted':
                         case 'approved':
@@ -168,9 +180,9 @@ include "navbar.php"
                             $target_page = $base_booking_url;
                     }
                 }
-                        
-                                    
-            echo '
+
+
+                echo '
           
             <div class="col-sm-12 col-md-6 col-lg-4   provider-card ">
                 <div class="card h-100 shadow border-0 rounded-4">
@@ -191,16 +203,17 @@ include "navbar.php"
                 </div>
             </div>
             ';
+            }
+            echo "</div></div>";
+        } else {
+            echo "<p class='text-center mt-4'>No providers available for this service.</p>";
         }
-        echo "</div></div>";
-    } else {
-        echo "<p class='text-center mt-4'>No providers available for this service.</p>";
-    }
-    ?>
-</div>
+        ?>
+    </div>
 
-<?php
-include "footer.php"
-?>
+    <?php
+    include "footer.php"
+    ?>
 </body>
+
 </html>
