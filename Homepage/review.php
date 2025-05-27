@@ -290,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                             <i class="fas fa-paper-plane me-2"></i> 
                             <?= $review_exists ? 'Review Already Submitted' : 'Submit Review' ?>
                         </button>
-                        <a href="booking.php" class="btn btn-outline-secondary">
+                        <a href="home.php" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left me-2"></i> Back To Home
                         </a>
                     </div>

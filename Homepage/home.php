@@ -12,7 +12,19 @@ include "navbar.php"
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="Search_Function.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#AD46FF',
+                        secondary: '#9820f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- <script src="Search_Function.js"></script> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -104,7 +116,7 @@ include "navbar.php"
 
     <!-- Hero Section -->
     <section class="relative py-20 bg-gradient-to-r from-purple-50 to-purple-100 overflow-hidden">
-        <div class="container mx-auto px-4 relative animate-fade-in">
+        <div class="container mx-auto px-4 relative animate-fade-in pt-10">
             <div class="max-w-3xl mx-auto text-center">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                     Find Home <span class="text-purple-600">Service/Repair</span> Near You
@@ -115,13 +127,12 @@ include "navbar.php"
                 <div class="flex justify-center max-w-2xl mx-auto">
                     <div class="relative w-full">
                         <input
-                            id = "serviceSearch"
+                            id="serviceSearch"
                             type="text"
                             class="w-full py-4 px-6 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-purple-300 transition-all duration-300"
-                          
-                            placeholder="What service are you looking for?"
-                             >
-                        <button    onclick="filterServices()" class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
+
+                            placeholder="What service are you looking for?">
+                        <button onclick="filterServices()" class="absolute right-2 top-2 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-full transition-all duration-300">
                             <i class="fas fa-search"></i> Search
                         </button>
                     </div>
@@ -137,36 +148,36 @@ include "navbar.php"
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">Services Category</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Browse through our wide range of home services</p>
             </div>
-                        <!-- Added search results count -->
+            <!-- Added search results count -->
             <div id="searchResultsCount" class="text-center text-purple-600 font-medium mb-4 hidden">
-            Found <span id="resultsCount">0</span> services matching your search
+                Found <span id="resultsCount">0</span> services matching your search
             </div>
-            <div  id="servicesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div id="servicesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <?php
                 $user_id = $_SESSION['user_id'] ?? null;
 
                 include 'db_connect.php';
 
-               
-                  // Get services ordered by service_id descending
+
+                // Get services ordered by service_id descending
                 $sql = "SELECT * FROM service ORDER BY service_id DESC";
                 $result = $conn->query($sql);
 
-               
 
 
-        
- 
+
+
+
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $image_data = '../Admin/img/' . $row['image'];
                         echo '
-                        <div class="service-card group" data-service-name="'.strtolower(htmlspecialchars($row['service_name'])).'">
+                        <div class="service-card group rounded-xl bg-purple-400" data-service-name="' . strtolower(htmlspecialchars($row['service_name'])) . '">
 
                             <a href="' . (!empty($user_id) ? 'providers.php?service_id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 service-card hover:shadow-lg">
                                     <div class="h-48 overflow-hidden">
-                                        <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                        <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
                                     </div>
                                     <div class="p-4">
                                         <h3 class="text-lg font-semibold text-gray-900 mb-2">' . htmlspecialchars($row['service_name']) . '</h3>
@@ -180,7 +191,7 @@ include "navbar.php"
                         </div>';
                     }
                 } else {
-             echo '<p class="text-center col-span-full text-gray-600">No services available at the moment</p>';
+                    echo '<p class="text-center col-span-full text-gray-600">No services available at the moment</p>';
                 }
                 $conn->close();
                 ?>
@@ -272,44 +283,39 @@ include "navbar.php"
             });
         });
 
- function filterServices() {
-        const searchInput = document.getElementById('serviceSearch').value.toLowerCase();
-        const serviceCards = document.querySelectorAll('[data-service-name]');
-        let matchCount = 0;
+        function filterServices() {
+            const searchInput = document.getElementById('serviceSearch').value.toLowerCase();
+            const serviceCards = document.querySelectorAll('[data-service-name]');
+            let matchCount = 0;
 
-        serviceCards.forEach(card => {
-            const serviceName = card.getAttribute('data-service-name');
-            if (serviceName.includes(searchInput)) {
-                card.style.display = 'block';
-                matchCount++;
+            serviceCards.forEach(card => {
+                const serviceName = card.getAttribute('data-service-name');
+                if (serviceName.includes(searchInput)) {
+                    card.style.display = 'block';
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const resultsCountContainer = document.getElementById('searchResultsCount');
+            const resultsCount = document.getElementById('resultsCount');
+
+            if (searchInput.trim() === "") {
+                resultsCountContainer.classList.add("hidden");
             } else {
-                card.style.display = 'none';
+                resultsCount.textContent = matchCount;
+                resultsCountContainer.classList.remove("hidden");
+            }
+        }
+
+        // Optional: trigger search on Enter key press
+        document.getElementById('serviceSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                filterServices();
             }
         });
-
-        const resultsCountContainer = document.getElementById('searchResultsCount');
-        const resultsCount = document.getElementById('resultsCount');
-
-        if (searchInput.trim() === "") {
-            resultsCountContainer.classList.add("hidden");
-        } else {
-            resultsCount.textContent = matchCount;
-            resultsCountContainer.classList.remove("hidden");
-        }
-    }
-
-    // Optional: trigger search on Enter key press
-    document.getElementById('serviceSearch').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            filterServices();
-        }
-    });
     </script>
-
-
-
-
-
 
 
 </body>

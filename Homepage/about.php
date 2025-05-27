@@ -11,6 +11,18 @@ include "navbar.php";
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#AD46FF',
+            secondary: '#9820f7',
+          }
+        }
+      }
+    }
+  </script>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -327,8 +339,8 @@ include "navbar.php";
         <p>To be the most trusted home service platform across the country, improving lives through quality and convenience.</p>
       </div>
     </div>
-    <div class="text-center mt-4">
-      <a href="home.php" class="btn btn-primary btn-lg px-5">Explore Our Services</a>
+    <div class="text-center mt-10">
+      <a href="home.php" class="btn btn-primary btn-lg px-5 rounded-full text-white py-2">Explore Our Services</a>
     </div>
   </section>
   <br>
