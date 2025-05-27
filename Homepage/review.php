@@ -21,10 +21,13 @@ $existing_review = null;
 // Fetch booking details and validate it's completed
 if ($booking_id > 0) {
     $stmt = $conn->prepare("
- SELECT b.*, p.businessname, p.image as provider_image, s.service_name, p.provider_id, s.service_id 
+        SELECT b.*, p.businessname, p.image as provider_image, 
+               s.service_name, p.provider_id, s.service_id, 
+               ss.subservice_name, ss.subservice_id
         FROM booking b
         JOIN service_providers p ON b.provider_id = p.provider_id
         JOIN service s ON b.service_id = s.service_id
+        LEFT JOIN subservice ss ON b.subservice_id = ss.subservice_id
         WHERE b.booking_id = ? AND b.user_id = ? AND b.booking_status = 'completed'
     ");
     
@@ -46,19 +49,17 @@ if ($booking_id > 0) {
 
     // Get provider image path
     $provider_image = !empty($booking['provider_image']) ? '../s_pro/uploads2/' . $booking['provider_image'] : '';
-    // Check if review already exists for this booking
+    
+    // Check if review already exists for this booking's subservice
     $check_stmt = $conn->prepare("
         SELECT * FROM review 
-        WHERE user_id = ? AND EXISTS (
-            SELECT 1 FROM booking 
-            WHERE booking_id = ? AND user_id = ?
-        )
+        WHERE user_id = ? AND provider_id = ? AND subservice_id = ?
     ");
     
     if ($check_stmt === false) {
         $error = "Database error: " . $conn->error;
     } else {
-        $check_stmt->bind_param("iii", $user_id, $booking_id, $user_id);
+        $check_stmt->bind_param("iii", $user_id, $booking['provider_id'], $booking['subservice_id']);
         $check_stmt->execute();
         $check_result = $check_stmt->get_result();
         
@@ -75,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
     $rating = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
     $comment = isset($_POST['comment']) ? trim($_POST['comment']) : '';
     $provider_id = $booking['provider_id'];
-    $service_id = $booking['service_id'];
+    $subservice_id = $booking['subservice_id'];
     
     // Validate input
     if ($rating < 1 || $rating > 5) {
@@ -86,31 +87,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
         // Insert new review
         $insert_stmt = $conn->prepare("
             INSERT INTO review
-            (user_id, provider_id, rating, comment, created_at)
-            VALUES (?, ?, ?, ?, NOW())
+            (user_id, provider_id, rating, comment, created_at, subservice_id)
+            VALUES (?, ?, ?, ?, NOW(), ?)
         ");
         
         if ($insert_stmt === false) {
             $error = "Database error: " . $conn->error;
         } else {
             $insert_stmt->bind_param(
-                "iiis", 
+                "iiisi", 
                 $user_id, 
                 $provider_id, 
                 $rating, 
-                $comment
+                $comment,
+                $subservice_id
             );
-                    if ($insert_stmt->execute()) {
-            // Update booking to mark as reviewed (optional - only if column exists)
-            $update_sql = "UPDATE booking SET is_reviewed = 1 WHERE booking_id = ?";
-            if ($update_stmt = $conn->prepare($update_sql)) {
-                $update_stmt->bind_param("i", $booking_id);
-                $update_stmt->execute();
-                $update_stmt->close();
-            }
-                
+           
+            if ($insert_stmt->execute()) {
                 $_SESSION['success'] = "Thank you for your review!";
-                header("Location: cart.php");
+                header("Location: cart.php"); // Changed from cart.php to bookings.php
                 exit();
             } else {
                 $error = "There was an error submitting your review. Please try again.";
@@ -130,6 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="hideScrollbar.css">
     <style>
+        /* Your existing CSS remains the same */
         :root {
             --primary-color: #ad67c8;
             --primary-hover: #9c56b7;
@@ -223,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                 
                 <!-- Booking Summary -->
                 <div class="d-flex align-items-center mb-4 p-3 bg-light rounded">
-                       <?php if (!empty($provider_image)): ?>
+                    <?php if (!empty($provider_image)): ?>
                         <img src="<?= htmlspecialchars($provider_image) ?>" 
                              class="service-image me-3" 
                              alt="<?= htmlspecialchars($booking['businessname']) ?>"
@@ -236,6 +232,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_review']) && !$
                     
                     <div>
                         <h5 class="mb-1"><?= htmlspecialchars($booking['service_name']) ?></h5>
+                        <?php if (!empty($booking['subservice_name'])): ?>
+                            <p class="mb-1"><small>Category: <?= htmlspecialchars($booking['subservice_name']) ?></small></p>
+                        <?php endif; ?>
                         <p class="mb-1 text-muted"><?= htmlspecialchars($booking['businessname']) ?></p>
                         <small class="text-muted">
                             <?= date('M d, Y', strtotime($booking['booking_time'])) ?>
