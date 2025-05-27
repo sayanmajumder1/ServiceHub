@@ -22,6 +22,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="hideScrollbar.css">
     <script>
         tailwind.config = {
             theme: {
@@ -90,7 +91,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
 </head>
 
 <body class="bg-gray-50 font-sans antialiased">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-10 py-8">
         <?php
         // Prepare and execute service query safely
         $stmt = $conn->prepare("SELECT * FROM service WHERE service_id = ?");

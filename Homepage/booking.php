@@ -81,6 +81,7 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
 
     <!-- Bootstrap JS (for responsive behavior) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="hideScrollbar.css">
     <style>
         .service-checkbox:checked+label {
             border-color: #9f7aea;

@@ -45,7 +45,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="services.php" class="footer-link">
+                        <a href="#category" class="footer-link">
                             <i class="fas fa-chevron-right text-xs text-primary mr-2"></i> Services
                         </a>
                     </li>
@@ -79,8 +79,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="footer-link">
-                            <i class="fas fa-chevron-right text-xs text-primary mr-2"></i> Painting
+                        <a href="#category" class="footer-link">
+                            <i class="fas fa-chevron-right text-xs text-primary mr-2"></i> Explore All
                         </a>
                     </li>
                 </ul>

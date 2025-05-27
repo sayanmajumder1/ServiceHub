@@ -27,6 +27,7 @@ include "navbar.php"
     <!-- <script src="Search_Function.js"></script> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="hideScrollbar.css">
 
     <!-- Custom animations -->
     <style>
@@ -143,9 +144,9 @@ include "navbar.php"
 
     <!-- Service Categories Section -->
     <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
+        <div class="container mx-auto px-4 md:px-10">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Services Category</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4" id="category">Services Category</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Browse through our wide range of home services</p>
             </div>
             <!-- Added search results count -->

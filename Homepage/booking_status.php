@@ -79,6 +79,7 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'bg-pu
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="hideScrollbar.css">
   
   <script>
     tailwind.config = {
