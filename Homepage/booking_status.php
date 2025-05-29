@@ -284,9 +284,11 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'bg-pu
               Cancel Booking
             </button>
           <?php elseif (strtolower($booking['booking_status']) === 'completed'): ?>
-            <button class="w-full py-3 bg-primary text-white rounded-lg shadow-md hover:shadow-lg transition-all">
-              <i class="bi bi-receipt mr-1"></i> View Receipt
-            </button>
+                    <button 
+            onclick="window.location.href='view.php?booking_id=<?php echo $booking['booking_id']; ?>'" 
+            class="w-full py-3 bg-primary text-white rounded-lg shadow-md hover:shadow-lg transition-all">
+            <i class="bi bi-receipt mr-1"></i> View Receipt
+          </button>
           <?php else: ?>
             <button class="w-full py-3 bg-gray-300 text-gray-600 rounded-lg cursor-not-allowed">
               <?php echo ucfirst($booking['booking_status']); ?>
