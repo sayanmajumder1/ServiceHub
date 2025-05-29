@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body class="bg-gray-50 font-sans antialiased">
   <div class="container mx-auto px-4 py-8 max-w-6xl">
     <!-- Header Section -->
-    <div class="text-center mb-8 animate-fade-in">
+    <div class="text-center mb-8 animate-fade-in mt-20">
       <h1 class="section-title inline-block">My Bookings</h1>
       <p class="text-gray-500 mt-2">View and manage your service appointments</p>
     </div>
