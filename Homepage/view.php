@@ -170,11 +170,17 @@ $receipt_date = date('F j, Y, g:i a');
 <body class="bg-gray-100 font-sans antialiased py-8">
   <div class="container mx-auto px-4">
     <!-- Back Button (Hidden when printing) -->
-    <div class="mb-4 no-print">
-      <a href="cart.php" class="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-all">
-        <i class="bi bi-arrow-left text-gray-600"></i>
-      </a>
-    </div>
+   
+          <div class="mb-4 no-print">
+            <button 
+              onclick="window.location.href='/ServiceHub/Homepage/cart.php'" 
+              class="inline-flex items-center bg-[#ad67c8] text-white font-semibold px-5 py-2 rounded-full shadow-lg hover:bg-[#9a56b2] transition-all duration-300 ease-in-out hover:-translate-y-0.5"
+            >
+              <i class="bi bi-arrow-left-circle mr-2 text-lg"></i>
+              Back
+            </button>
+          </div>
+
 
     <!-- Receipt Container -->
     <div class="receipt-container">
@@ -207,11 +213,11 @@ $receipt_date = date('F j, Y, g:i a');
           <h3 class="section-title">Service Details</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p class="detail-label">Service Type</p>
+              <p class="detail-label">Service Name  </p>
               <p class="detail-value"><?php echo htmlspecialchars($booking['service_name']); ?></p>
             </div>
             <div>
-              <p class="detail-label">Subservice</p>
+              <p class="detail-label">Survice Category</p>
               <p class="detail-value"><?php echo htmlspecialchars($booking['subservice_name']); ?></p>
             </div>
             <div>
@@ -306,16 +312,16 @@ $receipt_date = date('F j, Y, g:i a');
       </div>
       
       <!-- Completed Stamp (Positioned absolutely) -->
-      <div class="stamp no-print">
+     <!-- <div class="stamp no-print">
         <svg width="120" height="120" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="100" cy="100" r="90" fill="none" stroke="#10B981" stroke-width="10"/>
           <path d="M50 100 L85 135 L150 65" stroke="#10B981" stroke-width="15" stroke-linecap="round"/>
         </svg>
       </div>
-    </div>
+    </div>--->
 
     <!-- Print Button ::: I Just Call A Funtiob That Is Print() which download the Recipt -->
-    <div class="mt-6 text-center no-print">
+    <div class="mt-6 text-center no-print pb-5">
       <button 
         onclick="window.print()" 
         class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:shadow-lg transition-all">
