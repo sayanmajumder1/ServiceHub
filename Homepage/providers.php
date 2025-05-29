@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include "navbar.php";
 
 // Validate service_id parameter
@@ -102,7 +102,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
         if ($service_result->num_rows === 0) {
             echo '<div class="text-center py-12">
                     <h2 class="text-2xl font-bold text-red-500 mb-4">Service not found</h2>
-                    <a href="services.php" class="text-primary hover:underline">Browse available services</a>
+                    <a href="home.php" class="text-primary hover:underline">Browse available services</a>
                   </div>';
             exit;
         }
