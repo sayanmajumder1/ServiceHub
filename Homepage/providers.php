@@ -111,7 +111,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
         ?>
 
         <!-- Service Header -->
-        <div class="text-center mb-12 animate-fade-in">
+        <div class="text-center mb-12 animate-fade-in pt-8 md:pt-16 lg:pt-24">
             <h1 class="text-3xl md:text-4xl font-bold text-dark mb-3 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-gradient-to-r after:from-primary after:to-secondary">
                 Providers for <?= htmlspecialchars($service['service_name']) ?>
             </h1>
