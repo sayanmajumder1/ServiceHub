@@ -4,7 +4,7 @@ include "navbar.php";
 
 // Validate service_id parameter
 if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id'])) {
-    header("Location: services.php");
+    header("Location: home.php");
     exit();
 }
 
@@ -230,7 +230,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
                             <i class="fas fa-hard-hat text-4xl text-gray-400 mb-4"></i>
                             <h3 class="text-xl font-medium text-gray-700 mb-2">No providers available</h3>
                             <p class="text-gray-500 mb-4">We currently don\'t have providers for this service in your area.</p>
-                            <a href="services.php" class="inline-flex items-center text-primary hover:underline">
+                            <a href="home.php" class="inline-flex items-center text-primary hover:underline">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Browse other services
                             </a>
