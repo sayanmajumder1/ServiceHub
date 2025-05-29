@@ -18,6 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="custom.css">
+     <link rel="stylesheet" href="hideScrollbar.css">
     <style>
         .profile-card {
             max-width: 600px;
@@ -25,14 +26,30 @@
             border-radius: 1rem;
             box-shadow: 0 4px 8px rgba(88, 86, 86, 0.1);
         }
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-top: -75px;
-            border: 5px solid white;
-        }
+       
+       .profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: -75px;
+    padding: 5px; /* thickness of gradient border */
+    background: linear-gradient(to left, purple, skyblue);
+    position: relative;
+    z-index: 1;
+}
+
+/* The white background inside the gradient border */
+.profile-img::before {
+    content: "";
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    background: white; /* match your page background */
+    border-radius: 50%;
+    z-index: -1;
+}
+
+
         .bg{
             background-color:#9810FA;
         }

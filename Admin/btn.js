@@ -15,8 +15,8 @@ sidebarCollapse?.addEventListener('click', () => {
 // Close sidebar on nav item click (on mobile only)
 
 // Hide sidebar when dashboard (or any nav link) is clicked on small screens
-const dashboardLink = document.querySelector('[onclick="dashboard_click()"]');
-dashboardLink?.addEventListener('click', () => {
+const dashboardLink1 = document.querySelector('[onclick="dashboard_click()"]');
+dashboardLink1?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
@@ -56,124 +56,55 @@ dashboardLink5?.addEventListener('click', () => {
 });
 
 const dashboardLink6 = document.querySelector('[onclick="sp3_click()"]');
-dashboardLink5?.addEventListener('click', () => {
+dashboardLink6?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 
 const dashboardLink7 = document.querySelector('[onclick="payment_click()"]');
-dashboardLink6?.addEventListener('click', () => {
+dashboardLink7?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 
 const dashboardLink8 = document.querySelector('[onclick="se1_click()"]');
-dashboardLink6?.addEventListener('click', () => {
+dashboardLink8?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 
 const dashboardLink9 = document.querySelector('[onclick="se2_click()"]');
-dashboardLink6?.addEventListener('click', () => {
+dashboardLink9?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 const dashboardLink10 = document.querySelector('[onclick="service3_click()"]');
-dashboardLink3?.addEventListener('click', () => {
+dashboardLink10?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 
 const dashboardLink11 = document.querySelector('[onclick="service4_click()"]');
-dashboardLink3?.addEventListener('click', () => {
+dashboardLink11?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 const dashboardLink12 = document.querySelector('[onclick="user_click()"]');
-dashboardLink1?.addEventListener('click', () => {
+dashboardLink12?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
 
 const dashboardLink13 = document.querySelector('[onclick="feedback_click()"]');
-dashboardLink1?.addEventListener('click', () => {
+dashboardLink13?.addEventListener('click', () => {
     if (window.innerWidth < 992) {
         sidebar.classList.add('d-none');
     }
 });
-// function dashboard_click(){
-//     document.getElementById('ui1').style.display="block";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="none";
-//     const sidebarLinks = document.querySelectorAll('.sidebar .nav-link, .sidebar .dropdown-item');
-
-
-// }
-// function booking_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="block";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="none";
-//     const sidebarLinks = document.querySelectorAll('.sidebar .nav-link, .sidebar .dropdown-item');
-
-
-// }
-// function service1_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="block";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="none";
-// }
-// function service2_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="block";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="none";
-// }
-// function sp1_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="block";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="none";
-// }
-// function sp2_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="block";
-//     document.getElementById('ui7').style.display="none";
-// }
-// function payment_click(){
-//     document.getElementById('ui1').style.display="none";
-//     document.getElementById('ui2').style.display="none";
-//     document.getElementById('ui3').style.display="none";
-//     document.getElementById('ui4').style.display="none";
-//     document.getElementById('ui5').style.display="none";
-//     document.getElementById('ui6').style.display="none";
-//     document.getElementById('ui7').style.display="block";
-// }
