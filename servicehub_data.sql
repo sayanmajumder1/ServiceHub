@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2025 at 05:57 AM
+-- Generation Time: May 29, 2025 at 06:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,6 +69,16 @@ CREATE TABLE `booking` (
   `subservice_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`booking_id`, `user_id`, `service_id`, `provider_id`, `booking_status`, `booking_time`, `amount`, `payment_method`, `payment_status`, `transaction_id`, `created_at`, `booking_no`, `reason`, `subservice_id`) VALUES
+(15, 6, 28, 28, 'completed', '2025-05-27 09:19:32', 2000, 'cash', 'success', '', '2025-05-27 03:49:32', 'BOOK6835678419D57', '', 10),
+(16, 6, 28, 28, 'rejected', '2025-05-27 09:19:32', 3000, 'cash', 'failed', '', '2025-05-27 03:49:32', 'BOOK6835678419D57', 'bad behaviour', 11),
+(17, 6, 28, 28, 'completed', '2025-05-27 09:39:04', 3000, 'cash', 'success', '', '2025-05-27 04:09:04', 'BOOK68356C1861ECB', '', 11),
+(18, 6, 26, 25, 'completed', '2025-05-29 05:47:55', 15000, 'cash', 'success', '', '2025-05-29 00:17:55', 'BOOK6837D8EB938E3', '', 9);
+
 -- --------------------------------------------------------
 
 --
@@ -110,7 +120,8 @@ CREATE TABLE `review` (
   `provider_id` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
   `comment` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `subservice_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -169,7 +180,7 @@ CREATE TABLE `service_providers` (
 INSERT INTO `service_providers` (`provider_id`, `image`, `service_id`, `description`, `approved_action`, `created_at`, `businessname`, `lisenceno`, `identityno`, `identityimage`, `email`, `phone`, `provider_name`, `password`, `address`) VALUES
 (23, 'eaf5d61b2d9ee75141a1ff6bac387e4a.jpg', 24, '', 'approved', '2025-05-23 14:29:02', 'Santra Hub', 'A222111A', 'A111A', 'uploads/68308626e1d17_naihati ma.jpg', 'Anik@gmail.com', '1234567890', 'Anik Santra', '1234', 'Jamalpur'),
 (24, '', 24, '', 'approved', '2025-05-23 14:47:17', 'ghosh electronic', 'C222111C', 'C111C', 'uploads/68308a6f4f7c8_naihati ma.jpg', 'chinmoy@gmail.com', '6296364507', 'chinmoy ghosh', '1234', 'Burdwan'),
-(25, '', 26, '', 'approved', '2025-05-23 14:50:12', 'Majumdar Stores', 'S222111S', 'S111S', 'uploads/68308b1e0895b_naihati ma.jpg', 'sayan@gmail.com', '9784563210', 'sayan Majumdar', '1234', 'Memari'),
+(25, '', 26, 'We provide a good service. ', 'approved', '2025-05-23 14:50:12', 'Majumdar Stores', 'S222111S', 'S111S', 'uploads/68308b1e0895b_naihati ma.jpg', 'sayan@gmail.com', '9784563210', 'sayan Majumdar', '1234', 'Memari'),
 (26, '', 26, '', 'approved', '2025-05-23 14:53:03', 'Dutta Services', 'So111222So', 'So111So', 'uploads/68308bc90d819_naihati ma.jpg', 'soham@gmail.com', '9647853210', 'Soham Dutta', '1234', 'Bhater'),
 (27, '', 28, '', 'approved', '2025-05-23 14:55:30', 'Ghosh Automobile', 'R111222R', 'R111R', 'uploads/68308c5d28803_naihati ma.jpg', 'rupam@gmail.com', '1234567890', 'Rupam Ghosh', '1234', 'gurap'),
 (28, '5b0c346cf20130dcc0330fc030593e9c.jpg', 28, '', 'approved', '2025-05-23 14:56:58', 'Garai services', 'Ra111222Ra', 'Ra111Ra', 'uploads/68308cb3c9553_naihati ma.jpg', 'rana@gmail.com', '9647853210', 'Rana garai', '1234', 'Burdwan'),
@@ -230,7 +241,7 @@ INSERT INTO `subservice_price_map` (`subprice_id`, `service_id`, `subservice_id`
 (9, 27, 15, 29, 12000),
 (10, 27, 14, 30, 60000),
 (11, 27, 15, 30, 15000),
-(12, 26, 5, 25, 4500),
+(12, 26, 5, 25, 45000),
 (13, 26, 6, 25, 8000),
 (14, 26, 8, 25, 10000),
 (15, 26, 9, 25, 15000),
@@ -273,7 +284,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `dob`, `email`, `password`, `phone`, `address`, `image`, `created_at`, `updated_at`) VALUES
-(6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'kolkata', '2025-05-13_050657_user_6.jpg', '2025-05-05 07:04:49', '2025-05-19 04:52:14'),
+(6, 'shouvik banerjee', '2025-05-29', 'shouvik@gmail.com', 'shouvik@2005', '1234567890', 'kolkata', '2025-05-27_092119_user_6.jpg', '2025-05-05 07:04:49', '2025-05-27 07:21:19'),
 (9, 'Sk Asraful', '2025-05-06', 'Asraful@gmail.com', 'Asraful@2004', '9784563210', 'Nigan', '2025-05-24_055315_user_9.png', '2025-05-05 07:09:27', '2025-05-24 03:53:18'),
 (11, 'Soham dutta', '0000-00-00', 'soham@gmail.com', 'soham@2005', '7797472017', '', '', '2025-05-05 14:10:23', '2025-05-05 14:10:23'),
 (12, 'Sudipta Samanta', '0000-00-00', 'Sudipta@gmail.com', 'sudipta@2005', '6295069367', '', '', '2025-05-08 02:39:14', '2025-05-08 02:39:14');
@@ -358,7 +369,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `contact_messages`
@@ -376,7 +387,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `service`
