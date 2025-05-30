@@ -217,7 +217,7 @@ $receipt_date = date('F j, Y, g:i a');
               <p class="detail-value"><?php echo htmlspecialchars($booking['service_name']); ?></p>
             </div>
             <div>
-              <p class="detail-label">Survice Category</p>
+              <p class="detail-label">Service Category</p>
               <p class="detail-value"><?php echo htmlspecialchars($booking['subservice_name']); ?></p>
             </div>
             <div>
