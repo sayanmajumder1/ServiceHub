@@ -155,7 +155,7 @@ include "navbar.php"
             </div>
             <div id="servicesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <?php
-                $user_id = $_SESSION['user_id'] ?? null;
+               
 
                 include 'db_connect.php';
 
@@ -175,7 +175,7 @@ include "navbar.php"
                         echo '
                         <div class="service-card group rounded-xl bg-purple-400" data-service-name="' . strtolower(htmlspecialchars($row['service_name'])) . '">
 
-                            <a href="providers.php?service_id=' . $row['service_id'] . '" class="block">
+                            <a href="' . (!empty($user_id) ? 'providers.php?service_id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 service-card hover:shadow-lg">
                                     <div class="h-48 overflow-hidden">
                                         <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">

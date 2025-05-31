@@ -9,7 +9,7 @@ if (!isset($_GET['service_id']) || !is_numeric($_GET['service_id'])) {
 }
 
 $service_id = (int)$_GET['service_id'];
-$user_id = $_SESSION['user_id'] ?? 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +140,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
                     $target_page = 'booking.php?provider_id=' . $provider_id;
 
                     // Check for existing bookings if user is logged in
-                    if ($user_id) {
+                    
                         $booking_stmt = $conn->prepare("SELECT booking_id, booking_status FROM booking WHERE user_id = ? AND provider_id = ? ORDER BY created_at DESC LIMIT 1");
                         $booking_stmt->bind_param("ii", $user_id, $provider_id);
                         $booking_stmt->execute();
@@ -175,11 +175,7 @@ $user_id = $_SESSION['user_id'] ?? 0;
                                     $button_text = 'Book For Service';
                             }
                         }
-                    } else {
-                        $button_class = 'booking-btn-disabled';
-                        $button_text = 'Login to Book';
-                        $target_page = 'login.php';
-                    }
+                    
             ?>
 
                     <div class="provider-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-in-up">
