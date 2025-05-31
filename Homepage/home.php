@@ -175,7 +175,7 @@ include "navbar.php"
                         echo '
                         <div class="service-card group rounded-xl bg-purple-400" data-service-name="' . strtolower(htmlspecialchars($row['service_name'])) . '">
 
-                            <a href="' . (!empty($user_id) ? 'providers.php?service_id=' . $row['service_id'] : '/ServiceHub/Signup_Login/login.php') . '" class="block">
+                            <a href="providers.php?service_id=' . $row['service_id'] . '" class="block">
                                 <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 service-card hover:shadow-lg">
                                     <div class="h-48 overflow-hidden">
                                         <img src="' . trim($image_data) . '" alt="' . htmlspecialchars($row['service_name']) . '" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
