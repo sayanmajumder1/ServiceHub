@@ -111,11 +111,9 @@ if (isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <!-- Modern Navbar -->
     <nav class="navbar fixed top-0 w-full z-50 px-5">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo - Made larger as requested -->
                 <a href="home.php" class="flex items-center">
                     <img src="assets/images/logo.png" alt="ServiceHub" class="h-24 w-auto">
                 </a>
@@ -123,7 +121,14 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="home.php" class="nav-link text-gray-800 font-medium">Home</a>
+                    <?php 
+                        if (isset($_SESSION['user_id']))
+                        {
+                    ?>
                     <a href="cart.php" class="nav-link text-gray-800 font-medium">Bookings</a>
+                    <?php
+                        }
+                    ?>
                     <a href="about.php" class="nav-link text-gray-800 font-medium">About</a>
                     <a href="contact.php" class="nav-link text-gray-800 font-medium">Contact</a>
 
