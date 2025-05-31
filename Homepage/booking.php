@@ -2,10 +2,10 @@
 session_start();
 include "navbar.php";
 // Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: login.php");
+//     exit();
+// }
 // Check if provider_id is passed in URL
 if (!isset($_GET['provider_id']) || !is_numeric($_GET['provider_id'])) {
     header("Location: home.php");
@@ -154,7 +154,16 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
         <form action="booking_process.php" method="POST" class="bg-white rounded-xl shadow-md p-6">
             <input type="hidden" name="provider_id" value="<?php echo $provider['provider_id']; ?>">
             <input type="hidden" name="service_id" value="<?php echo $provider['service_id']; ?>">
+            <?php
+                
+                if(isset($_SESSION['user_id']))
+                {
+            ?>
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <?php
+                }
+            ?>
+            
 
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Services</h2>
 
@@ -203,10 +212,43 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
              
              
             <!-- Submit Button -->
+           <!-- <?php
+                
+                if(isset($_SESSION['user_id']))
+                {
+            ?>  
             <button type="submit"
                 class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
                 <i class="fas fa-bolt mr-2"></i> Book Now for Same-Day Service
             </button>
+            <?php
+                }
+                else
+                {
+            ?>
+                <a href="serviceHub/Signup_Login/login.php";
+            <?php
+                } 
+            ?> -->
+            <!-- Submit Button -->
+<?php
+    if (isset($_SESSION['user_id'])) {
+?>
+    <button type="submit"
+        class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+        <i class="fas fa-bolt mr-2"></i> Book Now for Same-Day Service
+    </button>
+<?php
+    } else {
+?>
+    <a href="/serviceHub/Signup_Login/login.php"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+        <i class="fas fa-user-plus mr-2"></i> Login to Book Now
+    </a>
+<?php
+    }
+?>
+
         </form>
     </div>
 
