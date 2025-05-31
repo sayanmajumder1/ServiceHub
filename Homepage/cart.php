@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION['user_id'])) {
+  header("Location:/ServiceHub/Signup_Login/login.php");
+  exit();
+}
 include "navbar.php";
 // Handle date filter submission
 $date_filter = '';
@@ -7,17 +11,19 @@ $end_date = '';
 $date_filter_applied = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['bookingDate']) && !empty($_POST['bookingDate'])) {
-        $date_filter = $_POST['bookingDate'];
-        $date_filter_applied = true;
-    }
-    
-    if (isset($_POST['startDate']) && !empty($_POST['startDate']) && 
-        isset($_POST['endDate']) && !empty($_POST['endDate'])) {
-        $start_date = $_POST['startDate'];
-        $end_date = $_POST['endDate'];
-        $date_filter_applied = true;
-    }
+  if (isset($_POST['bookingDate']) && !empty($_POST['bookingDate'])) {
+    $date_filter = $_POST['bookingDate'];
+    $date_filter_applied = true;
+  }
+
+  if (
+    isset($_POST['startDate']) && !empty($_POST['startDate']) &&
+    isset($_POST['endDate']) && !empty($_POST['endDate'])
+  ) {
+    $start_date = $_POST['startDate'];
+    $end_date = $_POST['endDate'];
+    $date_filter_applied = true;
+  }
 }
 ?>
 
@@ -37,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="hideScrollbar.css">
-  
+
   <script>
     tailwind.config = {
       theme: {
@@ -54,15 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           },
           keyframes: {
             fadeIn: {
-              '0%': { opacity: '0', transform: 'translateY(-10px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
+              '0%': {
+                opacity: '0',
+                transform: 'translateY(-10px)'
+              },
+              '100%': {
+                opacity: '1',
+                transform: 'translateY(0)'
+              },
             }
           }
         }
       }
     }
   </script>
-  
+
   <style type="text/tailwindcss">
     @layer components {
       .filter-btn {
@@ -106,14 +118,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <i class="bi bi-funnel text-primary"></i>
             Filter Options
           </h3>
-          
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Single Date Picker -->
             <div>
               <label for="bookingDate" class="block text-sm font-medium text-gray-700 mb-1">Specific Date</label>
               <div class="relative">
-                <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary" 
-                       id="bookingDate" name="bookingDate" value="<?php echo htmlspecialchars($date_filter) ?>">
+                <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                  id="bookingDate" name="bookingDate" value="<?php echo htmlspecialchars($date_filter) ?>">
               </div>
             </div>
 
@@ -123,12 +135,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               <div id="dateRangeFields" class="<?php echo (!empty($start_date) ? 'block' : 'hidden') ?> space-y-2">
                 <div class="grid grid-cols-2 gap-3">
                   <div>
-                    <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary" 
-                           id="startDate" name="startDate" value="<?php echo htmlspecialchars($start_date) ?>">
+                    <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                      id="startDate" name="startDate" value="<?php echo htmlspecialchars($start_date) ?>">
                   </div>
                   <div>
-                    <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary" 
-                           id="endDate" name="endDate" value="<?php echo htmlspecialchars($end_date) ?>">
+                    <input type="date" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                      id="endDate" name="endDate" value="<?php echo htmlspecialchars($end_date) ?>">
                   </div>
                 </div>
               </div>
@@ -144,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-custom flex-1 md:flex-none">
               <i class="bi bi-funnel-fill mr-2"></i> Apply Filters
             </button>
-            <button type="button" class="px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all flex-1 md:flex-none" 
-                    onclick="resetDateFilter()">
+            <button type="button" class="px-5 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all flex-1 md:flex-none"
+              onclick="resetDateFilter()">
               <i class="bi bi-x-circle mr-2"></i> Clear All
             </button>
           </div>
@@ -219,11 +231,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif (!empty($start_date) && !empty($end_date)) {
           $query .= " AND DATE(b.booking_time) BETWEEN ? AND ?";
         }
-        
+
         $query .= " ORDER BY b.created_at DESC";
-        
+
         $stmt = mysqli_prepare($conn, $query);
-        
+
         // Bind parameters based on date filtering
         if (!empty($date_filter)) {
           mysqli_stmt_bind_param($stmt, "is", $user_id, $date_filter);
@@ -232,7 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
           mysqli_stmt_bind_param($stmt, "i", $user_id);
         }
-        
+
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
@@ -272,10 +284,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               '../s_pro/uploads2/' . $booking['provider_image'] : (!empty($booking['service_image']) ?
                 'assets/images/services/' . $booking['service_image'] :
                 'https://via.placeholder.com/150');
-                
+
             $id = $booking['subservice_id'];
             $res = mysqli_query($conn, "select * from subservice where subservice_id=$id");
-            $row = mysqli_fetch_assoc($res);  
+            $row = mysqli_fetch_assoc($res);
       ?>
             <div class="card bg-white rounded-xl shadow-md overflow-hidden card-hover"
               onclick="window.location.href='booking_status.php?booking_id=<?php echo $booking['booking_id']; ?>'"
@@ -285,7 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="w-full md:w-1/4 h-48 md:h-auto">
                   <img src="<?php echo $image_path; ?>" class="w-full h-full object-cover" alt="<?php echo htmlspecialchars($booking['service_name']); ?>">
                 </div>
-                
+
                 <!-- Booking Details -->
                 <div class="w-full md:w-3/4 p-5">
                   <div class="flex justify-between items-start">
@@ -298,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <span class="status-badge <?php echo $status_class; ?>"><?php echo $status_text; ?></span>
                   </div>
-                  
+
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div>
                       <p class="text-sm text-gray-600"><span class="font-medium text-dark">Service:</span> <?php echo htmlspecialchars($booking['service_name']); ?></p>
@@ -309,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <p class="text-primary font-bold text-lg mt-1">$<?php echo number_format($booking['amount'], 2); ?></p>
                     </div>
                   </div>
-                  
+
                   <?php if ($review_button): ?>
                     <div class="mt-4 flex justify-end">
                       <button class="btn-custom text-sm px-4 py-1.5" onclick="event.stopPropagation(); window.location.href='review.php?booking_id=<?php echo $booking['booking_id']; ?>'">
@@ -347,17 +359,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function toggleDateRange() {
       const dateRangeFields = document.getElementById('dateRangeFields');
       const toggleBtn = document.querySelector('[onclick="toggleDateRange()"] span');
-      
+
       dateRangeFields.classList.toggle('hidden');
       dateRangeFields.classList.toggle('block');
-      
+
       if (dateRangeFields.classList.contains('hidden')) {
         toggleBtn.textContent = 'Select date range';
       } else {
         toggleBtn.textContent = 'Hide range';
       }
     }
-    
+
     function resetDateFilter() {
       document.getElementById('bookingDate').value = '';
       document.getElementById('startDate').value = '';
@@ -391,7 +403,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </script>
 
   <?php
-  include_once "footer.php"; 
+  include_once "footer.php";
   ?>
 </body>
+
 </html>
