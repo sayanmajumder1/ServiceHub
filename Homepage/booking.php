@@ -1,6 +1,11 @@
 <?php
+session_start();
 include "navbar.php";
-
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 // Check if provider_id is passed in URL
 if (!isset($_GET['provider_id']) || !is_numeric($_GET['provider_id'])) {
     header("Location: home.php");
@@ -8,7 +13,6 @@ if (!isset($_GET['provider_id']) || !is_numeric($_GET['provider_id'])) {
 }
 
 $provider_id = (int)$_GET['provider_id'];
-
 // Fetch provider details
 $query = "SELECT * FROM service_providers WHERE provider_id = ?";
 $stmt = mysqli_prepare($conn, $query);
@@ -196,6 +200,8 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
                 </div>
             </div>
 
+             
+             
             <!-- Submit Button -->
             <button type="submit"
                 class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
