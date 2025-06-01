@@ -161,7 +161,14 @@ if (isset($_SESSION['user_id'])) {
                 <div class="flex flex-col h-full py-6">
                     <nav class="flex-1 space-y-6">
                         <a href="home.php" class="block nav-link text-gray-800 font-medium text-lg px-4 py-3">Home</a>
+                        <?php 
+                        if (isset($_SESSION['user_id']))
+                        {
+                        ?>
                         <a href="cart.php" class="block nav-link text-gray-800 font-medium text-lg px-4 py-3">Bookings</a>
+                         <?php
+                        }
+                        ?>
                         <a href="about.php" class="block nav-link text-gray-800 font-medium text-lg px-4 py-3">About</a>
                         <a href="contact.php" class="block nav-link text-gray-800 font-medium text-lg px-4 py-3">Contact</a>
                     </nav>

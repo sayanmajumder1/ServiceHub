@@ -249,26 +249,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['guest_selections'])) {
 
              
              
-            <!-- Submit Button -->
-           <!-- <?php
-                
-                if(isset($_SESSION['user_id']))
-                {
-            ?>  
-            <button type="submit"
-                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
-                <i class="fas fa-bolt mr-2"></i> Book Now for Same-Day Service
-            </button>
-            <?php
-                }
-                else
-                {
-            ?>
-                <a href="serviceHub/Signup_Login/login.php";
-            <?php
-                } 
-
-            ?> -->
+       
 
 
 

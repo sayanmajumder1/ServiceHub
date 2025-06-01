@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
      <link rel="stylesheet" href="hideScrollbar.css">
 
   <style>
@@ -23,7 +25,10 @@
             background-color:rgb(150, 60, 186);
             color: white;
         }
-       
+       .btn {
+    font-size: 0.95rem;
+}
+
     </style>
     </head>
 <body>
@@ -61,9 +66,20 @@
                     <td><?php   echo $row['name']?></td>
                     <td><?php   echo $row['address']?></td>
                     <td><?php   echo $row['booking_time']?></td>
-                    <td>
+                    <!-- <td>
                         <a href="acceptbook.php?id=<?php echo $row['booking_id']?>"><button class="btn-accept">Accept</button>
                         <a href="rejectbook.php?id=<?php echo $row['booking_id']?>"><button class="btn-reject">Reject</button>
+                    </td> -->
+                    <td>
+                         <div class="d-flex flex-column flex-md-row gap-2">
+                            
+                            <a href="acceptbook.php?id=<?php echo $row['booking_id']?>" class="btn btn-success w-100 w-md-auto">
+                                <i class="bi bi-check-circle"></i> Accept
+                            </a>
+                            <a href="rejectbook.php?id=<?php echo $row['booking_id']?>" class="btn btn-danger w-100 w-md-auto">
+                                <i class="bi bi-x-circle"></i> Reject
+                            </a>
+                        </div> 
                     </td>
                 </tr>
                 <?php
