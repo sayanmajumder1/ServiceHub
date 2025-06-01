@@ -51,7 +51,7 @@
       font-size: 14px;
     }
 
-    .profile-card {
+    /* .profile-card {
       background: #fff;
       max-width: 500px;
       margin: -40px auto 30px;
@@ -59,7 +59,18 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       padding: 30px;
       text-align: center;
-    }
+    } */
+.profile-card {
+  background: #fff;
+  max-width: 500px;
+  margin: 30px auto; /* Changed from -40px auto 30px */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  top: 0; /* Ensure no upward shift */
+}
 
     .profile-img {
       width: 120px;
