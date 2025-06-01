@@ -2,28 +2,54 @@
 session_start();
 include_once "db_connect.php";
 
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
+if ($_SERVER["REQUEST_METHOD"] != "POST" && !isset($_SESSION['pending_booking'])) {
     $_SESSION['booking_error'] = "Invalid request method";
     header("Location: booking.php?provider_id=" . ($_POST['provider_id'] ?? ''));
     exit();
 }
 
-// Validate required fields
-$required_fields = ['user_id', 'provider_id', 'service_id', 'subservice_ids'];
-foreach ($required_fields as $field) {
-    if (empty($_POST[$field])) {
-        $_SESSION['booking_error'] = "Missing required field: $field";
-        header("Location: booking.php?provider_id=" . ($_POST['provider_id'] ?? ''));
+// Handle pending booking from guest user
+if (isset($_SESSION['pending_booking'])) {
+    $provider_id = (int)$_SESSION['pending_booking']['provider_id'];
+    $subservice_ids = $_SESSION['pending_booking']['subservice_ids'];
+    $user_id = $_SESSION['user_id'];
+    
+    // Get service_id from provider
+    $provider_query = "SELECT service_id FROM service_providers WHERE provider_id = ?";
+    $stmt = mysqli_prepare($conn, $provider_query);
+    mysqli_stmt_bind_param($stmt, "i", $provider_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $provider = mysqli_fetch_assoc($result);
+    
+    if (!$provider) {
+        $_SESSION['booking_error'] = "Provider not found";
+        header("Location: home.php");
         exit();
     }
-}
+    
+    $service_id = (int)$provider['service_id'];
+    unset($_SESSION['pending_booking']);
+} 
+// Handle regular POST request
+else {
+    // Validate required fields
+    $required_fields = ['user_id', 'provider_id', 'service_id', 'subservice_ids'];
+    foreach ($required_fields as $field) {
+        if (empty($_POST[$field])) {
+            $_SESSION['booking_error'] = "Missing required field: $field";
+            header("Location: booking.php?provider_id=" . ($_POST['provider_id'] ?? ''));
+            exit();
+        }
+    }
 
-// Sanitize inputs
-$user_id = (int)$_POST['user_id'];
-$provider_id = (int)$_POST['provider_id'];
-$service_id = (int)$_POST['service_id'];
-$subservice_ids = is_array($_POST['subservice_ids']) ? 
-    array_map('intval', $_POST['subservice_ids']) : [];
+    // Sanitize inputs
+    $user_id = (int)$_POST['user_id'];
+    $provider_id = (int)$_POST['provider_id'];
+    $service_id = (int)$_POST['service_id'];
+    $subservice_ids = is_array($_POST['subservice_ids']) ? 
+        array_map('intval', $_POST['subservice_ids']) : [];
+}
 
 // Calculate total amount and collect subservice details
 $total_amount = 0.00;

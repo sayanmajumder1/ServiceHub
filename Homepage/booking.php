@@ -50,6 +50,32 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
         $selected_subservice_price = $row['price'];
     }
 }
+
+
+
+// Check for stored selections in cookies for guest users
+$stored_selections = [];
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['guest_selections'])) {
+    $stored_selections = json_decode($_COOKIE['guest_selections'], true);
+    // Validate that stored selections belong to this provider
+    if (isset($stored_selections['provider_id']) && $stored_selections['provider_id'] == $provider_id) {
+        $selected_subservice_price = 0;
+        foreach ($stored_selections['subservice_ids'] as $id) {
+            // Get price for each stored subservice
+            $price_query = "SELECT price FROM subservice_price_map 
+                           WHERE provider_id = ? AND subservice_id = ?";
+            $stmt = mysqli_prepare($conn, $price_query);
+            mysqli_stmt_bind_param($stmt, "ii", $provider_id, $id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if ($row = mysqli_fetch_assoc($result)) {
+                $selected_subservice_price += $row['price'];
+            }
+        }
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -149,49 +175,61 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
                 </div>
             </div>
         </div>
-
         <!-- Booking Form -->
         <form action="booking_process.php" method="POST" class="bg-white rounded-xl shadow-md p-6">
             <input type="hidden" name="provider_id" value="<?php echo $provider['provider_id']; ?>">
             <input type="hidden" name="service_id" value="<?php echo $provider['service_id']; ?>">
-            <?php
-                
-                if(isset($_SESSION['user_id']))
-                {
-            ?>
+           
+           <?php if(isset($_SESSION['user_id'])): ?>
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-            <?php
-                }
-            ?>
-            
+        <?php endif; ?>
+        
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Services</h2>
 
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Services</h2>
+
+
+
+
+
+
+
+
 
             <!-- Services List -->
-            <div class="space-y-3 mb-6">
-                <?php $selected_subservice_id = isset($_GET['subservice_id']) ? (int)$_GET['subservice_id'] : 0; ?>
-
-                <!-- // Then in the checkbox loop, add checked attribute if it matches: -->
-                <?php while ($subservice = mysqli_fetch_assoc($subservices)): ?>
-                    <div class="service-item">
-                        <input type="checkbox"
-                            id="service-<?php echo $subservice['subservice_id']; ?>"
-                            name="subservice_ids[]"
-                            value="<?php echo $subservice['subservice_id']; ?>"
-                            class="service-checkbox hidden"
-                            data-price="<?php echo $subservice['price']; ?>"
-                            <?php echo ($subservice['subservice_id'] == $selected_subservice_id) ? 'checked' : ''; ?>>
-                        <label for="service-<?php echo $subservice['subservice_id']; ?>"
-                            class="flex justify-between items-center p-4 border rounded-lg cursor-pointer transition-colors hover:bg-purple-50">
-                            <div>
-                                <h3 class="font-medium text-gray-800"><?php echo htmlspecialchars($subservice['subservice_name']); ?></h3>
-                                <p class="text-sm text-gray-600">Professional service with warranty</p>
-                            </div>
-                            <span class="font-semibold text-purple-600">₹<?php echo number_format($subservice['price'], 2); ?></span>
-                        </label>
-                    </div>
-                <?php endwhile; ?>
-            </div>
+            <!-- Services List -->
+        <div class="space-y-3 mb-6">
+            <?php 
+            $selected_subservice_id = isset($_GET['subservice_id']) ? (int)$_GET['subservice_id'] : 0;
+            mysqli_data_seek($subservices, 0); // Reset pointer to start
+            ?>
+            
+            <?php while ($subservice = mysqli_fetch_assoc($subservices)): ?>
+                <div class="service-item">
+                    <input type="checkbox"
+                        id="service-<?php echo $subservice['subservice_id']; ?>"
+                        name="subservice_ids[]"
+                        value="<?php echo $subservice['subservice_id']; ?>"
+                        class="service-checkbox hidden"
+                        data-price="<?php echo $subservice['price']; ?>"
+                        <?php 
+                        // Check if this subservice is in stored selections or GET parameter
+                        if ((isset($stored_selections['subservice_ids']) && 
+                             in_array($subservice['subservice_id'], $stored_selections['subservice_ids'])) || 
+                            $subservice['subservice_id'] == $selected_subservice_id) {
+                            echo 'checked';
+                        }
+                        ?>>
+                    <label for="service-<?php echo $subservice['subservice_id']; ?>"
+                        class="flex justify-between items-center p-4 border rounded-lg cursor-pointer transition-colors hover:bg-purple-50">
+                        <div>
+                            <h3 class="font-medium text-gray-800"><?php echo htmlspecialchars($subservice['subservice_name']); ?></h3>
+                            <p class="text-sm text-gray-600">Professional service with warranty</p>
+                        </div>
+                        <span class="font-semibold text-purple-600">₹<?php echo number_format($subservice['price'], 2); ?></span>
+                    </label>
+                </div>
+            <?php endwhile; ?>
+        </div>
 
 
 
@@ -229,7 +267,11 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
                 <a href="serviceHub/Signup_Login/login.php";
             <?php
                 } 
+
             ?> -->
+
+
+
             <!-- Submit Button -->
 <?php
     if (isset($_SESSION['user_id'])) {
@@ -258,7 +300,7 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
 
 
     <script>
-        // Calculate total when services are selected
+                  // Calculate total when services are selected
         document.querySelectorAll('.service-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', updateSummary);
         });
@@ -266,10 +308,12 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
         function updateSummary() {
             let selectedCount = 0;
             let servicesTotal = 0;
+            let selectedIds = [];
 
             document.querySelectorAll('.service-checkbox:checked').forEach(checkbox => {
                 selectedCount++;
                 servicesTotal += parseFloat(checkbox.dataset.price);
+                selectedIds.push(checkbox.value);
             });
 
             document.getElementById('services-count').textContent =
@@ -285,23 +329,46 @@ if (isset($_GET['subservice_id']) && is_numeric($_GET['subservice_id'])) {
                     label.classList.remove('selected-service');
                 }
             });
+
+            // Store selections in cookie for guest users
+            <?php if (!isset($_SESSION['user_id'])): ?>
+                const providerId = <?php echo $provider_id; ?>;
+                const selections = {
+                    provider_id: providerId,
+                    subservice_ids: selectedIds
+                };
+                document.cookie = `guest_selections=${JSON.stringify(selections)}; path=/; max-age=${60 * 60 * 24}`; // 24 hours
+            <?php endif; ?>
         }
 
-        // Initialize with selected subservice price if available
+        // Handle guest booking button
+        document.getElementById('guest-book-btn')?.addEventListener('click', function() {
+            // Get selected services
+            const selectedServices = [];
+            document.querySelectorAll('.service-checkbox:checked').forEach(checkbox => {
+                selectedServices.push(checkbox.value);
+            });
+
+            if (selectedServices.length === 0) {
+                alert('Please select at least one service');
+                return;
+            }
+
+            // Redirect to login with provider_id
+            window.location.href = '/serviceHub/Signup_Login/login.php?provider_id=<?php echo $provider_id; ?>';
+        });
+
+        // Initialize with selected services
         document.addEventListener('DOMContentLoaded', function() {
             const selectedPrice = <?php echo $selected_subservice_price; ?>;
             if (selectedPrice > 0) {
-                // Find the checkbox for the selected subservice and trigger change
-                const checkboxes = document.querySelectorAll('.service-checkbox');
-                checkboxes.forEach(checkbox => {
-                    if (parseFloat(checkbox.dataset.price) === selectedPrice) {
-                        checkbox.checked = true;
-                        checkbox.closest('.service-item').querySelector('label').classList.add('selected-service');
-                        // Update summary immediately
-                        updateSummary();
-                    }
-                });
+                updateSummary();
             }
+            
+            // Check for stored selections
+            <?php if (!empty($stored_selections)): ?>
+                updateSummary();
+            <?php endif; ?>
         });
     </script>
 </body>

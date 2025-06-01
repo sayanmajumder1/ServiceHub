@@ -1,8 +1,8 @@
 <?php
-if (!isset($_SESSION['user_id'])) {
-  header("Location:/ServiceHub/Signup_Login/login.php");
-  exit();
-}
+//if (!isset($_SESSION['user_id'])) {
+  //header("Location:/ServiceHub/Signup_Login/login.php");
+  //exit();
+//}
 include "navbar.php";
 // Handle date filter submission
 $date_filter = '';
