@@ -3,6 +3,13 @@ session_start();
 require_once "connection.php";
 
 $error = "";
+$redirect_url = ""; 
+
+
+// Check for booking redirect
+if (isset($_GET['provider_id'])) {
+    $redirect_url = "booking.php?provider_id=" . (int)$_GET['provider_id'];
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
@@ -19,8 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = 'user';
         $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
-        header("Location: otpVerification.php");
-        exit();
+      // Check if there are guest selections to restore
+        if (isset($_COOKIE['guest_selections'])) {
+            $_SESSION['restore_booking'] = true;
+            header("Location: otpVerification.php?redirect=payment");
+            exit();
+        } else if (!empty($redirect_url)) {
+            header("Location: " . $redirect_url);
+            exit();
+        } else {
+            header("Location: otpVerification.php");
+            exit();
+        }
     }
     // If not user, check provider table
     else {

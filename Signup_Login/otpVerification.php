@@ -3,6 +3,9 @@ session_start();
 require_once "connection.php";
 
 $error = '';
+$success = "";
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $enteredOtp = implode('', $_POST['otp_digits'] ?? []);
@@ -11,6 +14,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // For login flow
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['user_type'] == 'user') {
+
+              // Check if we need to restore a booking after login
+                if (isset($_SESSION['restore_booking']) && isset($_COOKIE['guest_selections'])) {
+                    unset($_SESSION['restore_booking']);
+                    
+                    // Get the stored selections from cookie
+                    $selections = json_decode($_COOKIE['guest_selections'], true);
+                    
+                    // Store in session for booking_process.php
+                    $_SESSION['pending_booking'] = [
+                        'provider_id' => $selections['provider_id'],
+                        'subservice_ids' => $selections['subservice_ids']
+                    ];
+                    
+                    // Clear the cookie
+                    setcookie('guest_selections', '', time() - 3600, '/');
+                    
+                    // Redirect to booking process
+                    header("Location: /ServiceHub/Homepage/booking_process.php");
+                    exit();
+                }
+
                 header("Location: /ServiceHub/Homepage/index.php");
                 exit();
             }
@@ -18,10 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: /ServiceHub/s_pro/index.php");
             exit();
         }
+
+
+
+
+
+
+
+
+
         // For signup flow
         elseif (isset($_SESSION['signup_data'])) {
-            $data = $_SESSION['signup_data'];
-
+             $data = $_SESSION['signup_data'];
             if ($data['account_type'] == 'user') {
                 $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password, image) VALUES (?, ?, ?, ?, ?)");
                 $stmt->bind_param("sssss", $data['name'], $data['email'], $data['phone'], $data['password'], $data['image']);
@@ -29,6 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->execute()) {
                     $_SESSION['user_id'] = $conn->insert_id;
                     $_SESSION['user_type'] = 'user';
+                    // Check if new user was trying to book before signing up
+                    if (isset($_COOKIE['guest_selections'])) {
+                        $selections = json_decode($_COOKIE['guest_selections'], true);
+                        $_SESSION['pending_booking'] = [
+                            'provider_id' => $selections['provider_id'],
+                            'subservice_ids' => $selections['subservice_ids']
+                        ];
+                        setcookie('guest_selections', '', time() - 3600, '/');
+                        header("Location: /ServiceHub/Homepage/booking_process.php");
+                        exit();
+                    }
+                    
                     header("Location: /ServiceHub/Homepage/index.php");
                     exit();
                 } else {
@@ -55,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($stmt->execute()) {
                     $_SESSION['provider_id'] = $conn->insert_id;
-                    $_SESSION['email'] = $data['email']; // Add this line
+                    $_SESSION['email'] = $data['email'];
                     $_SESSION['user_type'] = 'provider';
                     unset($_SESSION['signup_data'], $_SESSION['otp']);
                     header("Location: /ServiceHub/s_pro/index.php");
