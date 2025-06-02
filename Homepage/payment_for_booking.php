@@ -8,6 +8,12 @@ if (!isset($_SESSION['current_booking'])) {
 }
 
 $booking = $_SESSION['current_booking'];
+
+// Check if user needs to provide address
+$user_id = $_SESSION['user_id'];
+$user_query = mysqli_query($conn, "SELECT address FROM users WHERE user_id = $user_id");
+$user_data = mysqli_fetch_assoc($user_query);
+$needs_address = empty($user_data['address']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,6 +131,31 @@ $booking = $_SESSION['current_booking'];
             font-size: 0.85rem;
         }
 
+        .address-field {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .address-field h5 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(110, 0, 255, 0.25);
+        }
+
         .btn-primary {
             background-color: var(--primary);
             border: none;
@@ -144,7 +175,6 @@ $booking = $_SESSION['current_booking'];
             transform: translateY(0);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 576px) {
             .payment-container {
                 padding: 1.5rem;
@@ -189,7 +219,19 @@ $booking = $_SESSION['current_booking'];
                     </div>
                     <input type="radio" name="payment_method" value="cash" id="cash" checked style="display: none;">
                 </div>
+
+            
             </div>
+
+            <?php if ($needs_address): ?>
+            <div class="address-field">
+                <h5><i class="bi bi-house-door"></i> Service Address</h5>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Where should we provide the service?</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <button type="submit" class="btn btn-primary mt-3">
                 <i class="bi bi-lock-fill me-2"></i> Complete Payment
@@ -212,5 +254,4 @@ $booking = $_SESSION['current_booking'];
         }
     </script>
 </body>
-
 </html>

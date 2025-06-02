@@ -295,9 +295,11 @@ textarea.form-control:focus {
         <button type="submit" name="update_profile" class="btn btn-secondary w-100 save-btn" >Save Changes</button>
       </form>
                
-          <form action=""   class ="d-flex justify-content-center align-items-center"> 
+         <!-- <form action=""   class ="d-flex justify-content-center align-items-center"> 
           <button type="submit" class="btn btn-link text-decoration-none text-secondary  justify-center p-0">Change The Password</button>
-          </form>
+          </form>-->
+
+          
           <form action="logout.php" method="post" class="d-flex justify-content-center align-items-center">
       <button type="submit" class="btn btn-link text-decoration-none text-secondary text-danger">Log Out</button>
     </form>
