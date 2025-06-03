@@ -126,7 +126,19 @@ $_SESSION['service_id']=$row['service_id'];
 						<div class="col-md-6 mb-4">
 							<div class="custom-card">
 								<h5 class="custom-title">Total Earnings</h5>
-								<p class="custom-number">₹5,200</p>
+								<?php
+								$res = mysqli_query($con, "SELECT SUM(amount) AS total FROM booking WHERE provider_id='" . $_SESSION['provider_id'] . "' AND booking_status='completed'");
+								$row = mysqli_fetch_array($res);
+								?>
+								<p class="custom-number">
+								<?php 
+									if (!empty($row['total'])) {
+										echo $row['total'];
+									} else {
+										echo "0";
+									}
+								?>
+								</p>
 							</div>
 						</div>
 					</div>
