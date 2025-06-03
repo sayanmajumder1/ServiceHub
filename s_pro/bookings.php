@@ -46,6 +46,7 @@
                     <th>#</th>
                     <th>Client Name</th>
                     <th>Address</th>
+                    <th>Service Category</th>
                     <th>Booking Date & Time</th>
                     <th>Action</th>
                 </tr>
@@ -53,9 +54,8 @@
             <?php
                                      
                  include_once "connection.php";
-                $res=mysqli_query($con,"select booking.*,users.name,users.address from booking inner join users on booking.user_id=users.user_id 
-                 
-                where provider_id='".$_SESSION['id']."' and booking_status='pending'");
+                $res=mysqli_query($con,"select booking.*,users.name,users.address,subservice.subservice_name from booking inner join users on booking.user_id=users.user_id 
+                inner join subservice on subservice.subservice_id=booking.subservice_id where provider_id='".$_SESSION['id']."' and booking_status='pending'");
                  $count=1;
                  while($row=mysqli_fetch_array($res))
                 {
@@ -65,11 +65,8 @@
                     <td><?php   echo $count++?></td>
                     <td><?php   echo $row['name']?></td>
                     <td><?php   echo $row['address']?></td>
+                    <td><?php   echo $row['subservice_name']?></td>
                     <td><?php   echo $row['booking_time']?></td>
-                    <!-- <td>
-                        <a href="acceptbook.php?id=<?php echo $row['booking_id']?>"><button class="btn-accept">Accept</button>
-                        <a href="rejectbook.php?id=<?php echo $row['booking_id']?>"><button class="btn-reject">Reject</button>
-                    </td> -->
                     <td>
                          <div class="d-flex flex-column flex-md-row gap-2">
                             
