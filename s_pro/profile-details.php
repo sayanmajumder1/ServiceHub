@@ -1,28 +1,28 @@
 <?php
 
-    session_start();
-  
-	 
-	
-     if(!isset($_SESSION["email"]))
-     {
-         header("location:/serviceHub/Signup_login/login.php");
-         exit;
-     }
+session_start();
+
+
+
+if (!isset($_SESSION["email"])) {
+  header("location:/serviceHub/Signup_login/login.php");
+  exit;
+}
 
 
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Service Provider Profile</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="hideScrollbar.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="hideScrollbar.css">
   <style>
     body {
       margin: 0;
@@ -31,7 +31,8 @@
     }
 
     .profile-container {
-      margin-left: 250px; /* sidebar width */
+      margin-left: 250px;
+      /* sidebar width */
     }
 
     .profile-header {
@@ -60,17 +61,19 @@
       padding: 30px;
       text-align: center;
     } */
-.profile-card {
-  background: #fff;
-  max-width: 500px;
-  margin: 30px auto; /* Changed from -40px auto 30px */
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  text-align: center;
-  position: relative;
-  top: 0; /* Ensure no upward shift */
-}
+    .profile-card {
+      background: #fff;
+      max-width: 500px;
+      margin: 30px auto;
+      /* Changed from -40px auto 30px */
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      top: 0;
+      /* Ensure no upward shift */
+    }
 
     .profile-img {
       width: 120px;
@@ -156,6 +159,7 @@
     input[type="file"] {
       display: none;
     }
+
     @media (max-width: 768px) {
       .profile-container {
         margin-left: 0;
@@ -167,6 +171,7 @@
     }
   </style>
 </head>
+
 <body>
   <?php include 'sidebar.php'; ?>
   <div class="profile-container">
@@ -175,37 +180,37 @@
     </div>
     <?php
 
-        include_once "connection.php";
-        $res=mysqli_query($con,"select service_providers.* ,service.service_name from service_providers inner join service on
-        service_providers.service_id =service.service_id where email='".$_SESSION['email']."'");
-        $row=mysqli_fetch_array($res);
+    include_once "connection.php";
+    $res = mysqli_query($con, "select service_providers.* ,service.service_name from service_providers inner join service on
+        service_providers.service_id =service.service_id where email='" . $_SESSION['email'] . "'");
+    $row = mysqli_fetch_array($res);
     ?>
     <div class="profile-card">
       <!-- <img src="img/n1.jpg" alt="Profile Picture" class="profile-img"> -->
       <form action="upload.php" method="POST" enctype="multipart/form-data">
-  <label for="file-upload" class="profile-container1">
-    <img src="./uploads2/<?php echo $row['image'] ?>" alt="Profile Picture" class="profile-img1">
-    <div class="icon-overlay"><i class="fa fa-camera"></i></div>
-  </label>
-  <input type="file" name="profile" id="file-upload" onchange="this.form.submit()">
-</form>
+        <label for="file-upload" class="profile-container1">
+          <img src="./uploads2/<?php echo $row['image'] ?>" alt="Profile Picture" class="profile-img1">
+          <div class="icon-overlay"><i class="fa fa-camera"></i></div>
+        </label>
+        <input type="file" name="profile" id="file-upload" onchange="this.form.submit()">
+      </form>
 
-      <h3><?php  echo $row['provider_name'] ?></h3>
-      <h6><?php  echo $row['service_name'] ?></h6>
+      <h3><?php echo $row['provider_name'] ?></h3>
+      <h6><?php echo $row['service_name'] ?></h6>
       <div class="details">
-        <p><strong>Email:</strong> <?php  echo $row['email'] ?></p>
-        <p><strong>Phone:</strong> <?php  echo $row['phone'] ?></p>
-        <p><strong>Description:</strong><?php  echo $row['description'] ?></p>
-        <p><strong>Location:</strong><?php  echo $row['address'] ?></p>
-        <p><strong>Business Name:</strong><?php  echo $row['businessname'] ?></p>
-        <p><strong>Lisence No:</strong><?php  echo $row['lisenceno'] ?></p>
-        <p><strong>Identity No:</strong><?php  echo $row['identityno'] ?></p>
-        
-        <p><strong>Password:</strong><?php  echo $row['password'] ?></p>
+        <p><strong>Email:</strong> <?php echo $row['email'] ?></p>
+        <p><strong>Phone:</strong> <?php echo $row['phone'] ?></p>
+        <p><strong>Description:</strong><?php echo $row['description'] ?></p>
+        <p><strong>Location:</strong><?php echo $row['address'] ?></p>
+        <p><strong>Business Name:</strong><?php echo $row['businessname'] ?></p>
+        <p><strong>Lisence No:</strong><?php echo $row['lisenceno'] ?></p>
+        <p><strong>Identity No:</strong><?php echo $row['identityno'] ?></p>
+
       </div>
       <a href="profile_update.php"><button class="edit-btn">Edit Profile</button></a>
     </div>
   </div>
 
 </body>
+
 </html>
