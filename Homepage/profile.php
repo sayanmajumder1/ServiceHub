@@ -25,7 +25,7 @@ $result = mysqli_stmt_get_result($stmt);
 if ($result && mysqli_num_rows($result) > 0) {
     $user = mysqli_fetch_assoc($result);
     $image = $user['image'];
-    $displayImage = !empty($image) ? $image : 'default.jpg';
+  $displayImage = !empty($image) ? 'assets/images/'.$image : 'assets/images/d.png';
 } else {
     // No user found → session invalid
     session_destroy();
@@ -249,7 +249,7 @@ textarea.form-control:focus {
 
     <!-- Profile Image -->
     <div class="position-relative text-center" style="margin-top: -40px;">
-      <img src="assets/images/<?php echo $displayImage; ?>" class="img-fluid rounded-circle shadow profile-pic animated-profile" alt="Profile Picture">
+     <img src="<?php echo $displayImage; ?>" class="img-fluid rounded-circle shadow profile-pic animated-profile" alt="Profile Picture">
       <form action="upload_profile.php" method="post" enctype="multipart/form-data">
       <input type="file" name="image" accept="image/*" id="uploadBtn" style="display:none;" onchange="this.form.submit();">
       <button type="button" class="btn btn-light edit-btn-profile" title="Edit Photo"onclick="document.getElementById('uploadBtn').click();">
