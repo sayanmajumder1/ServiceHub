@@ -89,10 +89,6 @@ $row = mysqli_fetch_assoc($res);
                         <p><strong>Date of Birth:</strong> <?php echo $row['dob']; ?></p>
                         <p><strong>Phone:</strong> <?php echo $row['phone']; ?></p>
                         <p><strong>Address:</strong> <?php echo $row['address']; ?></p>
-                        
-                        <p><strong>Password:</strong> <?php echo $row['password']; ?></p>
-
-
                     </div>
                 </div>
             </div>

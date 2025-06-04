@@ -43,8 +43,6 @@
             <form action="profile_update_data.php" method="POST" >
                 <div class="mb-3">
                     <input type="text" class="form-control" id="id" name="id" value='<?php echo $row['provider_id']?>'required hidden>
-                    <!-- <label for="name" class="form-label">Provider Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value='<?php echo $row['provider_name']?>'required> -->
                 </div>
 
                 <div class="mb-3">
@@ -69,12 +67,8 @@
 
                 
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" value='<?php echo $row['password']?>' required>
-                </div>
-
                 <button type="submit" class="btn btn-outline-success">Update Details</button>
+                
             </form>
         </div>
     </div>

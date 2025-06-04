@@ -159,6 +159,14 @@ if (!isset($_SESSION["email"])) {
     input[type="file"] {
       display: none;
     }
+         .modal-header{
+            background-color:rgb(150, 60, 186);
+            color: white;
+        }
+       .btn {
+    font-size: 0.95rem;
+}
+
 
     @media (max-width: 768px) {
       .profile-container {
@@ -208,9 +216,80 @@ if (!isset($_SESSION["email"])) {
 
       </div>
       <a href="profile_update.php"><button class="edit-btn">Edit Profile</button></a>
+      <a href="change_password.php"><button class="edit-btn">Change Password</button></a>
+
+
     </div>
   </div>
+<!-- Modal HTML -->
+<div class="modal fade" id="acceptedModal"  aria-labelledby="acceptedModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="acceptedModalLabel">Message</h1>
+      </div>
+      <div class="modal-body">
+        <?php
+        if (isset($_GET['status']) && $_GET['status'] == 1)
+        {
+        ?>
+            Your profile has been updated.
+        <?php
+        }
+        else if (isset($_GET['status']) && $_GET['status'] == 2)
+        {
+        ?>
+            Your Password has been changed.
+        <?php
+        }
+        else if (isset($_GET['status']) && $_GET['status'] == 3)
+        {
+        ?>
+            Your previous password cannot be matched.
+        <?php
+        }
+        ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+<?php 
+    if (isset($_GET['status']) && $_GET['status'] == 1)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+    else if(isset($_GET['status']) && $_GET['status'] == 2)
+    {
+?>
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+    else if(isset($_GET['status']) && $_GET['status'] == 3)
+    {
+?>
 
+    <script>
+        // Show modal when page loads if accepted=1 is present in URL
+        var acceptedModal = new bootstrap.Modal(document.getElementById('acceptedModal'));
+        acceptedModal.show();
+    </script>
+<?php
+    }
+ ?>
 </body>
 
 </html>
