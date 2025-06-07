@@ -158,13 +158,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- OTP Verification Panel -->
         <div id="step4Otp" class="lg:w-1/2 flex flex-col px-8 py-8 text-center lg:ml-10 items-center">
             <p class="text-sm text-gray-500 mb-2 lg:text-base italic">Step 03/03</p>
-            <h1 class="text-3xl lg:text-5xl font-bold mb-4">Verify your Mobile</h1>
-            <p class="mb-6 text-base lg:text-lg text-gray-600">We've sent a 6-digit code to your mobile number</p>
+            <h1 class="text-3xl lg:text-5xl font-bold mb-4">Verify your Email</h1>
+            <p class="mb-6 text-base lg:text-lg text-gray-600">We've sent a 6-digit code to your Email</p>
 
-            <!-- Display OTP for testing -->
-            <div class="bg-purple-100 p-3 rounded-lg mb-4">
-                <p class="text-purple-800 font-mono">For testing purposes, your OTP is: <span class="font-bold"><?php echo $_SESSION['otp']; ?></span></p>
-            </div>
+           
 
             <form method="POST" action="otpVerification.php">
                 <div class="flex gap-2 justify-center">

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "connection.php";
+require_once "smtp/PHPMailerAutoload.php"; // Required for sending OTP
 
 $error = '';
 
@@ -8,77 +9,102 @@ $error = '';
 $services = [];
 $service_query = mysqli_query($conn, "SELECT * FROM service");
 while ($service = mysqli_fetch_assoc($service_query)) {
-  $services[] = $service;
+    $services[] = $service;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Process form data when submitted
-  $targetDir = "uploads/";
+    $targetDir = "uploads/";
 
-  // Create upload directory if it doesn't exist
-  if (!file_exists($targetDir)) {
-    mkdir($targetDir, 0777, true);
-  }
-
-  // Handle file upload
-  $identityImage = '';
-  // In signup-provider.php, move the file type check before upload
-  if (isset($_FILES['documentUpload'])) {
-    $allowed_types = ['image/jpeg', 'image/png', 'application/pdf'];
-    if (!in_array($_FILES['documentUpload']['type'], $allowed_types)) {
-      $error = "Only JPG, PNG, and PDF files are allowed";
-    } else {
-      $identityImage = $targetDir . uniqid() . "_" . basename($_FILES["documentUpload"]["name"]);
-      if (!move_uploaded_file($_FILES["documentUpload"]["tmp_name"], $identityImage)) {
-        $error = "Failed to upload document";
-      }
-    }
-  }
-
-  if (empty($error)) {
-    // Get the selected service_id
-    $service_id = (int)$_POST['service_id'];
-
-    // Validate service exists
-    $valid_service = false;
-    foreach ($services as $service) {
-      if ($service['service_id'] == $service_id) {
-        $valid_service = true;
-        break;
-      }
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
     }
 
-    if (!$valid_service) {
-      $error = "Please select a valid service";
-    } else {
-      $data = [
-        'account_type' => 'provider',
-        'businessname' => $_POST['businessName'],
-        'provider_name' => $_POST['ownerName'],
-        'address' => $_POST['businessAddress'],
-        'email' => $_POST['email'],
-        'phone' => $_POST['phone'],
-        'password' => $_POST['password'],
-        'identityno' => $_POST['idNumber'],
-        'lisenceno' => $_POST['licenseNumber'] ?? '',
-        'identityimage' => $identityImage,
-        'service_id' => $service_id,
-        'image' => "default_provider.png",
-        'description' => "New provider",
-        'approved_action' => "pending"
-      ];
-
-      $_SESSION['otp'] = rand(100000, 999999);
-      $_SESSION['auth_type'] = 'signup';
-      $_SESSION['user_type'] = 'provider';
-      $_SESSION['signup_data'] = $data;
-
-      header("Location: otpVerification.php");
-      exit();
+    $identityImage = '';
+    if (isset($_FILES['documentUpload'])) {
+        $allowed_types = ['image/jpeg', 'image/png', 'application/pdf'];
+        if (!in_array($_FILES['documentUpload']['type'], $allowed_types)) {
+            $error = "Only JPG, PNG, and PDF files are allowed";
+        } else {
+            $identityImage = $targetDir . uniqid() . "_" . basename($_FILES["documentUpload"]["name"]);
+            if (!move_uploaded_file($_FILES["documentUpload"]["tmp_name"], $identityImage)) {
+                $error = "Failed to upload document";
+            }
+        }
     }
-  }
+
+    if (empty($error)) {
+        $service_id = (int)$_POST['service_id'];
+
+        // Validate service
+        $valid_service = false;
+        foreach ($services as $service) {
+            if ($service['service_id'] == $service_id) {
+                $valid_service = true;
+                break;
+            }
+        }
+
+        if (!$valid_service) {
+            $error = "Please select a valid service";
+        } else {
+            // Prepare signup data
+            $data = [
+                'account_type' => 'provider',
+                'businessname' => $_POST['businessName'],
+                'provider_name' => $_POST['ownerName'],
+                'address' => $_POST['businessAddress'],
+                'email' => $_POST['email'],
+                'phone' => $_POST['phone'],
+                'password' => $_POST['password'],
+                'identityno' => $_POST['idNumber'],
+                'lisenceno' => $_POST['licenseNumber'] ?? '',
+                'identityimage' => $identityImage,
+                'service_id' => $service_id,
+                'image' => "default_provider.png",
+                'description' => "New provider",
+                'approved_action' => "pending"
+            ];
+
+            // Generate OTP
+            $otp = rand(100000, 999999);
+            $_SESSION['otp'] = $otp;
+            $_SESSION['signup_data'] = $data;
+            $_SESSION['auth_type'] = 'signup';
+            $_SESSION['user_type'] = 'provider';
+
+            // Send OTP via PHPMailer
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'verify.servicehub@gmail.com';
+                $mail->Password = 'elyz jwsz ebpx zrsr'; // App Password
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                $mail->setFrom('verify.servicehub@gmail.com', 'ServiceHub');
+                $mail->addAddress($data['email'], $data['provider_name']);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'OTP code';
+                $mail->Body = "<p>Hello <strong>{$data['provider_name']}</strong>,</p>
+                               <p>Thank you for registering with ServiceHub.</p>
+                               <p>Your OTP is: <strong>$otp</strong></p>
+                               <p>Please enter this to verify your account.This OTP is valid for 5 minutes.</p>";
+
+                $mail->send();
+                // Redirect after successful email
+                header("Location: otpVerification.php");
+                exit();
+            } catch (Exception $e) {
+                $error = "Email sending failed: " . $mail->ErrorInfo;
+            }
+        }
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

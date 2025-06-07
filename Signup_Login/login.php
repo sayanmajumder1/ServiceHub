@@ -1,10 +1,38 @@
 <?php
 session_start();
 require_once "connection.php";
+require_once "smtp/PHPMailerAutoload.php"; // Adjust path if needed
 
 $error = "";
-$redirect_url = ""; 
+$redirect_url = "";
 
+function sendOTP($email, $name = '') {
+    $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
+
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'verify.servicehub@gmail.com'; // Your Gmail
+        $mail->Password = 'elyz jwsz ebpx zrsr'; // App password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('verify.servicehub@gmail.com', 'ServiceHub');
+        $mail->addAddress($email, $name);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'OTP Code';
+        $mail->Body = "<p>Hello <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                      <p>Your OTP is: <strong>" . $_SESSION['otp'] . "</strong></p>
+                      <p>Use this to verify your login. This OTP is valid for 5 minutes.</p>";
+
+        $mail->send();
+    } catch (Exception $e) {
+        $GLOBALS['error'] = "OTP sending failed: " . $mail->ErrorInfo;
+    }
+}
 
 // Check for booking redirect
 if (isset($_GET['provider_id'])) {
@@ -16,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
 
     // Check user table
-    $stmt = $conn->prepare("SELECT user_id, email FROM users WHERE email = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT user_id, name, email FROM users WHERE email = ? AND password = ?");
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -25,42 +53,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user = $result->fetch_assoc();
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_type'] = 'user';
-        $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
-      // Check if there are guest selections to restore
+
+        sendOTP($user['email'], $user['name']);
+
         if (isset($_COOKIE['guest_selections'])) {
             $_SESSION['restore_booking'] = true;
             header("Location: otpVerification.php?redirect=payment");
-            exit();
         } else if (!empty($redirect_url)) {
-            header("Location: " . $redirect_url);
-            exit();
+            header("Location: otpVerification.php?redirect=" . urlencode($redirect_url));
         } else {
             header("Location: otpVerification.php");
-            exit();
         }
+        exit();
     }
-    // If not user, check provider table
-    else {
-        $stmt = $conn->prepare("SELECT provider_id, email FROM service_providers WHERE email = ? AND password = ?");
-        $stmt->bind_param("ss", $email, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        // In the provider login section:
-        if ($result->num_rows > 0) {
-            $provider = $result->fetch_assoc();
-            $_SESSION['provider_id'] = $provider['provider_id'];
-            $_SESSION['email'] = $provider['email'];
-            $_SESSION['user_type'] = 'provider';
-            $_SESSION['otp'] = rand(100000, 999999);
-            header("Location: otpVerification.php");
-            exit();
-        } else {
-            $error = "Invalid email or password";
-        }
+    // Check provider table
+    $stmt = $conn->prepare("SELECT provider_id, provider_name, email FROM service_providers WHERE email = ? AND password = ?");
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $provider = $result->fetch_assoc();
+        $_SESSION['provider_id'] = $provider['provider_id'];
+        $_SESSION['email'] = $provider['email'];
+        $_SESSION['user_type'] = 'provider';
+
+        sendOTP($provider['email'], $provider['provider_name']);
+        header("Location: otpVerification.php");
+        exit();
+    } else {
+        $error = "Invalid email or password";
     }
 }
 ?>
+
 
 
 

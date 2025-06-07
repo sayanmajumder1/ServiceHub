@@ -1,30 +1,65 @@
 <?php
 session_start();
 require_once "connection.php";
+require_once "smtp/PHPMailerAutoload.php"; // Adjust path if needed
 
 $error = '';
 
+// Function to send OTP
+function sendOTP($email, $name) {
+    $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
+
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'verify.servicehub@gmail.com'; // Your Gmail
+        $mail->Password = 'elyz jwsz ebpx zrsr'; // App password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('verify.servicehub@gmail.com', 'ServiceHub');
+        $mail->addAddress($email, $name);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Your ServiceHub OTP Code';
+        $mail->Body = "<p>Hello <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                      <p>Thank you for registering with ServiceHub.</p>
+                      <p>Your OTP is: <strong>" . $_SESSION['otp'] . "</strong></p>
+                      <p>Please enter this code to complete your registration. This OTP is valid for 5 minutes.</p>";
+
+        $mail->send();
+    } catch (Exception $e) {
+        $GLOBALS['error'] = "OTP sending failed: " . $mail->ErrorInfo;
+    }
+}
+
+// On form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if ($_POST['password'] !== $_POST['confirmPassword']) {
-    $error = "Passwords do not match!";
-  } else {
-    $data = [
-      'account_type' => 'user',
-      'name' => $_POST['fullName'],
-      'email' => $_POST['email'],
-      'phone' => $_POST['phone'],
-      'password' => $_POST['password'],
-      'image' => "default_user.png"
-    ];
+    if ($_POST['password'] !== $_POST['confirmPassword']) {
+        $error = "Passwords do not match!";
+    } else {
+        $data = [
+            'account_type' => 'user',
+            'name' => $_POST['fullName'],
+            'email' => $_POST['email'],
+            'phone' => $_POST['phone'],
+            'password' => $_POST['password'],
+            'image' => "default_user.png"
+        ];
 
-    $_SESSION['otp'] = rand(100000, 999999);
-    $_SESSION['signup_data'] = $data;
+        $_SESSION['signup_data'] = $data;
+        sendOTP($data['email'], $data['name']);
 
-    header("Location: otpVerification.php");
-    exit();
-  }
+        if (!$error) {
+            header("Location: otpVerification.php");
+            exit();
+        }
+    }
 }
 ?>
+
 
 
 <!DOCTYPE html>
