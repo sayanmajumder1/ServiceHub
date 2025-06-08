@@ -13,8 +13,7 @@
    
   
 
-      $OTP=rand(1111,9999);
-      $_SESSION['OTP']=$OTP; 
+
 
    
           
@@ -116,7 +115,7 @@
 
                             <!-- Action Buttons -->
                             <div class="d-flex flex-column flex-md-row justify-content-center gap-2 mt-3" id="actionButtons">
-                                <button class="btn btn-success w-100 w-md-auto" id="otpbtn" onclick="showOtpForm()">OTP</button>
+                                <button class="btn btn-success w-100 w-md-auto" id="otpbtn" onclick="sendOtp('<?php echo $row['email']; ?>')">OTP</button>
                                 <button class="btn btn-danger w-100 w-md-auto" id="declineBtn" onclick="showDeclineForm()">Decline</button>
                             </div>
 
@@ -137,7 +136,7 @@
                 <!-- OTP Form -->
                 <div id="otpForm" class="mt-3" style="display: none;">
                     <h5 style="color:green">Enter 4 digit OTP Code</h5>
-                    <p style="color:green">Your 4 digits OTP code is : <strong><?php echo $_SESSION['OTP']; ?></strong></p>
+                    
                     <form method="POST" action="Update_booking.php">
                         <input type="hidden" name="id" value="<?php echo $row['booking_id'] ?>">
                         <input type="hidden" name="no" value="<?php echo $row['booking_no'] ?>">
@@ -169,6 +168,29 @@
 <script src="script.js"></script>
 </body>
 <script>
+
+
+function sendOtp(email) {
+    fetch('send_otp.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'email=' + encodeURIComponent(email)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('OTP sent to email');
+            showOtpForm(); // show OTP input fields
+        } else {
+            alert('Failed to send OTP: ' + data.message);
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error);
+    });
+}
 
 function showDeclineForm(){
     document.getElementById('declineForm').style.display = 'block';
