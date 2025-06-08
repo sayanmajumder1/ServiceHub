@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => $_POST['password'],
             'image' => "default_user.png"
         ];
-
+        $_SESSION['email']=$data['email'];
         $_SESSION['signup_data'] = $data;
         sendOTP($data['email'], $data['name']);
 

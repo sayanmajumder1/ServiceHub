@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['user_type'] = 'user';
 
         sendOTP($user['email'], $user['name']);
+        $_SESSION['email']=$user['email'];
 
         if (isset($_COOKIE['guest_selections'])) {
             $_SESSION['restore_booking'] = true;

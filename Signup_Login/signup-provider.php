@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $otp = rand(100000, 999999);
             $_SESSION['otp'] = $otp;
             $_SESSION['signup_data'] = $data;
+            $_SESSION['email']=$data['email'];
             $_SESSION['auth_type'] = 'signup';
             $_SESSION['user_type'] = 'provider';
 

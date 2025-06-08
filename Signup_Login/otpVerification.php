@@ -159,7 +159,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="step4Otp" class="lg:w-1/2 flex flex-col px-8 py-8 text-center lg:ml-10 items-center">
             <p class="text-sm text-gray-500 mb-2 lg:text-base italic">Step 03/03</p>
             <h1 class="text-3xl lg:text-5xl font-bold mb-4">Verify your Email</h1>
-            <p class="mb-6 text-base lg:text-lg text-gray-600">We've sent a 6-digit code to your Email</p>
+            <p class="mb-6 text-base lg:text-lg text-gray-600">
+                We've sent a 6-digit code to your email - 
+                <span class="text-purple-600 font-medium"><?php echo $_SESSION['email'] ?></span>
+            </p>
+
 
            
 
