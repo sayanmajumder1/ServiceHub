@@ -2,9 +2,9 @@
 session_start();
 include_once "connection.php";
 
-// Check if user is logged in as provider
-if (!isset($_SESSION["provider_id"]) || !isset($_SESSION["email"]) || $_SESSION["user_type"] !== 'provider') {
-    header("Location: /ServiceHub/Signup_Login/login.php");
+// Check if provider is logged in and approved
+if (!isset($_SESSION["provider_id"]) || $_SESSION["user_type"] !== 'provider') {
+    header("Location: login.php");
     exit;
 }
 

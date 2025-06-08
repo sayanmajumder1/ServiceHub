@@ -113,8 +113,8 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-gray-400 text-sm">Call us at</p>
-                            <a href="tel:+11234567890" class="text-white hover:text-primary transition-colors">
-                                +1 (123) 456-7890
+                            <a href="tel:+919382594060" class="text-white hover:text-primary transition-colors">
+                                +91 9382594060
                             </a>
                         </div>
                     </li>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-gray-400 text-sm">Visit us at</p>
-                            <span class="text-white">123 Service St, Cityville</span>
+                            <span class="text-white">Bardhaman, West Bengal</span>
                         </div>
                     </li>
                 </ul>

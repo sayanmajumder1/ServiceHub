@@ -6,61 +6,69 @@ require_once "smtp/PHPMailerAutoload.php"; // Adjust path if needed
 $error = '';
 
 // Function to send OTP
-function sendOTP($email, $name) {
-    $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
+function sendOTP($email, $name)
+{
+  $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
 
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'verify.servicehub@gmail.com'; // Your Gmail
-        $mail->Password = 'elyz jwsz ebpx zrsr'; // App password
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+  $mail = new PHPMailer(true);
+  try {
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'verify.servicehub@gmail.com'; // Your Gmail
+    $mail->Password = 'elyz jwsz ebpx zrsr'; // App password
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
 
-        $mail->setFrom('verify.servicehub@gmail.com', 'ServiceHub');
-        $mail->addAddress($email, $name);
+    $mail->setFrom('verify.servicehub@gmail.com', 'ServiceHub');
+    $mail->addAddress($email, $name);
 
-        $mail->isHTML(true);
-        $mail->Subject = 'Your ServiceHub OTP Code';
-        $mail->Body = "<p>Hello <strong>" . htmlspecialchars($name) . "</strong>,</p>
+    $mail->isHTML(true);
+    $mail->Subject = 'Your ServiceHub OTP Code';
+    $mail->Body = "<p>Hello <strong>" . htmlspecialchars($name) . "</strong>,</p>
                       <p>Thank you for registering with ServiceHub.</p>
                       <p>Your OTP is: <strong>" . $_SESSION['otp'] . "</strong></p>
                       <p>Please enter this code to complete your registration. This OTP is valid for 5 minutes.</p>";
 
-        $mail->send();
-    } catch (Exception $e) {
-        $GLOBALS['error'] = "OTP sending failed: " . $mail->ErrorInfo;
-    }
+    $mail->send();
+  } catch (Exception $e) {
+    $GLOBALS['error'] = "OTP sending failed: " . $mail->ErrorInfo;
+  }
 }
 
 // On form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['password'] !== $_POST['confirmPassword']) {
-        $error = "Passwords do not match!";
-    } else {
-        $data = [
-            'account_type' => 'user',
-            'name' => $_POST['fullName'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
-            'password' => $_POST['password'],
-            'image' => "default_user.png"
-        ];
-        $_SESSION['email']=$data['email'];
-        $_SESSION['signup_data'] = $data;
-        sendOTP($data['email'], $data['name']);
+  // Validate phone number format (10 digits)
+  if (!preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
+    $error = "Please enter a valid 10-digit phone number!";
+  }
+  // Check password match
+  elseif ($_POST['password'] !== $_POST['confirmPassword']) {
+    $error = "Passwords do not match!";
+  }
+  // Check password strength
+  elseif (strlen($_POST['password']) < 8) {
+    $error = "Password must be at least 8 characters long!";
+  } else {
+    $data = [
+      'account_type' => 'user',
+      'name' => $_POST['fullName'],
+      'email' => $_POST['email'],
+      'phone' => $_POST['phone'],
+      'password' => $_POST['password'],
+      'image' => "default_user.png"
+    ];
+    $_SESSION['email'] = $data['email'];
+    $_SESSION['signup_data'] = $data;
+    sendOTP($data['email'], $data['name']);
 
-        if (!$error) {
-            header("Location: otpVerification.php");
-            exit();
-        }
+    if (!$error) {
+      header("Location: otpVerification.php");
+      exit();
     }
+  }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +104,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         opacity: 0;
         transform: translateY(-20px);
       }
+    }
+
+    /* Password toggle eye */
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .password-container {
+      position: relative;
     }
   </style>
 </head>
@@ -135,25 +156,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h1 class="text-3xl lg:text-5xl font-bold mb-4">Create your profile</h1>
       <p class="mb-6 text-base lg:text-lg">Fill in your personal details</p>
 
-      <form method="POST" action="">
+      <form method="POST" action="" id="signupForm">
         <input type="text" name="fullName" placeholder="Full Name"
           class="border px-4 py-2 rounded mb-3 w-full max-w-md" style="text-transform: capitalize;" required />
         <input type="email" name="email" placeholder="Email"
           class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
         <div class="flex items-center border rounded mb-3 w-full max-w-md overflow-hidden">
           <span class="px-3 py-2 bg-gray-100 text-gray-700 border-r">+91</span>
-          <input type="tel" name="phone" placeholder="Phone Number"
+          <input type="tel" name="phone" placeholder="Phone Number" pattern="[0-9]{10}" title="Please enter a 10-digit phone number"
             class="px-3 py-2 w-full focus:outline-none" required />
         </div>
-        <input type="password" name="password" placeholder="Password"
-          class="border px-4 py-2 rounded mb-3 w-full max-w-md" required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password"
-          class="border px-4 py-2 rounded mb-5 w-full max-w-md" required />
+        <div class="password-container w-full max-w-md mb-3">
+          <input type="password" name="password" id="password" placeholder="Password (min 8 characters)"
+            class="border px-4 py-2 rounded w-full" minlength="8" required />
+          <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+        </div>
+        <div class="password-container w-full max-w-md mb-3">
+          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password"
+            class="border px-4 py-2 rounded w-full" minlength="8" required />
+          <!-- <span class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</span> -->
+        </div>
+        <div class="text-left text-sm text-gray-500 w-full max-w-md mb-5">
+          <p id="passwordHint" class="hidden text-red-600">Password does not match</p>
+        </div>
         <div class="flex gap-5 justify-center mb-4">
           <button type="button" onclick="window.location.href='signup.php';"
             class="bg-gray-300 px-5 py-2 rounded">Back</button>
-          <button type="submit"
-            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600">Signup</button>
+          <button type="submit" id="submitBtn"
+            class="bg-purple-500 text-white px-5 py-2 rounded hover:bg-purple-600 flex items-center justify-center">
+            Signup
+            <div id="submitSpinner" class="spinner"></div>
+          </button>
         </div>
       </form>
     </div>
@@ -168,6 +201,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           errorMessage.remove();
         }, 5000);
       }
+    });
+
+    // Toggle password visibility
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+      } else {
+        field.type = "password";
+      }
+    }
+
+
+    // Form submission handler
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        document.getElementById('passwordHint').classList.remove('hidden');
+        document.getElementById('passwordHint').classList.add('block');
+        return false;
+      }
+
+      return true;
     });
   </script>
 </body>

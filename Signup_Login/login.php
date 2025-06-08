@@ -104,12 +104,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body class="h-screen overflow-y-auto">
     <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
-        <div>
+        <a href="/ServiceHub/Homepage/index.php">
             <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
-        </div>
-        <a href="./signup.php">
-            <button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Create new account</button>
         </a>
+        <a href="./signup.php" class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">
+      Create new account
+    </a>
     </nav>
 
     <main class="lg:flex max-h-screen w-full">

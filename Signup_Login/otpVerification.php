@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="./images/6333220.jpg" alt="Illustration" />
             </div>
             <p class="mt-3 text-center text-sm lg:text-lg w-full">
-                Verify your profile & mobile no. via OTP
+                Verify your profile & email via OTP
             </p>
         </div>
 
