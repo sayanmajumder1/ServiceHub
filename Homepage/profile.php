@@ -25,7 +25,7 @@ $result = mysqli_stmt_get_result($stmt);
 if ($result && mysqli_num_rows($result) > 0) {
     $user = mysqli_fetch_assoc($result);
     $image = $user['image'];
-  $displayImage = !empty($image) ? 'assets/images/'.$image : 'assets/images/d.png';
+  $displayImage = !empty($image) ? 'assets/images/'.$image : 'assets/images/default_user.png';
 } else {
     // No user found → session invalid
     session_destroy();
@@ -277,10 +277,10 @@ textarea.form-control:focus {
           <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
         </div>
 
-        <div class="mb-3">
+       <!-- <div class="mb-3">
           <label class="form-label">Date of Birth</label>
           <input type="date" name="dob" value="<?php echo htmlspecialchars($user['dob']); ?>" class="form-control" >
-        </div>
+        </div>-->
           
 
         <div class="mb-3">

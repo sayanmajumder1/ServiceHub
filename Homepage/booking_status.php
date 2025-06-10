@@ -210,7 +210,7 @@ $status_color = $status_colors[strtolower($booking['booking_status'])] ?? 'bg-pu
             </div>
             <div>
               <p class="text-gray-500 text-sm">Amount</p>
-              <p class="font-semibold text-primary">$<?php echo number_format($booking['amount'], 2); ?></p>
+              <p class="font-semibold text-primary">₹<?php echo number_format($booking['amount'], 2); ?></p>
             </div>
             <?php if (!empty($booking['reason'])): ?>
               <div class="md:col-span-2">

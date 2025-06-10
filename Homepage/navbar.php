@@ -11,7 +11,7 @@ if (isset($_SESSION['user_id'])) {
     $result = mysqli_stmt_get_result($stmt);
     $user = mysqli_fetch_assoc($result);
     $image = $user['image'] ?? '';
-    $displayImage = !empty($image) ? $image : 'd.png';
+    $displayImage = !empty($image) ? $image : 'assets/images/default_user.png';
 }
 ?>
 

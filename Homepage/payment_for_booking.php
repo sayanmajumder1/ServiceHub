@@ -193,7 +193,7 @@ $needs_address = empty($user_data['address']);
 
         <div class="booking-card">
             <h5><i class="bi bi-ticket"></i> Booking #<?php echo $booking['booking_no']; ?></h5>
-            <p><i class="bi bi-currency-dollar"></i> Amount to pay: <strong>$<?php echo $booking['total_amount']; ?></strong></p>
+            <p><i class="bi bi-currency-rupee"></i> Amount to pay: <strong>₹<?php echo $booking['total_amount']; ?></strong></p>
         </div>
 
         <form action="process_payment.php" method="POST">
@@ -202,14 +202,22 @@ $needs_address = empty($user_data['address']);
             <div class="payment-options">
                 <h5 class="mb-3">Payment Method</h5>
 
-                <div class="payment-option" onclick="selectPayment(this, 'card')">
+               <!-- <div class="payment-option inactive" onclick="selectPayment(this, 'card')">
                     <div class="icon"><i class="bi bi-credit-card-2-front"></i></div>
                     <div class="content">
                         <h6>Credit/Debit Card</h6>
                         <small>Pay securely with your card</small>
                     </div>
                     <input type="radio" name="payment_method" value="card" id="card" style="display: none;">
-                </div>
+                </div> -->
+                <div class="payment-option inactive" onclick="return false;" style="pointer-events: none; opacity: 0.6;">
+    <div class="icon"><i class="bi bi-credit-card-2-front"></i></div>
+    <div class="content">
+        <h6>Credit/Debit Card</h6>
+        <small>Pay securely with your card</small>
+    </div>
+    <input type="radio" name="payment_method" value="card" id="card" style="display: none;" disabled>
+</div>
 
                 <div class="payment-option selected" onclick="selectPayment(this, 'cash')">
                     <div class="icon"><i class="bi bi-cash"></i></div>
@@ -234,7 +242,7 @@ $needs_address = empty($user_data['address']);
             <?php endif; ?>
 
             <button type="submit" class="btn btn-primary mt-3">
-                <i class="bi bi-lock-fill me-2"></i> Complete Payment
+                <i class="bi bi-lock-fill me-2"></i> Book Service
             </button>
         </form>
     </div>

@@ -35,12 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['update_profile'])) {
         $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
         $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-        $dob = mysqli_real_escape_string($conn, $_POST['dob']);
+      //  $dob = mysqli_real_escape_string($conn, $_POST['dob']);
         $address = mysqli_real_escape_string($conn, $_POST['address']);
         $query = "UPDATE users SET 
                     name = '$first_name',
                     phone = '$phone',
-                    dob='$dob',
                     address='$address',
                     updated_at = NOW()
                   WHERE user_id = $user_id";
