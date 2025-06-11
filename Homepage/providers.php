@@ -122,14 +122,14 @@ $service_id = (int)$_GET['service_id'];
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php
             // Prepare and execute provider query safely
-            $stmt = $conn->prepare("SELECT * FROM service_providers WHERE service_id = ?");
+            $stmt = $conn->prepare("SELECT * FROM service_providers WHERE approved_action = 'approved' && service_id = ?");
             $stmt->bind_param("i", $service_id);
             $stmt->execute();
             $provider_result = $stmt->get_result();
 
             if ($provider_result->num_rows > 0) {
                 while ($row = $provider_result->fetch_assoc()) {
-                    $image_path = !empty($row['image']) ? '../s_pro/uploads2/' . htmlspecialchars($row['image']) : 'assets/default-provider.jpg';
+                    $image_path = !empty($row['image']) ? '../s_pro/uploads2/' . htmlspecialchars($row['image']) : '../s_pro/uploads2/default_provider.png';
                     $provider_id = $row['provider_id'];
 
                     // Initialize booking variables
@@ -153,7 +153,6 @@ $service_id = (int)$_GET['service_id'];
 
                             // Determine button style based on booking status
                             switch ($booking_status) {
-                                case 'accepted':
                                 case 'approved':
                                     $button_class = 'booking-btn-success';
                                     $button_text = 'View Booking';
@@ -181,7 +180,7 @@ $service_id = (int)$_GET['service_id'];
                     <div class="provider-card bg-white rounded-xl shadow-md overflow-hidden animate-fade-in-up">
                         <img src="<?= $image_path ?>"
                             alt="<?= htmlspecialchars($row['provider_name']) ?>"
-                            class="w-full h-48 object-cover">
+                            class="w-full h-48 object-contain">
 
                         <div class="p-6">
                             <div class="flex items-start">
