@@ -12,7 +12,7 @@
                 <p class="text-gray-400 leading-relaxed">
                     Premium home services with trusted professionals for all your maintenance and improvement needs.
                 </p>
-                <div class="flex space-x-3">
+                <!-- <div class="flex space-x-3">
                     <a href="#" class="social-icon bg-gray-700 hover:bg-blue-600" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -25,7 +25,47 @@
                     <a href="#" class="social-icon bg-gray-700 hover:bg-blue-700" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                </div>
+                </div> -->
+    <div class="flex space-x-3">
+    <div class="relative group w-10">
+        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+            Coming Soon
+        </div>
+    </div>
+
+    <div class="relative group w-10">
+        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+            Coming Soon
+        </div>
+    </div>
+
+    <div class="relative group w-10">
+        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+            Coming Soon
+        </div>
+    </div>
+
+    <div class="relative group w-10">
+        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+            Coming Soon
+        </div>
+    </div>
+</div>
+
+
+
             </div>
 
             <!-- Quick Links -->
