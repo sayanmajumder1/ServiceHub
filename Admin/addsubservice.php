@@ -22,6 +22,40 @@
     <link rel="stylesheet" href="custom.css">
     <link rel="stylesheet" href="hideScrollbar.css">
     <style>
+                body {
+            background: #f8f9fa; /* light gray background */
+        }
+        .card {
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+        }
+        h2 {
+            color: #6f42c1; /* nice purple accent */
+            margin-bottom: 1.5rem;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #6f42c1;
+            box-shadow: 0 0 8px rgba(111, 66, 193, 0.3);
+        }
+        .btn-outline-success {
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-outline-success:hover {
+            background-color: #6f42c1;
+            color: white;
+            border-color: #6f42c1;
+        }
         .modal-header{
             background-color:rgb(150, 60, 186);
             color: white;
@@ -39,58 +73,51 @@
             <button class="btn btn-primary d-lg-none mb-3" id="sidebarToggle">
                 <i class="bi bi-list"></i> Menu
             </button>
-            <div class="o35">
-                <div class="col-md-8">
-                    <div class="card-body ab2">
-                        <h2>Add Sub Services:</h2>
-                        <p class="card-text"> 
-                         <?php
-                           
-                    
-                          ?>
-                            <form method="POST" action="subservice_data.php" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label>Service Name:</label><br>
-                                    <select id="s_id" name="s_id" class="con1" required>  
-                                        <option >Select Service</option>  
-                                    <?php
-                                        include_once "connection.php";
-                                        $res=mysqli_query($con,"select * from service");
-                                        while($row=mysqli_fetch_array($res))
-                                        {
-                                    ?> 
-                                                     
-                                    <option value="<?php echo $row['service_id']?>"><?php echo $row['service_name']?></option>
-                                    
-                                
-                                    <?php
-                                        }
-                                    ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Sub Service Name:</label><br>
-                                    <input type="text" name="sub_name" id="sub_name" Placeholder="Enter Sub Service Name"class="con1" required>
-                                </div>
+      
+<div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
+  <div class="mx-3 w-100">
+    <div class="card p-4">
+      <div class="card-body">
+        <h2 class="text-center">Add Sub Services</h2>
+        <form method="POST" action="subservice_data.php" enctype="multipart/form-data" novalidate>
+          <div class="mb-4">
+            <label for="s_id" class="form-label">Service Name:</label>
+            <select id="s_id" name="s_id" class="form-select" required>
+              <option selected disabled>Select Service</option>
+              <?php
+                include_once "connection.php";
+                $res = mysqli_query($con, "SELECT * FROM service");
+                while ($row = mysqli_fetch_array($res)) {
+              ?>
+                <option value="<?php echo $row['service_id'] ?>">
+                  <?php echo htmlspecialchars($row['service_name']); ?>
+                </option>
+              <?php } ?>
+            </select>
+          </div>
 
-                                <div class="mb-3">
-                                    <label>Sub Service Description:</label><br>
-                                    <input type="text" name="s_des" id="s_des" Placeholder="Enter Service Description"class="con1" required>
-                                </div>
+          <div class="mb-4">
+            <label for="sub_name" class="form-label">Sub Service Name:</label>
+            <input type="text" name="sub_name" id="sub_name" class="form-control" placeholder="Enter Sub Service Name" required>
+          </div>
 
-                              
-                              
-                                <div class="mb-3">
-                                    <label>Images:</label><br>
-                                    <input type="file" name="s_img" id="s_img" class="con1"required>
-                                </div>
-                                <button type="submit" class="btn btn-outline-success">Add Sub Services</button>
-                            </form>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+          <div class="mb-4">
+            <label for="s_des" class="form-label">Sub Service Description:</label>
+            <input type="text" name="s_des" id="s_des" class="form-control" placeholder="Enter Service Description" required>
+          </div>
+
+          <div class="mb-4">
+            <label for="s_img" class="form-label">Images:</label>
+            <input type="file" name="s_img" id="s_img" class="form-control" required>
+          </div>
+
+          <button type="submit" class="btn btn-outline-success w-100">Add Sub Services</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+                
     </div>
     <!-- Modal HTML -->
 <div class="modal fade" id="acceptedModal"  aria-labelledby="acceptedModalLabel" aria-hidden="true">
