@@ -86,7 +86,6 @@ $row = mysqli_fetch_assoc($res);
                     <p class="text-muted"><?php echo $row['email']; ?></p>
                     <hr>
                     <div class="text-start px-2 px-md-4">
-                        <p><strong>Date of Birth:</strong> <?php echo $row['dob']; ?></p>
                         <p><strong>Phone:</strong> <?php echo $row['phone']; ?></p>
                         <p><strong>Address:</strong> <?php echo $row['address']; ?></p>
                     </div>
