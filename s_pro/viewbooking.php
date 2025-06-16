@@ -72,7 +72,7 @@
 </head>
 <body>
 
-<body>
+
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->

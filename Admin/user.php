@@ -38,7 +38,6 @@
                         <tr>
                         <th scope="col">#</th>
                         <th scope="col">User Name</th>
-                        <th scope="col">Date of Birth</th>
                         <th scope="col">Address</th>
                         <th colspan='2'>Action</th>
                         </tr>
@@ -56,7 +55,6 @@
                         <th scope="row"><?php  echo $count++?></th>
                         
                         <td data-label="User Name"><?php  echo $row['name']?></td>
-                        <td data-label="DOB"><?php  echo $row['dob']?></td>
                          <td data-label="status"><?php  echo $row['address']?></td>
                         <td data-label="Action"><a href="userview.php?id=<?php echo $row['user_id']; ?>"><button type="button" class="btn btn-outline-primary">View</button></td>
                         </tr>
