@@ -53,7 +53,7 @@ if ($result && mysqli_num_rows($result) > 0) {
       </div>
 
       <!-- Profile Card -->
-      <div class="bg-white rounded-2xl shadow-xl overflow-hidden relative">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden relative lg:w-2/3 lg:ml-20">
         <!-- Profile Header -->
         <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-32"></div>
 
@@ -67,7 +67,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <i class="bi bi-pencil text-purple-600"></i>
               </button>
             </form>
-          </div>
+          </div> 
         </div>
 
         <!-- Profile Content -->

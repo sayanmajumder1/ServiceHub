@@ -91,7 +91,7 @@ include "navbar.php";
                                 </div>
                                 <div class="ml-4">
                                     <h3 class="font-medium">Email</h3>
-                                    <p class="text-primary-100">support@example.com</p>
+                                    <p class="text-primary-100">support@servicehub.com</p>
                                 </div>
                             </div>
 
@@ -101,7 +101,7 @@ include "navbar.php";
                                 </div>
                                 <div class="ml-4">
                                     <h3 class="font-medium">Phone</h3>
-                                    <p class="text-primary-100">+123 456 7890</p>
+                                    <p class="text-primary-100">+91 9382594060</p>
                                 </div>
                             </div>
 
@@ -111,7 +111,7 @@ include "navbar.php";
                                 </div>
                                 <div class="ml-4">
                                     <h3 class="font-medium">Address</h3>
-                                    <p class="text-primary-100">123 Main St, Your City</p>
+                                    <p class="text-primary-100">Bardhaman, West Bengal</p>
                                 </div>
                             </div>
                         </div>

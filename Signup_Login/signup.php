@@ -11,9 +11,9 @@
 
 <body class="h-screen overflow-y-auto">
   <nav class="w-full h-15 flex items-center justify-between px-3 lg:px-10 bg-white sticky top-0">
-    <div>
-      <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30 md:h-25 md:w-25" />
-    </div>
+    <a href="/ServiceHub/Homepage/index.php">
+      <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
+    </a>
     <a href="./login.php"><button class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">Login</button></a>
     </button>
   </nav>
