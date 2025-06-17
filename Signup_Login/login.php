@@ -3,10 +3,19 @@ session_start();
 require_once "connection.php";
 require_once "smtp/PHPMailerAutoload.php"; // Adjust path if needed
 
+if (isset($_SESSION['user_id'])){
+    header("Location: /ServiceHub/Homepage/index.php"); // Redirect if already logged in
+    exit();
+}else if (isset($_SESSION['provider_id'])) {
+    header("Location: /ServiceHub/s_pro/dash.php"); // Redirect if provider is already logged in
+    exit();
+}
+
 $error = "";
 $redirect_url = "";
 
-function sendOTP($email, $name = '') {
+function sendOTP($email, $name = '')
+{
     $_SESSION['otp'] = rand(100000, 999999); // Generate OTP
 
     $mail = new PHPMailer(true);
@@ -55,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['user_type'] = 'user';
 
         sendOTP($user['email'], $user['name']);
-        $_SESSION['email']=$user['email'];
+        $_SESSION['email'] = $user['email'];
 
         if (isset($_COOKIE['guest_selections'])) {
             $_SESSION['restore_booking'] = true;
@@ -108,8 +117,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <img src="./images/logo.png" alt="Logo" class="h-20 w-20 lg:h-30 lg:w-30" />
         </a>
         <a href="./signup.php" class="bg-purple-500 px-3 py-1 rounded-full lg:px-8 lg:py-2 lg:font-semibold text-white">
-      Create new account
-    </a>
+            Create new account
+        </a>
     </nav>
 
     <main class="lg:flex max-h-screen w-full">

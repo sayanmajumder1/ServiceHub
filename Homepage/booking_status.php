@@ -29,14 +29,14 @@ $booking = $booking_result->fetch_assoc();
 $timeline_statuses = [
   'ordered' => [
     'icon' => 'bi-cart',
-    'title' => 'Service Ordered',
+    'title' => 'Service Booked',
     'description' => $booking['businessname'],
     'active' => true
   ],
   'payment' => [
     'icon' => 'bi-credit-card-2-front',
-    'title' => 'Payment Done',
-    'description' => 'Paid via ' . $booking['payment_method'] . ' - ' . date('M j, H:i', strtotime($booking['created_at'])),
+    'title' => 'Payment Info',
+    'description' => 'Via ' . $booking['payment_method'] . ' - ' . date('M j, H:i', strtotime($booking['created_at'])),
     'active' => $booking['payment_status'] === 'completed'
   ],
   'working' => [

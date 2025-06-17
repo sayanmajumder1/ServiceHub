@@ -2,6 +2,11 @@
 session_start();
 require_once "connection.php";
 
+if (!isset($_SESSION['otp'])) {
+    header("Location: /ServiceHub/Homepage/index.php"); // Redirect if already logged in
+    exit();
+}
+
 $error = '';
 $success = "";
 
@@ -15,22 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_SESSION['user_id'])) {
             if ($_SESSION['user_type'] == 'user') {
 
-              // Check if we need to restore a booking after login
+                // Check if we need to restore a booking after login
                 if (isset($_SESSION['restore_booking']) && isset($_COOKIE['guest_selections'])) {
                     unset($_SESSION['restore_booking']);
-                    
+
                     // Get the stored selections from cookie
                     $selections = json_decode($_COOKIE['guest_selections'], true);
-                    
+
                     // Store in session for booking_process.php
                     $_SESSION['pending_booking'] = [
                         'provider_id' => $selections['provider_id'],
                         'subservice_ids' => $selections['subservice_ids']
                     ];
-                    
+
                     // Clear the cookie
                     setcookie('guest_selections', '', time() - 3600, '/');
-                    
+
                     // Redirect to booking process
                     header("Location: /ServiceHub/Homepage/booking_process.php");
                     exit();
@@ -54,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // For signup flow
         elseif (isset($_SESSION['signup_data'])) {
-             $data = $_SESSION['signup_data'];
+            $data = $_SESSION['signup_data'];
             if ($data['account_type'] == 'user') {
                 $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password, image) VALUES (?, ?, ?, ?, ?)");
                 $stmt->bind_param("sssss", $data['name'], $data['email'], $data['phone'], $data['password'], $data['image']);
@@ -73,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header("Location: /ServiceHub/Homepage/booking_process.php");
                         exit();
                     }
-                    
+
                     header("Location: /ServiceHub/Homepage/index.php");
                     exit();
                 } else {
@@ -160,12 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text-sm text-gray-500 mb-2 lg:text-base italic">Step 03/03</p>
             <h1 class="text-3xl lg:text-5xl font-bold mb-4">Verify your Email</h1>
             <p class="mb-6 text-base lg:text-lg text-gray-600">
-                We've sent a 6-digit code to your email - 
+                We've sent a 6-digit code to your email -
                 <span class="text-purple-600 font-medium"><?php echo $_SESSION['email'] ?></span>
             </p>
 
 
-           
+
 
             <form method="POST" action="otpVerification.php">
                 <div class="flex gap-2 justify-center">

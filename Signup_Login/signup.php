@@ -1,4 +1,13 @@
-<?php session_start(); /* NEW: Session start */ ?>
+<?php session_start();
+
+if (isset($_SESSION['user_id'])) {
+  header("Location: /ServiceHub/Homepage/index.php"); // Redirect if already logged in
+  exit();
+} else if (isset($_SESSION['provider_id'])) {
+  header("Location: /ServiceHub/s_pro/dash.php"); // Redirect if provider is already logged in
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

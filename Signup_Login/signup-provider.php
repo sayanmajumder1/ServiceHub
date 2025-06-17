@@ -3,6 +3,11 @@ session_start();
 require_once "connection.php";
 require_once "smtp/PHPMailerAutoload.php"; // Required for sending OTP
 
+if (isset($_SESSION['provider_id'])) {
+  header("Location: /ServiceHub/s_pro/dash.php"); // Redirect if provider is already logged in
+  exit();
+}
+
 $error = '';
 
 // Fetch services from database

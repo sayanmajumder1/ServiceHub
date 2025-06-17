@@ -1,11 +1,10 @@
 <?php
-session_start(); // Make sure session is started
+include "navbar.php";
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: /ServiceHub/Signup_Login/login.php"); // Redirect to home page
   exit();
 }
-include "navbar.php";
 // Handle date filter submission
 $date_filter = '';
 $start_date = '';

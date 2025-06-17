@@ -3,6 +3,11 @@ session_start();
 require_once "connection.php";
 require_once "smtp/PHPMailerAutoload.php"; // Adjust path if needed
 
+if (isset($_SESSION['user_id'])) {
+  header("Location: /ServiceHub/Homepage/index.php"); // Redirect if already logged in
+  exit();
+}
+
 $error = '';
 
 // Function to send OTP

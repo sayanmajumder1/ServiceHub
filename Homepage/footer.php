@@ -4,9 +4,7 @@
             <!-- Brand Section -->
             <div class="space-y-5">
                 <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary to-secondary flex items-center justify-center mr-3">
-                        <i class="fas fa-tools text-white"></i>
-                    </div>
+                    <img src="assets/images/icon.png" alt="logo" class="h-10 w-10 rounded-[50%] mr-3">
                     <span class="text-xl font-bold">ServiceHub</span>
                 </div>
                 <p class="text-gray-400 leading-relaxed">
@@ -28,37 +26,37 @@
                 </div> -->
     <div class="flex space-x-3">
     <div class="relative group w-10">
-        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Facebook">
+        <a href="#" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-700  text-white rounded-[50%]" aria-label="Facebook">
             <i class="fab fa-facebook-f"></i>
         </a>
-        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-purple-500 bg-transparent rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
             Coming Soon
         </div>
     </div>
 
     <div class="relative group w-10">
-        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Twitter">
+        <a href="#" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-700  text-white rounded-[50%]" aria-label="Twitter">
             <i class="fab fa-twitter"></i>
         </a>
-        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-purple-500 bg-transparent rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
             Coming Soon
         </div>
     </div>
 
     <div class="relative group w-10">
-        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="Instagram">
+        <a href="#" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-700  text-white rounded-[50%]" aria-label="Instagram">
             <i class="fab fa-instagram"></i>
         </a>
-        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-purple-500 bg-transparent rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
             Coming Soon
         </div>
     </div>
 
     <div class="relative group w-10">
-        <a href="#" class="social-icon w-15 h-10 flex items-center justify-center bg-gray-700  text-white rounded" aria-label="LinkedIn">
+        <a href="#" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-700  text-white rounded-[50%]" aria-label="LinkedIn">
             <i class="fab fa-linkedin-in"></i>
         </a>
-        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
+        <div class="absolute top-full left-0 mt-2 w-15 px-1 py-1 text-xs text-purple-500 bg-transparent rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
             Coming Soon
         </div>
     </div>
