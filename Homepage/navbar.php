@@ -11,7 +11,7 @@ if (isset($_SESSION['user_id'])) {
     $result = mysqli_stmt_get_result($stmt);
     $user = mysqli_fetch_assoc($result);
     $image = $user['image'] ?? '';
-    $displayImage = !empty($image) ? $image : 'assets/images/default_user.png';
+     $displayImage = !empty($image) ? 'assets/images/' . $image : 'assets/images/default_user.png';
 }
 
 $userLocation = $_SESSION['user_location'] ?? 'Set location';
@@ -127,7 +127,7 @@ $userLocation = $_SESSION['user_location'] ?? 'Set location';
 
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="profile.php" class="flex items-center space-x-2">
-                            <img src="assets/images/<?php echo $displayImage; ?>" alt="Profile" class="w-9 h-9 rounded-full object-cover shadow-sm border-2 border-transparent hover:border-purple-500 hover:scale-105 transition">
+                            <img src="<?php echo $displayImage; ?>" alt="Profile" class="w-9 h-9 rounded-full object-cover shadow-sm border-2 border-transparent hover:border-purple-500 hover:scale-105 transition">
                         </a>
                     <?php else: ?>
                         <a href="/ServiceHub/Signup_Login/login.php" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full text-white font-medium transition transform hover:-translate-y-1 shadow-md">
