@@ -174,7 +174,7 @@ $userLocation = $_SESSION['user_location'] ?? 'Set location';
                     <div class="pt-8 border-t border-gray-200 px-4">
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <a href="profile.php" class="flex items-center space-x-4 py-4">
-                                <img src="assets/images/<?php echo $displayImage; ?>" alt="Profile" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-transparent hover:border-purple-500 hover:scale-105 transition">
+                                <img src="<?php echo $displayImage; ?>" alt="Profile" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-transparent hover:border-purple-500 hover:scale-105 transition">
                                 <span class="font-medium text-gray-800 text-lg">My Profile</span>
                             </a>
                         <?php else: ?>
