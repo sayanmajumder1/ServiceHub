@@ -107,6 +107,7 @@
                                     <p><strong>Phone:</strong> <?php echo $row['phone']; ?></p>
                                     <p><strong>Address:</strong> <?php echo ucfirst($row['address']); ?></p>
                                     <p><strong>Service Category:</strong> <?php echo $row['subservice_name']; ?></p>
+                                    <p><strong>Amount:</strong> <?php echo htmlspecialchars($row['amount']); ?></p>
                                     <p><strong>Booking No:</strong> <?php echo $row['booking_no']; ?></p>
                                     <p><strong>Booking Time:</strong> <?php echo $row['booking_time']; ?></p>
                                     <p><strong>Booking Status:</strong> <?php echo ucfirst($row['booking_status']); ?></p>
