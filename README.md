@@ -37,11 +37,7 @@
 ---
 
 ## **💰 Payment System & Security Strategy**  
-🛡️ **Escrow-Based Protection**: The user’s payment is securely held until service completion.  
-✔️ **Funds Released Upon Confirmation**: The payment is only released after user approval.  
-🔄 **Dispute & Refund Policy**: If the service isn’t fulfilled, the user gets a refund.  
 📊 **Rating & Reviews**: Helps ensure high-quality service and avoid fraud.  
-
 💳 **Supported Payment Methods:**  
 - **Credit/Debit Cards Future Scope**  
 - **Net Banking Future Scope**  
