@@ -68,8 +68,8 @@ This project is licensed under the **MIT License**.
 ---
 
 ## **👨‍💻 Contributors**  
-💡 Developed by **[Asraful](https://github.com/iamasraful)**  
-🌍 Connect on **[GitHub](https://github.com/iamasraful/ServiceHub.git)**  
+💡 Developed by **------------------**  
+🌍 Connect on **----------------**  
 
 ---
 
