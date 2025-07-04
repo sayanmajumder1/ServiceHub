@@ -12,12 +12,9 @@
 
 ✨ **Key Features:**  
 ✔️ **Find Local Services** easily  
-✔️ **Filter by Ratings, Pricing & Reviews**  
-✔️ **View Service Providers on a Map**  
-✔️ **Admin Verification of Service Providers**  
-✔️ **Real-time Notifications** for Available Slots  
+✔️ **Admin Verification of Service Providers**   
 ✔️ **Secure Online Payment System**  
-✔️ **Escrow-Based Protection for Transactions**  
+
 
 ---
 
@@ -46,10 +43,10 @@
 📊 **Rating & Reviews**: Helps ensure high-quality service and avoid fraud.  
 
 💳 **Supported Payment Methods:**  
-- **Credit/Debit Cards**  
-- **Net Banking**  
-- **UPI Payments**  
-- **Wallets**  
+- **Credit/Debit Cards Future Scope**  
+- **Net Banking Future Scope**  
+- **Cash On  Payments**  
+
 
 ---
 
@@ -62,14 +59,16 @@
 
 ---
 
-## **📜 License**  
-This project is licensed under the **MIT License**.  
+
 
 ---
 
 ## **👨‍💻 Contributors**  
-💡 Developed by **------------------------------**  
-🌍 Connect on **-----------------------**  
+💡 Developed by **By Riya Das Roll No-221713820072**
+                 **By Sayan Majumder Roll No-221713820090**
+                 **By Sk Asraful Roll No-221713820095**
+                 **By Shouvik Banerjee Roll No-221713820093**
+                   
 
 ---
 
@@ -78,4 +77,3 @@ For any issues, feel free to open a **GitHub issue** or email **your@email.com**
 
 ---
 
-This **README.md** is now more **compact and visually appealing** while keeping the focus on the project! 🚀🔥 Let me know if you need any further edits. 😊
