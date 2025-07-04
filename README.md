@@ -68,8 +68,8 @@ This project is licensed under the **MIT License**.
 ---
 
 ## **👨‍💻 Contributors**  
-💡 Developed by **------------------**  
-🌍 Connect on **----------------**  
+💡 Developed by **------------------------------**  
+🌍 Connect on **-----------------------**  
 
 ---
 
