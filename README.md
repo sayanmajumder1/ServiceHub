@@ -1,17 +1,17 @@
-```markdown
+---
 # 🚀 Local Service Hub
 
-**Find and book local services near you with ease!**
+Find and book local services near you with ease!
 
 ![PHP](https://img.shields.io/badge/PHP-8.0+-blue) ![HTML5](https://img.shields.io/badge/HTML5-E34F26-orange) ![CSS3](https://img.shields.io/badge/CSS3-1572B6-green) ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
 
 ---
 
-## 📋 About the Project
+ 📋 About the Project
 
 Local Service Hub is a comprehensive web-based platform designed to connect users with verified local service providers. The platform allows users to discover, compare, and book various services in their vicinity while ensuring quality through a robust verification system.
 
-### ✨ Key Features:
+✨ Key Features:
 - ✅ **Easy Service Discovery** - Find services based on location, category, and ratings
 - ✅ **Verified Providers** - All service providers undergo admin verification
 - ✅ **Secure Booking System** - Safe and reliable appointment scheduling
@@ -21,7 +21,7 @@ Local Service Hub is a comprehensive web-based platform designed to connect user
 
 ---
 
-## 🛠️ Technology Stack
+ 🛠️ Technology Stack
 
 | Component       | Technology Used               |
 |-----------------|-------------------------------|
@@ -32,10 +32,9 @@ Local Service Hub is a comprehensive web-based platform designed to connect user
 | **Security**    | Password Hashing, Input Validation |
 
 ---
+ 📁 Project Structure
 
-## 📁 Project Structure
 
-```
 ServiceHub/
 ├── assets/          # CSS, JavaScript, Images
 ├── includes/        # PHP includes and functions
@@ -46,13 +45,13 @@ ServiceHub/
 ├── config/          # Database configuration
 ├── sql/             # Database schema
 └── README.md        # This file
-```
+
 
 ---
 
-## 👥 User Roles & Permissions
+  👥 User Roles & Permissions
 
-### 👤 **Regular Users**
+  👤 **Regular Users**
 - Browse and search for local services
 - View service provider profiles and ratings
 - Book appointments with providers
