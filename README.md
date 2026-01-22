@@ -140,4 +140,6 @@ This project is developed for educational purposes as part of academic coursewor
 ---
 
 **Thank you for visiting Local Service Hub!** 🌟
-```
+---
+@copyright 2026 all rights are reserved Sayan Majumder and his team members
+---
