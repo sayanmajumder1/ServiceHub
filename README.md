@@ -31,23 +31,6 @@ Local Service Hub is a comprehensive web-based platform designed to connect user
 | **Version Control** | Git, GitHub                 |
 | **Security**    | Password Hashing, Input Validation |
 
----
- 📁 Project Structure
-
-
-ServiceHub/
-├── assets/          # CSS, JavaScript, Images
-├── includes/        # PHP includes and functions
-├── pages/           # All application pages
-│   ├── user/        # User-facing pages
-│   ├── provider/    # Service provider pages
-│   └── admin/       # Admin dashboard pages
-├── config/          # Database configuration
-├── sql/             # Database schema
-└── README.md        # This file
-
-
----
 
   👥 User Roles & Permissions
 
