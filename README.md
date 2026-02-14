@@ -42,7 +42,7 @@ Local Service Hub is a comprehensive web-based platform designed to connect user
 ![Provider Sign Up](Homepage/assets/images/Screenshot_14-2-2026_122412_localhost.jpeg)
 
 ### ℹ️ About Page
-![About Page](Homepage\assets\images\Screenshot_14-2-2026_122252_localhost.jpeg)
+![About Page](Homepage/assets/images/Screenshot_14-2-2026_122252_localhost.jpeg)
 
 ## 🔐 Create Account Page
 ![Create Account](Homepage/assets/images/Screenshot_14-2-2026_122358_localhost.jpeg)
